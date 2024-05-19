@@ -61,7 +61,7 @@ export default defineConfig(({ mode }) => {
           { 'naive-ui': ['useDialog', 'useMessage', 'useNotification', 'useLoadingBar'] }
         ],
         vueTemplate: true,
-        dirs: ['src/store/modules', 'src/components/Common'],
+        dirs: ['src/stores', 'src/components/Common'],
         dts: 'types/auto-imports.d.ts'
       }),
       Components({ dts: 'types/components.d.ts', resolvers: [NaiveUiResolver()] }),
