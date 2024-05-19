@@ -2,8 +2,10 @@
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 
-import { useHttp } from './utils/fetch/http'
-useHttp('/system/user').get()
+import { useHttp } from './utils/http'
+
+const { data } = await useHttp<User[]>('/system/user').get()
+console.log(data.value)
 </script>
 
 <template>
