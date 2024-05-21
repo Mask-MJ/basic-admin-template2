@@ -108,8 +108,7 @@ export interface TableActionType {
   // expandAll: () => void;
   /** 折叠树形表格 */
   // collapseAll: () => void;
-  emits?: EmitType
-
+  emits?: (event: string, ...args: any[]) => void
   // 数据
   /** 获取表格数据 */
   getTableData: <T = Recordable>() => T[]

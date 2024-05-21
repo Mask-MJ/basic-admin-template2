@@ -1,36 +1,70 @@
 <script setup lang="ts">
-const formData = ref({})
-const schema = {
-  type: 'object',
-  properties: {
-    account: { type: 'string', title: '账号' },
-    nickname: { type: 'string', title: '昵称' },
-    email: { type: 'string', title: '邮箱' },
-    phoneNumber: { type: 'string', title: '手机号' },
-    sex: {
-      title: '性别',
-      type: 'number',
-      'ui:widget': 'SelectWidget',
-      enum: [0, 1],
-      enumNames: ['女', '男']
-    }
+import ResetModal from './modal/ResetModal.vue'
+import SetModal from './modal/SetModal.vue'
+import { deleteUser, getUserDetail, getUsersList, type UserInfo } from '@/api/system/user'
+import { useModal } from '@/components/Modal'
+import { Action, useTable } from '@/components/Table'
+
+import { columns, schemas } from './data'
+
+const [registerSetModal, { openModal: openSetModel }] = useModal()
+const [registerResetModal, { openModal: openResetModel }] = useModal()
+
+const [registerTable, { reload }] = useTable({
+  api: getUsersList, // 请求接口
+  columns, // 展示的列
+  useSearchForm: true, // 启用搜索表单
+  formConfig: { labelWidth: 100, schemas }, // 搜索表单配置
+  bordered: true,
+  rowKey: (rowData) => rowData.id,
+  actionColumn: {
+    width: 200,
+    key: 'ACTION',
+    render: (row: UserInfo) =>
+      h(Action, {
+        actions: [
+          {
+            type: 'edit',
+            onClick: async () => {
+              const result = await getUserDetail(row.id)
+              return openSetModel(true, result)
+            }
+          },
+          {
+            icon: 'i-ant-design:key-outlined',
+            tooltipProps: { content: '重置密码' },
+            buttonProps: {
+              type: 'success',
+              onClick: () => openResetModel(true, { id: row.id })
+            }
+          },
+          {
+            type: 'del',
+            onClick: async () => {
+              await deleteUser(row.id)
+              await reload()
+            }
+          }
+        ]
+      })
   }
+})
+
+const handleAdd = () => {
+  openSetModel(true)
 }
-const uiSchema = {}
 </script>
 
 <template>
-  <div>
-    <DarkModeContainer class="px-4 pt-4 rounded-xl">
-      <VueForm
-        v-model="formData"
-        :ui-schema="uiSchema"
-        :schema="schema"
-        :formProps="{ layoutColumn: 3, labelPlacement: 'left' }"
-        :formFooter="{ okBtn: '提交', cancelBtn: '重置' }"
-      />
-    </DarkModeContainer>
+  <div class="flex h-full">
+    <Table @register="registerTable">
+      <template #toolbar>
+        <n-button class="mr-2" type="primary" @click="handleAdd"> 新增 </n-button>
+      </template>
+    </Table>
+    <SetModal @register="registerSetModal" @success="reload()" />
+    <ResetModal @register="registerResetModal" />
   </div>
 </template>
 
-<style lang="" scoped></style>
+<style scoped></style>

@@ -8,7 +8,7 @@ export interface RegisterParams {
   email: string | null
   avatar: string | null
   phoneNumber: string | null
-  roles: number[]
+  role: number[]
   sex: number
   status: number
   deptId: number | null
@@ -34,7 +34,7 @@ export interface UserInfo {
   email: string | null
   avatar: string | null
   phoneNumber: string | null
-  roles: number[]
+  role: Role[]
   sex: number
   status: number
   deptId: number | null

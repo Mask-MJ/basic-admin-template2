@@ -66,6 +66,7 @@ const getBindComponentValue = computed(() => {
       return 'onUpdateCheckedKeys'
     } else {
       return 'onUpdate:value'
+      // return 'onChange'
     }
   })
   const on = {

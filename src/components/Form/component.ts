@@ -19,9 +19,11 @@ import type {
 } from 'naive-ui'
 import type { FormActionType, FormSchema } from './types'
 
-export type FormComponentProps =
-  | { schema: FormSchema; formModel: any; formActionType: FormActionType }
-  | undefined
+export interface FormComponentProps {
+  schema: FormSchema
+  formModel: any
+  formActionType: FormActionType
+}
 
 export interface UploadFileParams {
   // Other parameters

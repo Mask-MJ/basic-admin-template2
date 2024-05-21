@@ -58,9 +58,8 @@ export function useForm(props?: Props): UseFormReturnType {
     },
 
     resetPaths: async () => {
-      getForm().then(async (form) => {
-        await form.resetPaths()
-      })
+      const form = await getForm()
+      form.resetPaths()
     },
 
     removeSchemaByPath: async (paths: string | string[]) => {

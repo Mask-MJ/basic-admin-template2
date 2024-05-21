@@ -1,6 +1,8 @@
 import type { BasicFormProps, FormSchema } from '../types'
 import type { ComputedRef, Ref } from 'vue'
-import dayjs from 'dayjs'
+
+import { unref } from 'vue'
+import { dateUtil } from './dateUtil'
 import {
   cloneDeep,
   isArray,
@@ -14,7 +16,7 @@ import {
 
 interface UseFormValuesContext {
   defaultValueRef: Ref<any>
-  getSchemas: ComputedRef<FormSchema[]>
+  getSchema: ComputedRef<FormSchema[]>
   getProps: ComputedRef<BasicFormProps>
   formModel: Recordable
 }
@@ -57,7 +59,7 @@ function tryDeconstructObject(key: string, value: any, target: Recordable) {
 
 export function useFormValues({
   defaultValueRef,
-  getSchemas,
+  getSchema,
   formModel,
   getProps
 }: UseFormValuesContext) {
@@ -117,8 +119,8 @@ export function useFormValues({
 
       const [startTimeFormat, endTimeFormat] = Array.isArray(format) ? format : [format, format]
 
-      values[startTimeKey] = dayjs(startTime).format(startTimeFormat)
-      values[endTimeKey] = dayjs(endTime).format(endTimeFormat)
+      values[startTimeKey] = dateUtil(startTime).format(startTimeFormat)
+      values[endTimeKey] = dateUtil(endTime).format(endTimeFormat)
       Reflect.deleteProperty(values, path)
     }
 
@@ -126,7 +128,7 @@ export function useFormValues({
   }
 
   function initDefault() {
-    const schemas = unref(getSchemas)
+    const schemas = unref(getSchema)
     const obj: Recordable = {}
     schemas.forEach((item) => {
       const { defaultValue } = item

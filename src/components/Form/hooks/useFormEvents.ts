@@ -15,9 +15,9 @@ import {
 } from 'lodash-es'
 
 interface UseFormActionContext {
-  emits: (event: string, ...args: any[]) => void
+  emits: EmitType
   getProps: ComputedRef<BasicFormProps>
-  getSchemas: ComputedRef<FormSchema[]>
+  getSchema: ComputedRef<FormSchema[]>
   formModel: Recordable
   defaultValueRef: Ref<Recordable>
   formElRef: Ref<FormActionType>
@@ -28,7 +28,7 @@ export function useFormEvents({
   emits,
   getProps,
   formModel,
-  getSchemas,
+  getSchema,
   defaultValueRef,
   formElRef,
   schemaRef,
@@ -41,7 +41,7 @@ export function useFormEvents({
     resetFunc && isFunction(resetFunc) && (await resetFunc())
     // 遍历 formModel 把值置为 defaultValue 或 ''
     Object.keys(formModel).forEach((key) => {
-      const schema = unref(getSchemas).find((item) => item.path === key)
+      const schema = unref(getSchema).find((item) => item.path === key)
       const isInput = schema?.component && schema.component === 'NInput'
       const defaultValue = cloneDeep(defaultValueRef.value[key])
       formModel[key] = isInput ? defaultValue || '' : defaultValue || null
@@ -84,7 +84,7 @@ export function useFormEvents({
   const setPathsValue = async (values: Recordable) => {
     Object.keys(values).forEach((key) => {
       // 获取 path 对应的 schema
-      const schema = unref(getSchemas).find((item) => item.path === key)
+      const schema = unref(getSchema).find((item) => item.path === key)
       schema && (formModel[key] = values[key])
     })
   }
@@ -107,7 +107,7 @@ export function useFormEvents({
       return
     }
     const schema: FormSchema[] = []
-    unref(getSchemas).forEach((val) => {
+    unref(getSchema).forEach((val) => {
       updateData.forEach((item) => {
         if (val.path === item.path) {
           const newSchema = merge(val, item)
@@ -173,7 +173,7 @@ export function useFormEvents({
   }
   // 在特定的 path 之前插入 schema
   const appendSchemaByPath = async (schema: FormSchema, prefixPath?: string, first = false) => {
-    const schemaList: FormSchema[] = cloneDeep(unref(getSchemas))
+    const schemaList: FormSchema[] = cloneDeep(unref(getSchema))
     // 获取要插入的下标
     const index = schemaList.findIndex((schema) => schema.path === prefixPath)
     if (!prefixPath || index === -1 || first) {
@@ -190,7 +190,7 @@ export function useFormEvents({
   }
   // 根据 path 移除 schema
   const removeSchemaByPath = async (paths: string | string[]) => {
-    const schemaList: FormSchema[] = cloneDeep(unref(getSchemas))
+    const schemaList: FormSchema[] = cloneDeep(unref(getSchema))
     if (!paths) {
       return
     }
