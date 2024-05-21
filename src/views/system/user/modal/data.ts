@@ -34,7 +34,7 @@ export const schemas: FormSchema[] = [
     }
   },
   {
-    path: 'role',
+    path: 'roleIds',
     label: '角色',
     component: 'ApiSelect',
     componentProps: {

@@ -45,10 +45,9 @@ export const columns: BasicColumn<UserInfo & { pendingStatus: boolean }>[] = [
             if (!Reflect.has(rowData, 'pendingStatus')) {
               rowData.pendingStatus = false
             }
-            const status = rowData.status ? 0 : 1
-            updateUser({ id: rowData.id, status })
+            updateUser({ id: rowData.id, status: !rowData.status })
               .then(() => {
-                rowData.status = status
+                rowData.status = !rowData.status
                 window.$message.success(`已成功修改用户状态`)
               })
               .catch(() => {
@@ -68,8 +67,6 @@ export const columns: BasicColumn<UserInfo & { pendingStatus: boolean }>[] = [
             h(
               NSwitch,
               {
-                checkedValue: 1,
-                uncheckedValue: 0,
                 loading: rowData.pendingStatus,
                 value: rowData.status,
                 onUpdateValue() {

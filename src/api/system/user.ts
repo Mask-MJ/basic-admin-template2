@@ -36,7 +36,7 @@ export interface UserInfo {
   phoneNumber: string | null
   role: Role[]
   sex: number
-  status: number
+  status: boolean
   deptId: number | null
   remark: string | null
   createdAt: Date
