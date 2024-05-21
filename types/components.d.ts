@@ -7,13 +7,22 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    Action: typeof import('./../src/components/Table/components/Action.vue')['default']
+    ApiSelect: typeof import('./../src/components/Form/components/ApiSelect.vue')['default']
+    ApiTree: typeof import('./../src/components/Form/components/ApiTree.vue')['default']
+    ApiTreeSelect: typeof import('./../src/components/Form/components/ApiTreeSelect.vue')['default']
+    AutoComplete: typeof import('./../src/components/Form/components/AutoComplete.vue')['default']
     DarkModeContainer: typeof import('./../src/components/Common/DarkModeContainer.vue')['default']
     DarkModeSwitch: typeof import('./../src/components/Common/DarkModeSwitch.vue')['default']
+    Form: typeof import('./../src/components/Form/index.vue')['default']
+    FormAction: typeof import('./../src/components/Form/components/FormAction.vue')['default']
+    FormItemComponent: typeof import('./../src/components/Form/components/FormItemComponent.vue')['default']
     HelloWorld: typeof import('./../src/components/HelloWorld.vue')['default']
     HoverContainer: typeof import('./../src/components/Common/HoverContainer.vue')['default']
     IconCommunity: typeof import('./../src/components/icons/IconCommunity.vue')['default']
     IconDocumentation: typeof import('./../src/components/icons/IconDocumentation.vue')['default']
     IconEcosystem: typeof import('./../src/components/icons/IconEcosystem.vue')['default']
+    IconPicker: typeof import('./../src/components/Form/components/IconPicker.vue')['default']
     IconSupport: typeof import('./../src/components/icons/IconSupport.vue')['default']
     IconTooling: typeof import('./../src/components/icons/IconTooling.vue')['default']
     NaiveProvider: typeof import('./../src/components/Common/NaiveProvider.vue')['default']
@@ -41,9 +50,13 @@ declare module 'vue' {
     NScrollbar: typeof import('naive-ui')['NScrollbar']
     NSpace: typeof import('naive-ui')['NSpace']
     NTooltip: typeof import('naive-ui')['NTooltip']
+    RadioGroup: typeof import('./../src/components/Form/components/RadioGroup.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Table: typeof import('./../src/components/Table/index.vue')['default']
     TheWelcome: typeof import('./../src/components/TheWelcome.vue')['default']
+    Toolbars: typeof import('./../src/components/Table/components/Toolbars.vue')['default']
+    Upload: typeof import('./../src/components/Form/components/Upload.vue')['default']
     WelcomeItem: typeof import('./../src/components/WelcomeItem.vue')['default']
   }
 }
