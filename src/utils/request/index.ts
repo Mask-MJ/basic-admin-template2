@@ -39,7 +39,7 @@ const transform: AxiosTransform = {
     if (!res) return '[HTTP] Request has no return value'
     const { data, status } = res
     if (status.toString().startsWith('2')) {
-      return data.data as Result
+      return data as Result
     }
   },
 

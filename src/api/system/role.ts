@@ -13,8 +13,9 @@ export interface RoleInfo {
   id: number
   name: string
   value: string
-  roleKey: string
   sort: number
+  menu?: number[]
+  factory?: number[]
   remark: string
   createdAt: string
   updatedAt: string

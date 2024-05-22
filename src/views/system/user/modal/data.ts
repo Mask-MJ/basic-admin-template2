@@ -19,6 +19,7 @@ export const schemas: FormSchema[] = [
     label: '用户密码',
     required: true,
     component: 'NInput',
+    componentProps: { type: 'password' },
     ifShow: ({ model }) => !model.id
   },
   {
@@ -59,6 +60,7 @@ export const resetSchemas: FormSchema[] = [
     path: 'password',
     label: '新密码',
     component: 'NInput',
+    componentProps: { type: 'password', showPasswordOn: 'click' },
     rule: [
       {
         required: true,
