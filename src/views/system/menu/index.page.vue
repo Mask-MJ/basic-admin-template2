@@ -1,47 +1,38 @@
 <script setup lang="ts">
-import { deleteUser, getUserDetail, getUsersList, type UserInfo } from '@/api/system/user'
+import { deleteMenu, getMenuDetail, getMenuList, type MenuInfo } from '@/api/system/menu'
 import { useModal } from '@/components/Modal'
 import { Action, useTable } from '@/components/Table'
 
 import { columns, searchSchemas } from './data'
-import ResetModal from './ResetModal.vue'
 import SetModal from './SetModal.vue'
 
 const [registerSetModal, { openModal: openSetModel }] = useModal()
-const [registerResetModal, { openModal: openResetModel }] = useModal()
 
 const [registerTable, { reload }] = useTable({
-  api: getUsersList, // 请求接口
+  api: getMenuList, // 请求接口
   columns, // 展示的列
   useSearchForm: true, // 启用搜索表单
   formConfig: { labelWidth: 100, schemas: searchSchemas }, // 搜索表单配置
   bordered: true,
   rowKey: (rowData) => rowData.id,
+  showIndexColumn: false,
   actionColumn: {
     width: 200,
     key: 'ACTION',
-    render: (row: UserInfo) =>
+    render: (row: MenuInfo) =>
       h(Action, {
         actions: [
           {
             type: 'edit',
             onClick: async () => {
-              const result = await getUserDetail(row.id)
+              const result = await getMenuDetail(row.id)
               return openSetModel(true, result)
-            }
-          },
-          {
-            icon: 'i-ant-design:key-outlined',
-            tooltipProps: { content: '重置密码' },
-            buttonProps: {
-              type: 'success',
-              onClick: () => openResetModel(true, { id: row.id })
             }
           },
           {
             type: 'del',
             onClick: async () => {
-              await deleteUser(row.id)
+              await deleteMenu(row.id)
               await reload()
             }
           }
@@ -49,7 +40,6 @@ const [registerTable, { reload }] = useTable({
       })
   }
 })
-
 const handleAdd = () => {
   openSetModel(true)
 }
@@ -63,8 +53,7 @@ const handleAdd = () => {
       </template>
     </Table>
     <SetModal @register="registerSetModal" @success="reload()" />
-    <ResetModal @register="registerResetModal" />
   </div>
 </template>
 
-<style scoped></style>
+<style lang="" scoped></style>

@@ -21,23 +21,6 @@ export interface RoleInfo {
   updatedAt: string
 }
 
-export interface Routes {
-  id: number
-  name: string
-  path: string
-  icon: string
-  hidden: boolean
-  status: boolean
-  sort: number
-  parentId: number
-  remark: string
-  createBy: string
-  updateBy: string
-  createdAt: Date
-  updatedAt: Date
-  children?: Routes[]
-}
-
 export interface SearchParams {
   name: string | null
   beginTime: number | null
@@ -63,6 +46,3 @@ export const updateRole = (params: Partial<RoleInfo>) =>
   defHttp.patch({ url: `${Api.Role}/${params.id}`, params })
 // 删除角色
 export const deleteRole = (ids: number | string) => defHttp.delete({ url: `${Api.Role}/${ids}` })
-
-// 获取菜单权限
-export const getMenuList = () => defHttp.get<Routes[]>({ url: Api.Menu })

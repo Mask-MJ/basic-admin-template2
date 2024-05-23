@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import { deleteRole, getRoleDetail, getRoleList, type RoleInfo } from '@/api/system/role'
-import SetModal from './modal/SetModal.vue'
+import SetModal from './SetModal.vue'
 import { useModal } from '@/components/Modal'
 import { Action, useTable } from '@/components/Table'
 
-import { columns, schemas } from './data'
+import { columns, searchSchemas } from './data'
 
 const [registerSetModal, { openModal: openSetModel }] = useModal()
 const [registerTable, { reload }] = useTable({
   api: getRoleList, // 请求接口
   columns, // 展示的列
   useSearchForm: true, // 启用搜索表单
-  formConfig: { labelWidth: 100, schemas }, // 搜索表单配置
+  formConfig: { labelWidth: 100, schemas: searchSchemas }, // 搜索表单配置
   bordered: true,
   rowKey: (rowData) => rowData.id,
   actionColumn: {
@@ -58,3 +58,4 @@ const handleAdd = () => {
 </template>
 
 <style scoped></style>
+./SetModal.vue

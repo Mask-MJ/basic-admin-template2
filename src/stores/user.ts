@@ -1,7 +1,7 @@
 import type { MenuOption } from 'naive-ui'
 import type { RemovableRef } from '@vueuse/core'
 
-import { getMenuList, type Routes } from '@/api/system/role'
+import { getMenuList, type MenuInfo } from '@/api/system/menu'
 import { getUserInfo, login, type LoginParams, type UserInfo } from '@/api/system/user'
 import { router } from '@/router'
 import { CACHE_ROUTES, PageEnum, TOKEN_KEY, USER_INFO_KEY } from '@/settings/enums'
@@ -17,7 +17,7 @@ interface UserState {
   /** 路由是否动态添加 */
   isDynamicAddedRoute: boolean
   /** 后台返回的路由列表 */
-  backendRouteList: Routes[]
+  backendRouteList: MenuInfo[]
   /** 菜单列表 */
   menus: MenuOption[]
   /** 缓存路由页面 */
@@ -85,10 +85,10 @@ export const useUserStore = defineStore('user-store', {
 
       const routes = router.getRoutes()
       // 把路由同步到 router 中
-      flatMapDeep(data, (route) => [route, route.children] as Routes[]).forEach((route) => {
+      flatMapDeep(data, (route) => [route, route.children] as MenuInfo[]).forEach((route) => {
         routes.forEach((item) => {
           if (route?.path === item.path) {
-            item.meta = { ...item.meta, ...route }
+            item.meta = { ...item.meta, ...(route as any) }
           }
         })
       })
@@ -102,7 +102,7 @@ export const useUserStore = defineStore('user-store', {
       return data
     },
     /** 设置路由 */
-    setBackendRouteList(list: Routes[]) {
+    setBackendRouteList(list: MenuInfo[]) {
       this.backendRouteList = list
     },
     /** 设置缓存路由 */

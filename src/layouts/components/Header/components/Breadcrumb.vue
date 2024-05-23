@@ -2,13 +2,13 @@
 import type { DropdownOption } from 'naive-ui'
 
 import { router } from '@/router'
-import type { Routes } from '@/api/system/role'
+import type { MenuInfo } from '@/api/system/menu'
 
 const route = useRoute()
 const theme = useThemeStore()
 const user = useUserStore()
 
-function getTopLevelMenu(path: string, routes: Routes[]): Routes | undefined {
+function getTopLevelMenu(path: string, routes: MenuInfo[]): MenuInfo | undefined {
   return routes.find((item) => {
     if (item.path === path) return true
     if (Array.isArray(item.children)) {
@@ -18,7 +18,7 @@ function getTopLevelMenu(path: string, routes: Routes[]): Routes | undefined {
   })
 }
 
-function generateBreadcrumbs(routes: Routes[]): DropdownOption[] {
+function generateBreadcrumbs(routes: MenuInfo[]): DropdownOption[] {
   return routes.map((route) => {
     const list: DropdownOption = {
       label: route.name,

@@ -1,8 +1,8 @@
-import type { Routes } from '@/api/system/role'
+import type { MenuInfo } from '@/api/system/menu'
 import type { MenuOption } from 'naive-ui'
 import { RouterLink } from 'vue-router/auto'
 
-export function transformersMenus(data: Routes[]) {
+export function transformersMenus(data: MenuInfo[]) {
   const menuOption: MenuOption[] = []
   data.forEach((item) => {
     if (item.hidden) return

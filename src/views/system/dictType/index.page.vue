@@ -1,47 +1,51 @@
 <script setup lang="ts">
-import { deleteUser, getUserDetail, getUsersList, type UserInfo } from '@/api/system/user'
+import SetModal from './SetModal.vue'
+import {
+  deleteDictType,
+  getDictTypeDetail,
+  getDictTypeList,
+  type DictTypeInfo
+} from '@/api/system/dict'
 import { useModal } from '@/components/Modal'
 import { Action, useTable } from '@/components/Table'
 
 import { columns, searchSchemas } from './data'
-import ResetModal from './ResetModal.vue'
-import SetModal from './SetModal.vue'
 
-const [registerSetModal, { openModal: openSetModel }] = useModal()
-const [registerResetModal, { openModal: openResetModel }] = useModal()
+const router = useRouter()
+const [registerSetModal, { openModal }] = useModal()
 
 const [registerTable, { reload }] = useTable({
-  api: getUsersList, // 请求接口
+  api: getDictTypeList, // 请求接口
   columns, // 展示的列
   useSearchForm: true, // 启用搜索表单
   formConfig: { labelWidth: 100, schemas: searchSchemas }, // 搜索表单配置
-  bordered: true,
-  rowKey: (rowData) => rowData.id,
+  bordered: true, // 是否显示边框
+  rowKey: (rowData) => rowData.id, // 表格行 key 的取值
   actionColumn: {
-    width: 200,
+    width: 150,
     key: 'ACTION',
-    render: (row: UserInfo) =>
+    render: (row: DictTypeInfo) =>
       h(Action, {
         actions: [
           {
             type: 'edit',
             onClick: async () => {
-              const result = await getUserDetail(row.id)
-              return openSetModel(true, result)
+              const result = await getDictTypeDetail(row.id)
+              return openModal(true, result)
             }
           },
           {
-            icon: 'i-ant-design:key-outlined',
-            tooltipProps: { content: '重置密码' },
+            icon: 'i-line-md:list-3',
+            tooltipProps: { content: '字典管理' },
             buttonProps: {
               type: 'success',
-              onClick: () => openResetModel(true, { id: row.id })
+              onClick: () => router.push(`/system/dictData/${row.id}`)
             }
           },
           {
             type: 'del',
             onClick: async () => {
-              await deleteUser(row.id)
+              await deleteDictType(row.id)
               await reload()
             }
           }
@@ -49,9 +53,8 @@ const [registerTable, { reload }] = useTable({
       })
   }
 })
-
 const handleAdd = () => {
-  openSetModel(true)
+  openModal(true)
 }
 </script>
 
@@ -63,8 +66,7 @@ const handleAdd = () => {
       </template>
     </Table>
     <SetModal @register="registerSetModal" @success="reload()" />
-    <ResetModal @register="registerResetModal" />
   </div>
 </template>
 
-<style scoped></style>
+<style lang="" scoped></style>
