@@ -88,7 +88,14 @@ export const useUserStore = defineStore('user-store', {
       flatMapDeep(data, (route) => [route, route.children] as MenuInfo[]).forEach((route) => {
         routes.forEach((item) => {
           if (route?.path === item.path) {
-            item.meta = { ...item.meta, ...(route as any) }
+            item.meta = {
+              ...item.meta,
+              title: route.name,
+              icon: route.icon,
+              hidden: route.hidden,
+              parentId: route.parentId,
+              sort: route.sort
+            }
           }
         })
       })

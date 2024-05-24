@@ -6,6 +6,8 @@ declare module 'vue-router' {
     icon: string
     hidden: boolean
     link?: string
-    parentId: number
+    parentId: number | null
+    sort: number
+    affix?: boolean
   }
 }

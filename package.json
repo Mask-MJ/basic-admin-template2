@@ -13,6 +13,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@better-scroll/core": "^2.5.1",
     "@unhead/vue": "^1.9.10",
     "@vueuse/core": "^10.9.0",
     "axios": "^1.6.8",
@@ -44,6 +45,7 @@
     "@vue/eslint-config-prettier": "^9.0.0",
     "@vue/eslint-config-typescript": "^13.0.0",
     "@vue/tsconfig": "^0.5.1",
+    "css-render": "^0.15.14",
     "eslint": "^8.57.0",
     "eslint-plugin-vue": "^9.23.0",
     "gsap": "^3.12.5",

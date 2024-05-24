@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { LayoutSider, LayoutHeader, LayoutContent } from './components'
+import { LayoutSider, LayoutHeader, LayoutContent, LayoutTabs } from './components'
 import { useBasicLayout } from './components/hooks'
 
 const app = useAppStore()
@@ -26,7 +26,7 @@ const siderCollapse = computed(() => app.siderCollapse)
     <n-layout content-style="display:flex; flex-flow: column; height: 100%">
       <n-layout-header>
         <LayoutHeader v-bind="headerProps" />
-        <!-- <LayoutTabs /> -->
+        <LayoutTabs />
       </n-layout-header>
       <n-layout-content
         class="bg-[#f6f9f8] dark:bg-[#101014] transition duration-300 ease-in-out p-4"

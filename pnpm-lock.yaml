@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@better-scroll/core':
+    specifier: ^2.5.1
+    version: 2.5.1
   '@unhead/vue':
     specifier: ^1.9.10
     version: 1.9.10(vue@3.4.27)
@@ -94,6 +97,9 @@ devDependencies:
   '@vue/tsconfig':
     specifier: ^0.5.1
     version: 0.5.1
+  css-render:
+    specifier: ^0.15.14
+    version: 0.15.14
   eslint:
     specifier: ^8.57.0
     version: 8.57.0
@@ -538,6 +544,16 @@ packages:
       '@babel/helper-validator-identifier': 7.24.5
       to-fast-properties: 2.0.0
 
+  /@better-scroll/core@2.5.1:
+    resolution: {integrity: sha512-koKOuYA55dQ04FJRIVUpMGDr1hbCfWmfX0MGp1hKagkQSWSRpwblqACiwtggVauoj9aaJRJZ9hDsTM4weaavlg==}
+    dependencies:
+      '@better-scroll/shared-utils': 2.5.1
+    dev: false
+
+  /@better-scroll/shared-utils@2.5.1:
+    resolution: {integrity: sha512-AplkfSjXVYP9LZiD6JsKgmgQJ/mG4uuLmBuwLz8W5OsYc7AYTfN8kw6GqZ5OwCGoXkVhBGyd8NeC4xwYItp0aw==}
+    dev: false
+
   /@commitlint/cli@19.3.0(@types/node@20.12.12)(typescript@5.4.5):
     resolution: {integrity: sha512-LgYWOwuDR7BSTQ9OLZ12m7F/qhNY+NpAyPBgo4YNMkACE7lGuUnuQq1yi9hz1KA4+3VqpOYl8H1rY/LYK43v7g==}
     engines: {node: '>=v18'}
@@ -719,7 +735,6 @@ packages:
 
   /@emotion/hash@0.8.0:
     resolution: {integrity: sha512-kBJtf7PH6aWwZ6fka3zQ0p6SBYzx4fl1LoZXE2RrnYST9Xljm7WfKJrU4g/Xr3Beg72MLrp1AWNUmuYJTL7Cow==}
-    dev: false
 
   /@esbuild/aix-ppc64@0.20.2:
     resolution: {integrity: sha512-D+EBOJHXdNZcLJRBkhENNG8Wji2kgc9AZ9KiPr1JuZjsNtyHzrsfLRrY0tk2H2aoFu6RANO1y1iPPUCDYWkb5g==}
@@ -2432,7 +2447,6 @@ packages:
     dependencies:
       '@emotion/hash': 0.8.0
       csstype: 3.0.11
-    dev: false
 
   /css-tree@2.3.1:
     resolution: {integrity: sha512-6Fv1DV/TYw//QF5IzQdqsNDjx/wc8TrMBZsqjL9eW01tWb7R7k/mq+/VXfJCl7SoD5emsJop9cOByJZfs8hYIw==}
@@ -2450,7 +2464,6 @@ packages:
 
   /csstype@3.0.11:
     resolution: {integrity: sha512-sa6P2wJ+CAbgyy4KFssIb/JNMLxFvKF1pCYCSXS8ZMuqZnMsrxqI2E5sPyoTpxoPU/gVZMzr2zjOfg8GIZOMsw==}
-    dev: false
 
   /csstype@3.1.3:
     resolution: {integrity: sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw==}
