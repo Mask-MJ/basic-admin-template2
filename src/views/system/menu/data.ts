@@ -17,9 +17,60 @@ export const searchSchemas: FormSchema[] = [
 export const columns: BasicColumn<MenuInfo & { pendingStatus: boolean }>[] = [
   { title: '菜单名称', key: 'name', width: 150 },
   { title: '菜单路径', key: 'path', width: 200 },
-  { title: '菜单图标', key: 'icon', width: 150 },
-  { title: '是否隐藏', key: 'hidden', width: 150 },
-  { title: '状态', key: 'status', width: 150 },
+  {
+    title: '菜单图标',
+    key: 'icon',
+    width: 100,
+    render: (rowData) => h('i', { class: rowData.icon })
+  },
+  {
+    title: '是否隐藏',
+    key: 'hidden',
+    width: 150,
+    render: (rowData) =>
+      h(
+        NPopconfirm,
+        {
+          onPositiveClick() {
+            if (!Reflect.has(rowData, 'pendingStatus')) {
+              rowData.pendingStatus = false
+            }
+            updateMenu({ id: rowData.id, hidden: !rowData.hidden })
+              .then(async () => {
+                rowData.hidden = !rowData.hidden
+                window.$message.success(`已成功修改菜单状态`)
+                setTimeout(() => {
+                  window.location.reload()
+                }, 500)
+              })
+              .catch(() => {
+                window.$message.error('修改菜单状态失败')
+              })
+              .finally(() => {
+                rowData.pendingStatus = false
+              })
+          },
+          onNegativeClick() {
+            rowData.pendingStatus = false
+          }
+        },
+        {
+          default: () => (rowData.hidden ? '是否展示菜单' : '是否隐藏菜单'),
+          trigger: () =>
+            h(
+              NSwitch,
+              {
+                loading: rowData.pendingStatus,
+                value: rowData.hidden,
+                onUpdateValue() {
+                  rowData.pendingStatus = true
+                }
+              },
+              { checked: () => '隐藏', unchecked: () => '展示' }
+            )
+        }
+      )
+  },
   {
     title: '状态',
     key: 'status',
@@ -35,10 +86,10 @@ export const columns: BasicColumn<MenuInfo & { pendingStatus: boolean }>[] = [
             updateMenu({ id: rowData.id, status: !rowData.status })
               .then(() => {
                 rowData.status = !rowData.status
-                window.$message.success(`已成功修改用户状态`)
+                window.$message.success(`已成功修改菜单状态`)
               })
               .catch(() => {
-                window.$message.error('修改用户状态失败')
+                window.$message.error('修改菜单状态失败')
               })
               .finally(() => {
                 rowData.pendingStatus = false
@@ -49,7 +100,7 @@ export const columns: BasicColumn<MenuInfo & { pendingStatus: boolean }>[] = [
           }
         },
         {
-          default: () => (rowData.status ? '是否停用用户' : '是否启用用户'),
+          default: () => (rowData.status ? '是否停用菜单' : '是否启用菜单'),
           trigger: () =>
             h(
               NSwitch,
@@ -65,23 +116,20 @@ export const columns: BasicColumn<MenuInfo & { pendingStatus: boolean }>[] = [
         }
       )
   },
-  { title: '排序', key: 'sort', width: 150 },
-  { title: '创建时间', key: 'createdAt', width: 200 },
-  { title: '更新时间', key: 'updatedAt', width: 200 }
+  { title: '排序', key: 'sort', width: 100 }
 ]
 
 export const setSchemas: FormSchema[] = [
   { path: 'id', component: 'NInputNumber', show: false },
   {
     path: 'parentId',
+    label: '上级菜单',
     component: 'ApiTreeSelect',
     componentProps: {
       immediate: true,
       api: getMenuList,
-      multiple: true,
       labelField: 'name',
       keyField: 'id',
-      checkable: true,
       cascade: true
     }
   },
@@ -91,7 +139,6 @@ export const setSchemas: FormSchema[] = [
   {
     path: 'hidden',
     label: '是否隐藏',
-    required: true,
     component: 'NRadioGroup',
     componentProps: {
       options: [
@@ -103,7 +150,6 @@ export const setSchemas: FormSchema[] = [
   {
     path: 'status',
     label: '状态',
-    required: true,
     component: 'NRadioGroup',
     componentProps: {
       options: [

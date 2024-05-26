@@ -99,8 +99,8 @@ export const useUserStore = defineStore('user-store', {
           }
         })
       })
-      // const route = useRoute()
-      // const tabStore = useMultipleTabStore()
+      // const route = router.currentRoute.value
+      // const tabStore = useTabStore()
       // console.log('route', route)
       // tabStore.iniTabStore(route)
 

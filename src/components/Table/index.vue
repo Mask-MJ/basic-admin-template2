@@ -33,18 +33,6 @@ const getScrollX = computed(() => {
   const { scrollX } = unref(getProps)
   return scrollX || getColumnsRef.value.reduce((pre, next) => pre + Number(next.width || 0), 0)
 })
-const getBindValues = computed(() => {
-  return {
-    ...unref(getProps),
-    data: getTableData(),
-    scrollX: unref(getScrollX),
-    loading: unref(getLoading),
-    rowKey: unref(getRowKey),
-    columns: toRaw(unref(getViewColumns)),
-    pagination: getPagination(),
-    checkedRowKeys: unref(checkedRowKeysRef)
-  } as unknown as BasicTableProps
-})
 // loading hooks
 const { getLoading, setLoading } = useLoading(getProps)
 
@@ -55,6 +43,7 @@ const { getViewColumns, getColumnsRef, getColumns, setColumns, getCacheColumns }
   getProps,
   getPagination
 )
+
 // checked hooks
 const {
   checkedRowKeysRef,
@@ -102,6 +91,19 @@ const updatePageSize = (size: number) => {
 function setProps(props: Partial<BasicTableProps>) {
   innerPropsRef.value = { ...unref(innerPropsRef), ...props }
 }
+
+const getBindValues = computed(() => {
+  return {
+    ...unref(getProps),
+    data: getTableData(),
+    scrollX: unref(getScrollX),
+    loading: unref(getLoading),
+    rowKey: unref(getRowKey),
+    columns: toRaw(unref(getViewColumns)),
+    pagination: getPagination(),
+    checkedRowKeys: unref(checkedRowKeysRef)
+  } as unknown as BasicTableProps
+})
 
 const toolbarsAction = (data: { type: string; value: string }) => {
   if (data.type === 'reload') {
@@ -179,8 +181,8 @@ emits('register', tableAction, formActions)
     </dark-mode-container>
     <!-- 表格内容 card -->
     <dark-mode-container
-      class="p-4 flex-1"
-      :class="getProps.outermost ? 'rounded-lg shadow-md mb-4' : ''"
+      class="p-3 flex-1"
+      :class="getProps.outermost ? 'rounded-lg shadow-md ' : ''"
     >
       <!-- 表格头部 操作按钮 -->
       <div class="flex-between mb-2">
@@ -212,4 +214,3 @@ emits('register', tableAction, formActions)
   min-height: 300px;
 }
 </style>
-./components/hooks

@@ -68,6 +68,7 @@ declare module 'vue' {
     NTree: typeof import('naive-ui')['NTree']
     NTreeSelect: typeof import('naive-ui')['NTreeSelect']
     NUpload: typeof import('naive-ui')['NUpload']
+    PageWrapper: typeof import('./../src/components/Common/PageWrapper.vue')['default']
     RadioGroup: typeof import('./../src/components/Form/components/RadioGroup.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

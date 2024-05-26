@@ -27,9 +27,9 @@ export const useTabStore = defineStore('tab-store', {
     tabs: [],
     homeTab: {
       name: '/dashboard/workTable/',
-      fullPath: '/dashboard/workTable/',
+      fullPath: '/dashboard/workTable',
       meta: {
-        title: '首页',
+        title: '工作台',
         icon: 'i-ant-design:laptop-outlined',
         hidden: false,
         parentId: null,
@@ -190,7 +190,7 @@ export const useTabStore = defineStore('tab-store', {
       const tabs: GlobalTabRoute[] = theme.tab.isCache ? getTabRoutes() : []
 
       const hasHome = getIndexInTabRoutesByRouteName(tabs, this.homeTab.name as string) > -1
-      if (!hasHome && this.homeTab.name !== '/dashboard/workTable/') tabs.unshift(this.homeTab)
+      if (!hasHome) tabs.unshift(this.homeTab)
 
       const isHome = currentRoute.fullPath === this.homeTab.fullPath
       const index = getIndexInTabRoutesByRouteName(tabs, currentRoute.name as string)

@@ -11,7 +11,7 @@ interface Emits {
 const emit = defineEmits<Emits>()
 
 const theme = useThemeStore()
-const tab = useTabStore()
+const tabStore = useTabStore()
 const isChromeMode = computed(() => theme.tab.mode === 'chrome')
 const activeComponent = computed(() => (isChromeMode.value ? ChromeTab : ButtonTab))
 
@@ -19,8 +19,12 @@ const activeComponent = computed(() => (isChromeMode.value ? ChromeTab : ButtonT
 const tabRef = ref<HTMLElement>()
 async function getActiveTabClientX() {
   await nextTick()
-  if (tabRef.value && tabRef.value.children.length && tabRef.value.children[tab.activeTabIndex]) {
-    const activeTabElement = tabRef.value.children[tab.activeTabIndex]
+  if (
+    tabRef.value &&
+    tabRef.value.children.length &&
+    tabRef.value.children[tabStore.activeTabIndex]
+  ) {
+    const activeTabElement = tabRef.value.children[tabStore.activeTabIndex]
     const { x, width } = activeTabElement.getBoundingClientRect()
     const clientX = x + width / 2
     setTimeout(() => {
@@ -28,6 +32,8 @@ async function getActiveTabClientX() {
     }, 50)
   }
 }
+
+const tabs = computed(() => tabStore.tabs)
 
 interface DropdownConfig {
   visible: boolean
@@ -80,7 +86,7 @@ async function handleContextMenu(e: MouseEvent, currentPath: string, affix?: boo
 }
 
 watch(
-  () => tab.activeTabIndex,
+  () => tabStore.activeTabIndex,
   () => {
     getActiveTabClientX()
   },
@@ -94,24 +100,21 @@ watch(
   <div ref="tabRef" class="h-full" :class="[isChromeMode ? 'flex items-end' : 'flex-y-center']">
     <component
       :is="activeComponent"
-      v-for="(item, index) in tab.tabs"
+      v-for="(item, index) in tabs"
       :key="item.fullPath"
-      :is-active="tab.activeTab === item.fullPath"
+      :is-active="tabStore.activeTab === item.fullPath"
       :primary-color="theme.themeColor"
-      :closable="!(item.name === tab.homeTab.name || item.meta.affix)"
+      :closable="!(item.name === tabStore.homeTab.name || item.meta.affix)"
       :dark-mode="theme.darkMode"
       :class="{
-        '!mr-0': isChromeMode && index === tab.tabs.length - 1,
+        '!mr-0': isChromeMode && index === tabs.length - 1,
         'mr-10px': !isChromeMode
       }"
-      @click="tab.handleClickTab(item.fullPath)"
-      @close="tab.removeTab(item.fullPath)"
+      @click="tabStore.handleClickTab(item.fullPath)"
+      @close="tabStore.removeTab(item.fullPath)"
       @contextmenu="handleContextMenu($event, item.fullPath, item.meta.affix)"
     >
-      <i
-        :class="`icon-${item.meta.icon}`"
-        class="inline-block align-text-bottom mr-4px text-16px"
-      />
+      <i :class="item.meta.icon" class="inline-block align-text-bottom mr-4px text-16px" />
       {{ item.meta.title }}
     </component>
   </div>

@@ -7,7 +7,7 @@ const route = useRoute()
 const themeStore = useThemeStore()
 const tabStore = useTabStore()
 
-tabStore.iniTabStore(route)
+// tabStore.iniTabStore(route)
 
 watch(
   () => route.fullPath,

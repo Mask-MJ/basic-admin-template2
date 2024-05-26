@@ -56,7 +56,7 @@ const handleAdd = () => {
 </script>
 
 <template>
-  <div class="flex h-full">
+  <PageWrapper>
     <Table @register="registerTable">
       <template #toolbar>
         <n-button class="mr-2" type="primary" @click="handleAdd"> 新增 </n-button>
@@ -64,7 +64,7 @@ const handleAdd = () => {
     </Table>
     <SetModal @register="registerSetModal" @success="reload()" />
     <ResetModal @register="registerResetModal" />
-  </div>
+  </PageWrapper>
 </template>
 
 <style scoped></style>

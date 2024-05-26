@@ -17,7 +17,7 @@ const [registerTable, { reload }] = useTable({
   rowKey: (rowData) => rowData.id,
   showIndexColumn: false,
   actionColumn: {
-    width: 200,
+    width: 150,
     key: 'ACTION',
     render: (row: MenuInfo) =>
       h(Action, {
@@ -46,14 +46,14 @@ const handleAdd = () => {
 </script>
 
 <template>
-  <div class="flex h-full">
+  <PageWrapper>
     <Table @register="registerTable">
       <template #toolbar>
         <n-button class="mr-2" type="primary" @click="handleAdd"> 新增 </n-button>
       </template>
     </Table>
     <SetModal @register="registerSetModal" @success="reload()" />
-  </div>
+  </PageWrapper>
 </template>
 
 <style lang="" scoped></style>
