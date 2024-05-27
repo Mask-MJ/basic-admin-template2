@@ -109,7 +109,7 @@ watch(
         'mr-10px': !isChromeMode
       }"
       @click="tabStore.handleClickTab(item.fullPath)"
-      @close="tabStore.removeTab(item.fullPath)"
+      @close="() => tabStore.removeTab(item.fullPath)"
       @contextmenu="handleContextMenu($event, item.fullPath, item.meta.affix)"
     >
       <i :class="item.meta.icon" class="inline-block align-text-bottom mr-4px text-16px" />
