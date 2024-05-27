@@ -1,39 +1,45 @@
 <script setup lang="ts">
-import { deleteMenu, getMenuDetail, getMenuList, type MenuInfo } from '@/api/system/menu'
+import SetModal from './SetModal.vue'
+import {
+  deleteDictData,
+  getDictDataDetail,
+  getDictDataList,
+  type DictDataInfo
+} from '@/api/system/dict'
 import { useModal } from '@/components/Modal'
 import { Action, useTable } from '@/components/Table'
 
-import { columns, searchSchemas } from './data'
-import SetModal from './SetModal.vue'
+import { columns, searchSchemas } from '../factory/data'
 
-const [registerSetModal, { openModal: openSetModel }] = useModal()
+const route = useRoute() as any
+const dictTypeId = computed(() => Number(route.params.id))
+
+const [registerSetModal, { openModal }] = useModal()
 
 const [registerTable, { reload }] = useTable({
-  api: getMenuList, // 请求接口
+  api: getDictDataList, // 请求接口
   columns, // 展示的列
   useSearchForm: true, // 启用搜索表单
-  formConfig: { labelWidth: 100, schemas: searchSchemas }, // 搜索表单配置
-  pagination: false,
-  bordered: true,
-  rowKey: (rowData) => rowData.id,
-  showIndexColumn: false,
+  searchInfo: { dictTypeId: dictTypeId.value }, // 额外的请求参数
+  formConfig: { schemas: searchSchemas }, // 搜索表单配置
+  rowKey: (rowData) => rowData.id, // 表格行 key 的取值
   actionColumn: {
     width: 150,
     key: 'ACTION',
-    render: (row: MenuInfo) =>
+    render: (row: DictDataInfo) =>
       h(Action, {
         actions: [
           {
             type: 'edit',
             onClick: async () => {
-              const result = await getMenuDetail(row.id)
-              return openSetModel(true, result)
+              const result = await getDictDataDetail(row.id)
+              return openModal(true, result)
             }
           },
           {
             type: 'del',
             onClick: async () => {
-              await deleteMenu(row.id)
+              await deleteDictData(row.id)
               await reload()
             }
           }
@@ -42,7 +48,7 @@ const [registerTable, { reload }] = useTable({
   }
 })
 const handleAdd = () => {
-  openSetModel(true)
+  openModal(true, { dictTypeId: dictTypeId.value })
 }
 </script>
 

@@ -20,7 +20,7 @@ function handleRefresh() {
     placement="bottom-end"
     @click="handleRefresh"
   >
-    <i class="text-16px i-carbon:renew" :class="{ 'animate-spin': loading }" />
+    <i class="text-16px i-ant-design:reload-outlined" :class="{ 'animate-spin': loading }" />
   </hover-container>
 </template>
 
