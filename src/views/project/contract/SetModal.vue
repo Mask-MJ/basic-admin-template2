@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { createDevice, updateDevice, type DeviceInfo } from '@/api/project/device'
+import { createContract, updateContract, type ContractInfo } from '@/api/project/contract'
 import { useForm } from '@/components/Form'
 import { useModalInner } from '@/components/Modal'
 
@@ -13,7 +13,7 @@ const [registerForm, { validate, getPathsValue, setPathsValue }] = useForm({
   schemas: setSchemas
 })
 
-const [registerModal, { closeModal, setModalProps }] = useModalInner(async (data: DeviceInfo) => {
+const [registerModal, { closeModal, setModalProps }] = useModalInner(async (data: ContractInfo) => {
   if (data.id) {
     setModalProps({ title: '编辑装置' })
     await setPathsValue(data)
@@ -24,7 +24,7 @@ const handleSubmit = async () => {
   try {
     await validate()
     const result = getPathsValue()
-    result.id ? await updateDevice(result) : await createDevice(result)
+    result.id ? await updateContract(result) : await createContract(result)
     emits('success')
     closeModal()
   } catch (error) {

@@ -9,6 +9,7 @@ import {
   getTabRoutes
 } from './helper/tab-helper'
 import { useRouterPush } from '@/router/hooks'
+import { router } from '@/router'
 
 export interface GlobalTabRoute
   extends Pick<RouteLocationNormalizedLoaded, 'name' | 'fullPath' | 'meta'> {}
@@ -43,6 +44,14 @@ export const useTabStore = defineStore('tab-store', {
     /** 当前激活状态的页签索引 */
     activeTabIndex(): number {
       return this.tabs.findIndex((tab) => tab.fullPath === this.activeTab)
+    },
+    getTabs(): GlobalTabRoute[] {
+      const routes = router.getRoutes()
+      this.tabs.forEach((tab) => {
+        const route = routes.find((item) => item.name === tab.name)
+        if (route) tab.meta = route.meta
+      })
+      return this.tabs
     }
   },
   actions: {

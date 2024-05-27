@@ -39,7 +39,7 @@ const [registerTable, { reload }] = useTable({
             tooltipProps: { content: '装置管理' },
             buttonProps: {
               type: 'success',
-              onClick: () => router.push(`/projects/device/${row.id}`)
+              onClick: () => router.push(`/project/device/${row.id}`)
             }
           },
           {
@@ -47,7 +47,7 @@ const [registerTable, { reload }] = useTable({
             tooltipProps: { content: '阀门管理' },
             buttonProps: {
               type: 'info',
-              onClick: () => router.push(`/projects/valve/${row.id}`)
+              onClick: () => router.push(`/project/valve/factoryId-${row.id}`)
             }
           },
           {
@@ -55,7 +55,7 @@ const [registerTable, { reload }] = useTable({
             tooltipProps: { content: '项目管理' },
             buttonProps: {
               type: 'warning',
-              onClick: () => router.push(`/projects/contract/${row.id}`)
+              onClick: () => router.push(`/project/contract/${row.id}`)
             }
           },
           {
@@ -63,7 +63,7 @@ const [registerTable, { reload }] = useTable({
             tooltipProps: { content: '分析任务' },
             buttonProps: {
               type: 'success',
-              onClick: () => router.push(`/projects/analysisTask/${row.id}`)
+              onClick: () => router.push(`/project/analysisTask/${row.id}`)
             }
           },
           {

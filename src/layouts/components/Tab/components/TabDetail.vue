@@ -33,8 +33,6 @@ async function getActiveTabClientX() {
   }
 }
 
-const tabs = computed(() => tabStore.tabs)
-
 interface DropdownConfig {
   visible: boolean
   affix: boolean
@@ -100,14 +98,14 @@ watch(
   <div ref="tabRef" class="h-full" :class="[isChromeMode ? 'flex items-end' : 'flex-y-center']">
     <component
       :is="activeComponent"
-      v-for="(item, index) in tabs"
+      v-for="(item, index) in tabStore.getTabs"
       :key="item.fullPath"
       :is-active="tabStore.activeTab === item.fullPath"
       :primary-color="theme.themeColor"
       :closable="!(item.name === tabStore.homeTab.name || item.meta.affix)"
       :dark-mode="theme.darkMode"
       :class="{
-        '!mr-0': isChromeMode && index === tabs.length - 1,
+        '!mr-0': isChromeMode && index === tabStore.getTabs.length - 1,
         'mr-10px': !isChromeMode
       }"
       @click="tabStore.handleClickTab(item.fullPath)"

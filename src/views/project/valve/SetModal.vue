@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { createDevice, updateDevice, type DeviceInfo } from '@/api/project/device'
+import { createValve, updateValve, type ValveInfo } from '@/api/project/valve'
 import { useForm } from '@/components/Form'
 import { useModalInner } from '@/components/Modal'
 
@@ -16,9 +16,9 @@ const [registerForm, { validate, getPathsValue, setPathsValue }] = useForm({
   schemas: getSchemas.value
 })
 
-const [registerModal, { closeModal, setModalProps }] = useModalInner(async (data: DeviceInfo) => {
+const [registerModal, { closeModal, setModalProps }] = useModalInner(async (data: ValveInfo) => {
   if (data.id) {
-    setModalProps({ title: '编辑装置' })
+    setModalProps({ title: '编辑阀门' })
     await setPathsValue(data)
   }
 })
@@ -28,7 +28,7 @@ const handleSubmit = async () => {
     await validate()
     const result = getPathsValue()
     factoryId.value && (result.factoryId = factoryId.value)
-    result.id ? await updateDevice(result) : await createDevice(result)
+    result.id ? await updateValve(result) : await createValve(result)
     emits('success')
     closeModal()
   } catch (error) {
@@ -38,7 +38,7 @@ const handleSubmit = async () => {
 </script>
 
 <template>
-  <Modal title="新增装置" class="!w-120" @register="registerModal" @positive-click="handleSubmit">
+  <Modal title="新增阀门" class="!w-250" @register="registerModal" @positive-click="handleSubmit">
     <Form @register="registerForm" />
   </Modal>
 </template>

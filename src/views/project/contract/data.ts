@@ -17,11 +17,10 @@ export const searchSchemas: FormSchema[] = [
 
 export const columns: BasicColumn<ContractInfo & { pendingStatus: boolean }>[] = [
   { title: '项目名称', key: 'name', width: 200 },
-  { title: '所属工厂', key: 'factory.name', width: 300 },
-  { title: '客户名称', key: 'customer' },
-  { title: '客户联系方式', key: 'customerPhone' },
+  { title: '所属工厂', key: 'factory.name', width: 250 },
+  { title: '客户名称', key: 'customer', width: 150 },
   { title: '签订合同时间', key: 'contractTime', width: 200 },
-  { title: '销售人员', key: 'saler' }
+  { title: '销售人员', key: 'saler', width: 150 }
 ]
 
 export const setSchemas: FormSchema[] = [
@@ -29,13 +28,14 @@ export const setSchemas: FormSchema[] = [
   { path: 'name', label: '项目名称', required: true, component: 'NInput' },
   { path: 'customer', label: '客户名称', required: true, component: 'NInput' },
   { path: 'customerPhone', label: '客户联系方式', required: true, component: 'NInput' },
-  { path: 'valveCount', label: '采购阀门总数', required: true, component: 'NInput' },
-  { path: 'highValveCount', label: '高级阀门数量', required: true, component: 'NInput' },
-  { path: 'contractTime', label: '签订合同时间', required: true, component: 'NInput' },
+  { path: 'valveCount', label: '采购阀门总数', required: true, component: 'NInputNumber' },
+  { path: 'highValveCount', label: '高级阀门数量', required: true, component: 'NInputNumber' },
+  { path: 'contractTime', label: '签订合同时间', required: true, component: 'NDatePicker' },
   {
     path: 'factoryId',
     label: '所属工厂',
     component: 'ApiTreeSelect',
+    required: true,
     componentProps: {
       immediate: true,
       api: getFactoryList,

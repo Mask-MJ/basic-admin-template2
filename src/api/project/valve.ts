@@ -11,10 +11,19 @@ export interface ValveInfo {
   id: number
   name: string
   status: number
+  brand: string
+  model: string
+  serial: string
+  caliber: string
+  level: string
+  material: string
+  leak: string
+  actuator: string
+  locator: string
+  fault: string
   remark: string
   factoryId: number
-  createrId: number
-  valves: number[]
+  deviceId?: number
   createdAt: string
   updatedAt: string
 }
@@ -22,9 +31,10 @@ export interface ValveInfo {
 export interface SearchParams {
   page: number
   pageSize: number
-  name: string | null
-  status: number | null
-  factoryId?: number | null
+  name: string
+  status: number
+  factoryId: number
+  deviceId: number
 }
 
 enum Api {

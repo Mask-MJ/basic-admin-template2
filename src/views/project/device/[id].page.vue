@@ -1,55 +1,9 @@
 <script setup lang="ts">
-import { useModal } from '@/components/Modal'
-import { useTable, Action } from '@/components/Table'
-import { deleteDevice, getDeviceDetail, getDeviceList, type DeviceInfo } from '@/api/project/device'
-import { columns, searchSchemas } from './data'
-import SetModal from './SetModal.vue'
-
-const [registerSetModal, { openModal: openSetModel }] = useModal()
-const [registerTable, { reload }] = useTable({
-  api: getDeviceList, // 请求接口
-  columns, // 展示的列
-  useSearchForm: true, // 启用搜索表单
-  formConfig: { labelWidth: 100, schemas: searchSchemas }, // 搜索表单配置
-  bordered: true,
-  rowKey: (rowData) => rowData.id,
-  showIndexColumn: false,
-  pagination: false,
-  actionColumn: {
-    width: 200,
-    key: 'ACTION',
-    render: (row: DeviceInfo) =>
-      h(Action, {
-        actions: [
-          {
-            type: 'edit',
-            onClick: async () => {
-              const result = await getDeviceDetail(row.id)
-              return openSetModel(true, result)
-            }
-          },
-          {
-            type: 'del',
-            onClick: async () => {
-              await deleteDevice(row.id)
-              await reload()
-            }
-          }
-        ]
-      })
-  }
-})
+import Page from './index.page.vue'
 </script>
 
 <template>
-  <PageWrapper>
-    <Table @register="registerTable">
-      <template #toolbar>
-        <n-button class="mr-2" type="primary" @click="openSetModel(true)"> 新增 </n-button>
-      </template>
-    </Table>
-    <SetModal @register="registerSetModal" @success="reload()" />
-  </PageWrapper>
+  <Page />
 </template>
 
 <style lang="" scoped></style>
