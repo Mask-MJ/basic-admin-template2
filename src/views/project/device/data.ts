@@ -70,6 +70,7 @@ export const setSchemas: FormSchema[] = [
     componentProps: {
       immediate: true,
       api: getValveList,
+      resultField: 'rows',
       labelField: 'name',
       valueField: 'id',
       multiple: true

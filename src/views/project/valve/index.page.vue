@@ -14,7 +14,7 @@ const typeId = computed(() => {
 })
 
 const getSchemas = computed(() => {
-  if (formType.value === 'factory' || formType.value === 'device') {
+  if (formType.value === 'factoryId' || formType.value === 'deviceId') {
     return searchSchemas.filter((item) => item.path !== 'factoryId')
   } else {
     return searchSchemas
@@ -27,7 +27,7 @@ const [registerTable, { reload }] = useTable({
   columns, // 展示的列
   useSearchForm: true, // 启用搜索表单
   formConfig: { labelWidth: 100, schemas: getSchemas.value }, // 搜索表单配置
-  searchInfo: { [formType.value]: typeId.value }, // 额外参数
+  searchInfo: { [formType.value]: Number(typeId.value) }, // 额外参数
   bordered: true,
   rowKey: (rowData) => rowData.id,
   showIndexColumn: false,

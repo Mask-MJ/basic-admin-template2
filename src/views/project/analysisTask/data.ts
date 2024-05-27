@@ -3,9 +3,10 @@ import type { BasicColumn } from '@/components/Table'
 
 import { type ContractInfo } from '@/api/project/contract'
 import { getFactoryList } from '@/api/project/factory'
+import { getDictTypeList } from '@/api/system/dict'
 
 export const searchSchemas: FormSchema[] = [
-  { path: 'name', label: '项目名称', component: 'NInput', span: 8 },
+  { path: 'name', label: '任务名称', component: 'NInput', span: 8 },
   {
     path: '[beginTime, endTime]',
     component: 'NDatePicker',
@@ -29,24 +30,16 @@ export const searchSchemas: FormSchema[] = [
 ]
 
 export const columns: BasicColumn<ContractInfo & { pendingStatus: boolean }>[] = [
-  { title: '项目名称', key: 'name', width: 200 },
+  { title: '任务名称', key: 'name', width: 200 },
   { title: '所属工厂', key: 'factory.name', width: 250 },
-  { title: '客户名称', key: 'customer', width: 100 },
-  { title: '客户联系方式', key: 'customerPhone', width: 150 },
-  { title: '采购阀门总数', key: 'valveCount', width: 150 },
-  { title: '高级阀门数量', key: 'highValveCount', width: 150 },
-  { title: '签订合同时间', key: 'contractTime', width: 150 },
-  { title: '销售人员', key: 'saler', width: 100 }
+  { title: '使用模板', key: 'dict.name', width: 100 },
+  { title: '创建时间', key: 'createdAt', width: 200 },
+  { title: '更新时间', key: 'updatedAt', width: 200 }
 ]
 
 export const setSchemas: FormSchema[] = [
   { path: 'id', component: 'NInputNumber', show: false },
-  { path: 'name', label: '项目名称', required: true, component: 'NInput' },
-  { path: 'customer', label: '客户名称', required: true, component: 'NInput' },
-  { path: 'customerPhone', label: '客户联系方式', required: true, component: 'NInput' },
-  { path: 'valveCount', label: '采购阀门总数', required: true, component: 'NInputNumber' },
-  { path: 'highValveCount', label: '高级阀门数量', required: true, component: 'NInputNumber' },
-  { path: 'contractTime', label: '签订合同时间', required: true, component: 'NDatePicker' },
+  { path: 'name', label: '任务名称', required: true, component: 'NInput' },
   {
     path: 'factoryId',
     label: '所属工厂',
@@ -58,6 +51,19 @@ export const setSchemas: FormSchema[] = [
       labelField: 'name',
       keyField: 'id',
       cascade: true
+    }
+  },
+  {
+    path: 'dictId',
+    label: '使用模板',
+    component: 'ApiSelect',
+    required: true,
+    componentProps: {
+      immediate: true,
+      api: getDictTypeList,
+      resultField: 'rows',
+      labelField: 'name',
+      valueField: 'id'
     }
   },
   {

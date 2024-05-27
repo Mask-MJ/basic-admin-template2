@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import { createContract, updateContract, type ContractInfo } from '@/api/project/contract'
+import {
+  createAnalysisTask,
+  updateAnalysisTask,
+  type AnalysisTaskInfo
+} from '@/api/project/analysisTask'
 import { useForm } from '@/components/Form'
 import { useModalInner } from '@/components/Modal'
 
@@ -16,19 +20,21 @@ const [registerForm, { validate, getPathsValue, setPathsValue }] = useForm({
   schemas: getSchemas.value
 })
 
-const [registerModal, { closeModal, setModalProps }] = useModalInner(async (data: ContractInfo) => {
-  if (data.id) {
-    setModalProps({ title: '编辑项目' })
-    await setPathsValue(data)
+const [registerModal, { closeModal, setModalProps }] = useModalInner(
+  async (data: AnalysisTaskInfo) => {
+    if (data.id) {
+      setModalProps({ title: '编辑任务' })
+      await setPathsValue(data)
+    }
   }
-})
+)
 
 const handleSubmit = async () => {
   try {
     await validate()
     const result = getPathsValue()
     factoryId.value && (result.factoryId = factoryId.value)
-    result.id ? await updateContract(result) : await createContract(result)
+    result.id ? await updateAnalysisTask(result) : await createAnalysisTask(result)
     emits('success')
     closeModal()
   } catch (error) {
@@ -38,7 +44,7 @@ const handleSubmit = async () => {
 </script>
 
 <template>
-  <Modal title="新增项目" class="!w-120" @register="registerModal" @positive-click="handleSubmit">
+  <Modal title="新增任务" class="!w-120" @register="registerModal" @positive-click="handleSubmit">
     <Form @register="registerForm" />
   </Modal>
 </template>

@@ -21,7 +21,10 @@ declare module 'vue-router/auto-routes' {
     '/[...path]': RouteRecordInfo<'/[...path]', '/:path(.*)', { path: ParamValue<true> }, { path: ParamValue<false> }>,
     '/dashboard/workTable/': RouteRecordInfo<'/dashboard/workTable/', '/dashboard/workTable', Record<never, never>, Record<never, never>>,
     '/login/': RouteRecordInfo<'/login/', '/login', Record<never, never>, Record<never, never>>,
+    '/monitor/loginLog/': RouteRecordInfo<'/monitor/loginLog/', '/monitor/loginLog', Record<never, never>, Record<never, never>>,
+    '/monitor/operationLog/': RouteRecordInfo<'/monitor/operationLog/', '/monitor/operationLog', Record<never, never>, Record<never, never>>,
     '/project/analysisTask/': RouteRecordInfo<'/project/analysisTask/', '/project/analysisTask', Record<never, never>, Record<never, never>>,
+    '/project/analysisTask/[id]': RouteRecordInfo<'/project/analysisTask/[id]', '/project/analysisTask/:id', { id: ParamValue<true> }, { id: ParamValue<false> }>,
     '/project/contract/': RouteRecordInfo<'/project/contract/', '/project/contract', Record<never, never>, Record<never, never>>,
     '/project/contract/[id]': RouteRecordInfo<'/project/contract/[id]', '/project/contract/:id', { id: ParamValue<true> }, { id: ParamValue<false> }>,
     '/project/device/': RouteRecordInfo<'/project/device/', '/project/device', Record<never, never>, Record<never, never>>,
@@ -36,6 +39,7 @@ declare module 'vue-router/auto-routes' {
     '/system/menu/': RouteRecordInfo<'/system/menu/', '/system/menu', Record<never, never>, Record<never, never>>,
     '/system/post/': RouteRecordInfo<'/system/post/', '/system/post', Record<never, never>, Record<never, never>>,
     '/system/role/': RouteRecordInfo<'/system/role/', '/system/role', Record<never, never>, Record<never, never>>,
+    '/system/unit/': RouteRecordInfo<'/system/unit/', '/system/unit', Record<never, never>, Record<never, never>>,
     '/system/user/': RouteRecordInfo<'/system/user/', '/system/user', Record<never, never>, Record<never, never>>,
   }
 }

@@ -127,6 +127,7 @@ export const setSchemas: FormSchema[] = [
       immediate: true,
       api: getRoleList,
       multiple: true,
+      resultField: 'rows',
       labelField: 'name',
       valueField: 'id'
     }

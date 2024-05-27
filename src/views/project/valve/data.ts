@@ -31,7 +31,8 @@ export const searchSchemas: FormSchema[] = [
 export const columns: BasicColumn<FactoryInfo & { pendingStatus: boolean }>[] = [
   { title: '阀门名称', key: 'name', width: 200 },
   { title: '所属工厂', key: 'factory.name', width: 300 },
-  { title: '创建者', key: 'createBy', width: 100 },
+  { title: '阀门品牌', key: 'brand', width: 100 },
+  { title: '阀门型号', key: 'model', width: 100 },
   { title: '创建时间', key: 'createdAt', width: 200 }
 ]
 
@@ -57,7 +58,13 @@ export const setSchemas: FormSchema[] = [
     label: '所属装置',
     component: 'ApiSelect',
     span: 8,
-    componentProps: { immediate: true, api: getDeviceList, labelField: 'name', valueField: 'id' }
+    componentProps: {
+      immediate: true,
+      api: getDeviceList,
+      resultField: 'rows',
+      labelField: 'name',
+      valueField: 'id'
+    }
   },
   { path: 'brand', label: '阀门品牌', component: 'NInput', span: 8 },
   { path: 'model', label: '阀门型号', component: 'NInput', span: 8 },
