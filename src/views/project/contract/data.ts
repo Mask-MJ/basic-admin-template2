@@ -2,7 +2,6 @@ import type { FormSchema } from '@/components/Form'
 import type { BasicColumn } from '@/components/Table'
 
 import { type ContractInfo } from '@/api/project/contract'
-import { getValveList } from '@/api/project/valve'
 import { getFactoryList } from '@/api/project/factory'
 
 export const searchSchemas: FormSchema[] = [
