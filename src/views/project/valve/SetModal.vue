@@ -20,6 +20,8 @@ const getSchemas = computed(() => {
     return setSchemas.filter((item) => item.path !== 'factoryId')
   } else if (formType.value === 'deviceId') {
     return setSchemas.filter((item) => !['factoryId', 'deviceId'].includes(item.path))
+  } else {
+    return setSchemas
   }
 })
 const [registerForm, { validate, getPathsValue, setPathsValue }] = useForm({
