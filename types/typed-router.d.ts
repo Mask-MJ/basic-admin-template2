@@ -21,6 +21,7 @@ declare module 'vue-router/auto-routes' {
     '/[...path]': RouteRecordInfo<'/[...path]', '/:path(.*)', { path: ParamValue<true> }, { path: ParamValue<false> }>,
     '/dashboard/workTable/': RouteRecordInfo<'/dashboard/workTable/', '/dashboard/workTable', Record<never, never>, Record<never, never>>,
     '/login/': RouteRecordInfo<'/login/', '/login', Record<never, never>, Record<never, never>>,
+    '/monitor/info/': RouteRecordInfo<'/monitor/info/', '/monitor/info', Record<never, never>, Record<never, never>>,
     '/monitor/loginLog/': RouteRecordInfo<'/monitor/loginLog/', '/monitor/loginLog', Record<never, never>, Record<never, never>>,
     '/monitor/operationLog/': RouteRecordInfo<'/monitor/operationLog/', '/monitor/operationLog', Record<never, never>, Record<never, never>>,
     '/project/analysisTask/': RouteRecordInfo<'/project/analysisTask/', '/project/analysisTask', Record<never, never>, Record<never, never>>,
