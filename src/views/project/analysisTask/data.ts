@@ -4,6 +4,7 @@ import type { BasicColumn } from '@/components/Table'
 import { type ContractInfo } from '@/api/project/contract'
 import { getFactoryList } from '@/api/project/factory'
 import { getDictTypeList } from '@/api/system/dict'
+import { uploadAnalysisTaskPdf } from '@/api/project/analysisTask'
 
 export const searchSchemas: FormSchema[] = [
   { path: 'name', label: '任务名称', component: 'NInput', span: 8 },
@@ -54,7 +55,7 @@ export const setSchemas: FormSchema[] = [
     }
   },
   {
-    path: 'dictId',
+    path: 'dictTypeId',
     label: '使用模板',
     component: 'ApiSelect',
     required: true,
@@ -64,6 +65,16 @@ export const setSchemas: FormSchema[] = [
       resultField: 'rows',
       labelField: 'name',
       valueField: 'id'
+    }
+  },
+  {
+    path: 'pdf',
+    component: 'Upload',
+    label: '上传PDF文件',
+    required: true,
+    componentProps: {
+      api: uploadAnalysisTaskPdf,
+      listType: 'text'
     }
   },
   {

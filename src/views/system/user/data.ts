@@ -37,45 +37,47 @@ export const columns: BasicColumn<UserInfo & { pendingStatus: boolean }>[] = [
     key: 'status',
     width: 100,
     render: (rowData) =>
-      h(
-        NPopconfirm,
-        {
-          onPositiveClick() {
-            if (!Reflect.has(rowData, 'pendingStatus')) {
-              rowData.pendingStatus = false
-            }
-            updateUser({ id: rowData.id, status: !rowData.status })
-              .then(() => {
-                rowData.status = !rowData.status
-                window.$message.success(`已成功修改用户状态`)
-              })
-              .catch(() => {
-                window.$message.error('修改用户状态失败')
-              })
-              .finally(() => {
-                rowData.pendingStatus = false
-              })
-          },
-          onNegativeClick() {
-            rowData.pendingStatus = false
-          }
-        },
-        {
-          default: () => (rowData.status ? '是否停用用户' : '是否启用用户'),
-          trigger: () =>
-            h(
-              NSwitch,
-              {
-                loading: rowData.pendingStatus,
-                value: rowData.status,
-                onUpdateValue() {
-                  rowData.pendingStatus = true
+      rowData.isAdmin
+        ? '启用'
+        : h(
+            NPopconfirm,
+            {
+              onPositiveClick() {
+                if (!Reflect.has(rowData, 'pendingStatus')) {
+                  rowData.pendingStatus = false
                 }
+                updateUser({ id: rowData.id, status: !rowData.status })
+                  .then(() => {
+                    rowData.status = !rowData.status
+                    window.$message.success(`已成功修改用户状态`)
+                  })
+                  .catch(() => {
+                    window.$message.error('修改用户状态失败')
+                  })
+                  .finally(() => {
+                    rowData.pendingStatus = false
+                  })
               },
-              { checked: () => '启用', unchecked: () => '停用' }
-            )
-        }
-      )
+              onNegativeClick() {
+                rowData.pendingStatus = false
+              }
+            },
+            {
+              default: () => (rowData.status ? '是否停用用户' : '是否启用用户'),
+              trigger: () =>
+                h(
+                  NSwitch,
+                  {
+                    loading: rowData.pendingStatus,
+                    value: rowData.status,
+                    onUpdateValue() {
+                      rowData.pendingStatus = true
+                    }
+                  },
+                  { checked: () => '启用', unchecked: () => '停用' }
+                )
+            }
+          )
   },
   {
     title: '角色',

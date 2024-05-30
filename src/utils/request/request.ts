@@ -10,7 +10,8 @@ import axios from 'axios'
 import { cloneDeep, isFunction } from 'lodash-es'
 import { ContentTypeEnum, RequestMethodEnum } from './enum'
 import qs from 'qs'
-import type { RequestOptions, Result } from './types'
+import type { RequestOptions, Result, UploadFileParams } from './types'
+import { getAppEnvConfig } from '@/utils/env'
 
 export class Request {
   private axiosInstance: AxiosInstance
@@ -70,6 +71,46 @@ export class Request {
         return responseInterceptorsCatch(error)
       })
   }
+  /**
+   * @description:  File Upload
+   */
+  uploadFile<T = any>(config: AxiosRequestConfig, params: UploadFileParams) {
+    const { VITE_GLOB_API_URL_PREFIX } = getAppEnvConfig()
+    const formData = new window.FormData()
+    const customFilename = params.name || 'file'
+    // 加上前缀
+    config.url = `${VITE_GLOB_API_URL_PREFIX}${config.url}`
+
+    if (params.filename) {
+      formData.append(customFilename, params.file, params.filename)
+    } else {
+      formData.append(customFilename, params.file)
+    }
+
+    if (params.data) {
+      Object.keys(params.data).forEach((key) => {
+        const value = params.data![key]
+        if (Array.isArray(value)) {
+          value.forEach((item) => {
+            formData.append(`${key}[]`, item)
+          })
+          return
+        }
+
+        formData.append(key, params.data![key])
+      })
+    }
+    return this.axiosInstance.request<T>({
+      ...config,
+      method: 'POST',
+      data: formData,
+      headers: {
+        'Content-type': ContentTypeEnum.FORM_DATA,
+        // @ts-ignore
+        ignoreCancelToken: true
+      }
+    })
+  }
   // support form-data
   supportFormData(config: AxiosRequestConfig) {
     const headers = config.headers || this.options.headers
@@ -100,7 +141,6 @@ export class Request {
     conf.requestOptions = opt
 
     conf = this.supportFormData(conf)
-
     return new Promise((resolve, reject) => {
       this.axiosInstance
         .request<any, AxiosResponse<Result>>(conf)

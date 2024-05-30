@@ -22,30 +22,32 @@ const [registerTable, { reload }] = useTable({
     key: 'ACTION',
     render: (row: UserInfo) =>
       h(Action, {
-        actions: [
-          {
-            type: 'edit',
-            onClick: async () => {
-              const result = await getUserDetail(row.id)
-              return openSetModel(true, result)
-            }
-          },
-          {
-            icon: 'i-ant-design:key-outlined',
-            tooltipProps: { content: '重置密码' },
-            buttonProps: {
-              type: 'success',
-              onClick: () => openResetModel(true, { id: row.id })
-            }
-          },
-          {
-            type: 'del',
-            onClick: async () => {
-              await deleteUser(row.id)
-              await reload()
-            }
-          }
-        ]
+        actions: row.isAdmin
+          ? []
+          : [
+              {
+                type: 'edit',
+                onClick: async () => {
+                  const result = await getUserDetail(row.id)
+                  return openSetModel(true, result)
+                }
+              },
+              {
+                icon: 'i-ant-design:key-outlined',
+                tooltipProps: { content: '重置密码' },
+                buttonProps: {
+                  type: 'success',
+                  onClick: () => openResetModel(true, { id: row.id })
+                }
+              },
+              {
+                type: 'del',
+                onClick: async () => {
+                  await deleteUser(row.id)
+                  await reload()
+                }
+              }
+            ]
       })
   }
 })

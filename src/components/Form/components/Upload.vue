@@ -1,27 +1,39 @@
 <script setup lang="ts">
 import type { PropType } from 'vue'
 import type { UploadFileInfo } from 'naive-ui'
-import type { UploadFileParams } from '../component'
+import type { UploadFileParams } from '@/utils/request/types'
 import { isArray } from 'lodash-es'
 
 const emits = defineEmits(['update:fileList'])
 const attrs = useAttrs()
 const props = defineProps({
-  name: { type: String, default: '' },
+  name: { type: String, default: 'file' },
   max: { type: Number },
   type: { type: Array, default: () => [] },
   api: {
     type: Function as PropType<(params: UploadFileParams) => Promise<any>>,
     default: () => {}
   },
-  value: { type: [String, Array] as PropType<string | string[]>, default: () => [] }
+  value: {
+    type: [String, Array] as PropType<
+      { url: string; name: string } | { url: string; name: string }[]
+    >,
+    default: () => []
+  }
 })
 
 const getFileList = computed((): UploadFileInfo[] => {
   if (isArray(props.value)) {
-    return props.value.map((item) => ({ id: item, name: item, status: 'finished', url: item }))
+    return props.value.map((item) => ({
+      id: item.url,
+      name: item.name,
+      status: 'finished',
+      url: item.url
+    }))
   } else {
-    return [{ id: props.value, name: props.value, status: 'finished', url: props.value }]
+    return [
+      { id: props.value.url, name: props.value.name, status: 'finished', url: props.value.url }
+    ]
   }
 })
 
@@ -44,8 +56,11 @@ const customRequest = async ({ file }: { file: UploadFileInfo }) => {
     if (file.status === 'removed') {
       emits('update:fileList', [])
     } else {
-      const result = await props.api({ name: props.name, file: file.file })
-      emits('update:fileList', [...props.value, result.data.data.url])
+      const result = await props.api({ name: props.name, file: file.file as File })
+      const updatedFileList = Array.isArray(props.value)
+        ? [...props.value, result.data]
+        : [props.value, result.data]
+      emits('update:fileList', updatedFileList)
       window.$message.success('上传成功')
     }
   } catch (error) {
@@ -57,8 +72,9 @@ const customRequest = async ({ file }: { file: UploadFileInfo }) => {
   <n-upload
     v-bind="getBindValue"
     :file-list="getFileList"
-    list-type="image-card"
     @before-upload="beforeUpload"
     @change="customRequest"
-  />
+  >
+    <n-button>上传文件</n-button>
+  </n-upload>
 </template>

@@ -18,23 +18,12 @@ import type {
   UploadProps
 } from 'naive-ui'
 import type { FormActionType, FormSchema } from './types'
+import type { UploadFileParams } from '@/utils/request/types'
 
 export interface FormComponentProps {
   schema: FormSchema
   formModel: any
   formActionType: FormActionType
-}
-
-export interface UploadFileParams {
-  // Other parameters
-  data?: Recordable
-  // File parameter interface field name
-  name?: string
-  // file name
-  file?: File | null
-  // file name
-  filename?: string
-  [key: string]: any
 }
 
 interface ApiProps {
