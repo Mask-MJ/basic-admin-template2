@@ -3,6 +3,7 @@ import { useModal } from '@/components/Modal'
 import { useTable, Action } from '@/components/Table'
 import {
   deleteAnalysisTask,
+  executeAnalysisTask,
   getAnalysisTaskDetail,
   getAnalysisTaskList,
   type AnalysisTaskInfo
@@ -39,7 +40,9 @@ const [registerTable, { reload }] = useTable({
             tooltipProps: { content: '执行任务' },
             buttonProps: {
               type: 'success',
-              onClick: () => {}
+              onClick: () => {
+                executeAnalysisTask(row.id)
+              }
             }
           },
           {

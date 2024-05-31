@@ -32,7 +32,8 @@ export interface SearchParams {
 
 enum Api {
   AnalysisTask = 'project/analysis-task',
-  Upload = 'project/analysis-task/uploadPdf'
+  Upload = 'project/analysis-task/uploadPdf',
+  Execute = 'project/analysis-task/execute'
 }
 
 // 获取分析任务列表
@@ -52,3 +53,5 @@ export const deleteAnalysisTask = (ids: number | string) =>
   defHttp.delete({ url: `${Api.AnalysisTask}/${ids}` })
 export const uploadAnalysisTaskPdf = (params: UploadFileParams) =>
   defHttp.uploadFile({ url: Api.Upload }, params)
+// 执行分析任务
+export const executeAnalysisTask = (id: number) => defHttp.post({ url: `${Api.Execute}/${id}` })
