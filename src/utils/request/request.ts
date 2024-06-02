@@ -100,13 +100,29 @@ export class Request {
         formData.append(key, params.data![key])
       })
     }
+    // console.log(this.options)
+    // return axios.post(config.url, formData, {
+    //   headers: {
+    //     'Content-Type': 'multipart/form-data; charset=utf-8',
+    //     ignoreCancelToken: true
+    //   }
+    // })
+    // return axios.create(this.options).request<T>({
+    //   // ...config,
+    //   url: config.url,
+    //   method: 'POST',
+    //   data: formData,
+    //   headers: {
+    //     'Content-Type': ContentTypeEnum.FORM_DATA,
+    //     ignoreCancelToken: true
+    //   }
+    // })
     return this.axiosInstance.request<T>({
       ...config,
       method: 'POST',
       data: formData,
       headers: {
-        'Content-type': ContentTypeEnum.FORM_DATA,
-        // @ts-ignore
+        'Content-Type': ContentTypeEnum.FORM_DATA,
         ignoreCancelToken: true
       }
     })

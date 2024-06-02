@@ -1,10 +1,9 @@
 import type { FormSchema } from '@/components/Form'
 import type { BasicColumn } from '@/components/Table'
 
-import { type ContractInfo } from '@/api/project/contract'
 import { getFactoryList } from '@/api/project/factory'
 import { getDictTypeList } from '@/api/system/dict'
-import { uploadAnalysisTaskPdf } from '@/api/project/analysisTask'
+import { uploadAnalysisTaskPdf, type AnalysisTaskInfo } from '@/api/project/analysisTask'
 
 export const searchSchemas: FormSchema[] = [
   { path: 'name', label: '任务名称', component: 'NInput', span: 8 },
@@ -30,10 +29,23 @@ export const searchSchemas: FormSchema[] = [
   }
 ]
 
-export const columns: BasicColumn<ContractInfo & { pendingStatus: boolean }>[] = [
+export const columns: BasicColumn<AnalysisTaskInfo & { pendingStatus: boolean }>[] = [
   { title: '任务名称', key: 'name', width: 200 },
   { title: '所属工厂', key: 'factory.name', width: 250 },
   { title: '使用模板', key: 'dict.name', width: 100 },
+  {
+    title: '状态',
+    key: 'status',
+    width: 100,
+    render: (rowData) => {
+      const map = new Map([
+        [0, '未执行'],
+        [1, '执行中'],
+        [2, '已完成']
+      ])
+      return map.get(rowData.status)
+    }
+  },
   { title: '创建时间', key: 'createdAt', width: 200 },
   { title: '更新时间', key: 'updatedAt', width: 200 }
 ]

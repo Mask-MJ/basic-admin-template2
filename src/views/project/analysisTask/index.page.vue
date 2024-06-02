@@ -40,8 +40,14 @@ const [registerTable, { reload }] = useTable({
             tooltipProps: { content: '执行任务' },
             buttonProps: {
               type: 'success',
-              onClick: () => {
-                executeAnalysisTask(row.id)
+              onClick: async () => {
+                if (row.status === 1) {
+                  return window.$message.warning('任务正在执行中')
+                } else {
+                  await executeAnalysisTask(row.id)
+                  window.$message.warning('任务开始执行')
+                  await reload()
+                }
               }
             }
           },

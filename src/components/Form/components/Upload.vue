@@ -56,7 +56,11 @@ const customRequest = async ({ file }: { file: UploadFileInfo }) => {
     if (file.status === 'removed') {
       emits('update:fileList', [])
     } else {
-      const result = await props.api({ name: props.name, file: file.file as File })
+      const result = await props.api({
+        name: props.name,
+        file: file.file as File,
+        filename: file.name
+      })
       const updatedFileList = Array.isArray(props.value)
         ? [...props.value, result.data]
         : [props.value, result.data]
