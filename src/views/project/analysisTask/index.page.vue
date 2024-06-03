@@ -12,8 +12,8 @@ import { columns, searchSchemas } from './data'
 import SetModal from './SetModal.vue'
 
 const router = useRouter()
-const factoryId = computed(() => (router.currentRoute.value.params as { id: string }).id)
 
+const factoryId = computed(() => (router.currentRoute.value.params as { id: string }).id)
 const getSchemas = computed(() =>
   factoryId.value ? searchSchemas.filter((item) => item.path !== 'factoryId') : searchSchemas
 )
@@ -32,6 +32,7 @@ const [registerTable, { reload }] = useTable({
   actionColumn: {
     width: 200,
     key: 'ACTION',
+    align: 'left',
     render: (row: AnalysisTaskInfo) =>
       h(Action, {
         actions: [
@@ -40,6 +41,7 @@ const [registerTable, { reload }] = useTable({
             tooltipProps: { content: '执行任务' },
             buttonProps: {
               type: 'success',
+              loading: row.status === 1,
               onClick: async () => {
                 if (row.status === 1) {
                   return window.$message.warning('任务正在执行中')
