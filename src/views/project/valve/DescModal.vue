@@ -16,7 +16,6 @@ const [registerModal] = useModalInner(async () => {})
               :key="item_3.name"
               :title="item_3.name"
               size="small"
-              hoverable
               content-style="padding: 0;"
               class="mb-4"
             >

@@ -1,14 +1,4 @@
 <script setup lang="ts">
-const RenderTr = h('tr', null, () => {
-  return [
-    h('td', null, () => {
-      return '放弃'
-    }),
-    h('td', null, () => {
-      return '反常的'
-    })
-  ]
-})
 const tes = h('div', null, '111')
 </script>
 
