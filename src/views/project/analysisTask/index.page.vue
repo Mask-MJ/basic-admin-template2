@@ -32,7 +32,6 @@ const [registerTable, { reload }] = useTable({
   actionColumn: {
     width: 200,
     key: 'ACTION',
-    align: 'left',
     render: (row: AnalysisTaskInfo) =>
       h(Action, {
         actions: [
@@ -65,6 +64,15 @@ const [registerTable, { reload }] = useTable({
             onClick: async () => {
               await deleteAnalysisTask(row.id)
               await reload()
+            }
+          },
+          {
+            icon: 'i-ant-design:fund-view-outlined',
+            tooltipProps: { content: '查看结果' },
+            ifShow: row.status === 2,
+            buttonProps: {
+              type: 'info',
+              onClick: () => router.push(`/project/valve/analysisTaskId-${row.id}`)
             }
           }
         ]

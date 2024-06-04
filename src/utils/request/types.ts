@@ -34,6 +34,6 @@ export interface UploadFileParams {
   // file name
   file: File | Blob
   // file name
-  filename?: string
+  fileName?: string
   [key: string]: any
 }

@@ -76,55 +76,10 @@ export class Request {
    */
   uploadFile<T = any>(config: AxiosRequestConfig, params: UploadFileParams) {
     const { VITE_GLOB_API_URL_PREFIX } = getAppEnvConfig()
-    const formData = new window.FormData()
-    const customFilename = params.name || 'file'
     // 加上前缀
     config.url = `${VITE_GLOB_API_URL_PREFIX}${config.url}`
-
-    if (params.filename) {
-      formData.append(customFilename, params.file, params.filename)
-    } else {
-      formData.append(customFilename, params.file)
-    }
-
-    if (params.data) {
-      Object.keys(params.data).forEach((key) => {
-        const value = params.data![key]
-        if (Array.isArray(value)) {
-          value.forEach((item) => {
-            formData.append(`${key}[]`, item)
-          })
-          return
-        }
-
-        formData.append(key, params.data![key])
-      })
-    }
-    // console.log(this.options)
-    // return axios.post(config.url, formData, {
-    //   headers: {
-    //     'Content-Type': 'multipart/form-data; charset=utf-8',
-    //     ignoreCancelToken: true
-    //   }
-    // })
-    // return axios.create(this.options).request<T>({
-    //   // ...config,
-    //   url: config.url,
-    //   method: 'POST',
-    //   data: formData,
-    //   headers: {
-    //     'Content-Type': ContentTypeEnum.FORM_DATA,
-    //     ignoreCancelToken: true
-    //   }
-    // })
-    return this.axiosInstance.request<T>({
-      ...config,
-      method: 'POST',
-      data: formData,
-      headers: {
-        'Content-Type': ContentTypeEnum.FORM_DATA,
-        ignoreCancelToken: true
-      }
+    return this.axiosInstance.postForm<T>(config.url, params, {
+      headers: { ignoreCancelToken: true }
     })
   }
   // support form-data
