@@ -5,6 +5,7 @@ import { deleteValve, getValveDetail, getValveList, type ValveInfo } from '@/api
 import { columns, searchSchemas } from './data'
 import SetModal from './SetModal.vue'
 import DescModal from './DescModal.vue'
+import HistoryModal from './HistoryModal.vue'
 
 const router = useRouter()
 const formType = computed(
@@ -24,6 +25,8 @@ const getSchemas = computed(() => {
 
 const [registerSetModal, { openModal: openSetModel }] = useModal()
 const [registerDescModal, { openModal: openDescModel }] = useModal()
+const [registerHistoryModal, { openModal: openHistoryModel }] = useModal()
+
 const [registerTable, { reload }] = useTable({
   api: getValveList, // 请求接口
   columns, // 展示的列
@@ -57,6 +60,16 @@ const [registerTable, { reload }] = useTable({
             }
           },
           {
+            icon: 'i-ant-design:bar-chart-outlined',
+            tooltipProps: { content: '查看历史数据' },
+            buttonProps: {
+              type: 'warning',
+              onClick: () => {
+                openHistoryModel(true)
+              }
+            }
+          },
+          {
             type: 'del',
             onClick: async () => {
               await deleteValve(row.id)
@@ -78,6 +91,7 @@ const [registerTable, { reload }] = useTable({
     </Table>
     <SetModal @register="registerSetModal" @success="reload()" />
     <DescModal @register="registerDescModal" />
+    <HistoryModal @register="registerHistoryModal" />
   </PageWrapper>
 </template>
 

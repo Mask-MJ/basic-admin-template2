@@ -53,3 +53,12 @@ export const updateValve = (params: Partial<ValveInfo>) =>
   defHttp.patch({ url: `${Api.Valve}/${params.id}`, params })
 // 删除阀门
 export const deleteValve = (ids: number | string) => defHttp.delete({ url: `${Api.Valve}/${ids}` })
+
+// 获取阀门历史数据
+export const getValveHistoryList = async () => {
+  return [
+    { id: 1, name: 'DVW-R1', createdAt: '2023-10-01' },
+    { id: 2, name: 'DVW-R1', createdAt: '2022-12-02' },
+    { id: 3, name: 'DVW-R1', createdAt: '2022-10-03' }
+  ]
+}

@@ -5,7 +5,7 @@ import { type FactoryInfo, getFactoryList } from '@/api/project/factory'
 import { getDeviceList } from '@/api/project/device'
 
 export const searchSchemas: FormSchema[] = [
-  { path: 'name', label: '阀门名称', component: 'NInput', span: 8 },
+  { path: 'name', label: '阀门位号', component: 'NInput', span: 8 },
   {
     path: '[beginTime, endTime]',
     component: 'NDatePicker',
@@ -29,7 +29,7 @@ export const searchSchemas: FormSchema[] = [
 ]
 
 export const columns: BasicColumn<FactoryInfo & { pendingStatus: boolean }>[] = [
-  { title: '阀门名称', key: 'name', width: 200 },
+  { title: '阀门位号', key: 'name', width: 200 },
   { title: '所属工厂', key: 'factory.name', width: 300 },
   { title: '阀门品牌', key: 'brand', width: 100 },
   { title: '阀门型号', key: 'model', width: 100 },
@@ -38,7 +38,7 @@ export const columns: BasicColumn<FactoryInfo & { pendingStatus: boolean }>[] = 
 
 export const setSchemas: FormSchema[] = [
   { path: 'id', component: 'NInputNumber', show: false },
-  { path: 'name', label: '阀门名称', required: true, component: 'NInput', span: 8 },
+  { path: 'name', label: '阀门位号', required: true, component: 'NInput', span: 8 },
   {
     path: 'factoryId',
     label: '所属工厂',
