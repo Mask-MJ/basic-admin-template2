@@ -69,96 +69,11 @@ export const hard_Online = [
             name: '标签',
             key: 'Tag',
             data: [
-              { name: 'HART 标签', key: 'HART Tag', value: 'DVW-R1' },
-              { name: '信息串', value: '' },
-              { name: '描述符', value: 'F003203177' },
-              { name: '阀门序列号', value: 'F003203177' },
-              { name: '仪表序列号', value: 'F003203177' },
-              { name: '轮询地址', value: '0' }
-            ]
-          },
-          {
-            name: '单位',
-            data: [
-              { name: '压力单位', value: 'psi' },
-              { name: '温度单位', value: 'C' },
-              { name: '行程单位', value: 'deg' },
-              { name: '长度单位', value: 'in' },
-              { name: '面积单位', value: 'in2' },
-              { name: '扭矩单位', value: 'lbf.in' },
-              { name: '弹簧刚度单位', value: 'lbf/in' },
-              { name: '模拟输入单位', value: 'mA' }
-            ]
-          }
-        ]
-      },
-      {
-        name: '初始设置',
-        data: [
-          {
-            name: '控制信号',
-            data: [
-              { name: '控制模式', value: '模拟 (RSP)' },
-              { name: '重启控制模式', value: '模拟 (RSP)' }
-            ]
-          },
-          {
-            name: '设置',
-            data: [
-              { name: '零功率状态', value: '阀门开启' },
-              { name: '阀门型式', value: '旋转轴' },
-              { name: '执行机构类型', value: '不带弹簧双动作气缸式' },
-              { name: '放大器类型', value: 'A 或 C 型放大器' },
-              { name: '反馈连接方式', value: '旋转式阵列' },
-              { name: '行程传感器旋转方向', value: '逆时针 / 转向仪表顶部' },
-              { name: '本地自动标定按钮', value: '已禁用' }
-            ]
-          }
-        ]
-      },
-      {
-        name: '输出',
-        data: [
-          {
-            name: 'HART 变量分配',
-            data: [
-              { name: '主变量 (PV)', value: '输入电流' },
-              { name: '二级变量 (SV)', value: '设定点 (SP)' },
-              { name: '三级变量 (TV)', value: '压力 A' },
-              { name: '四级变量 (QV)', value: '行程' }
-            ]
-          }
-        ]
-      },
-      {
-        name: '整定',
-        data: [
-          {
-            name: '行程控制',
-            data: [
-              { name: '整定参数', value: '专家级' },
-              { name: '比例增益', value: '3.9' },
-              { name: '速度增益', value: '4' },
-              { name: 'MLFB 增益', value: '52' },
-              { name: '启用积分控制', value: 'Yes' },
-              { name: '积分增益 (重复次数/分钟)', value: '9.4' }
-            ]
-          },
-          {
-            name: '积分设置',
-            data: [
-              { name: '积分死区 (%)', value: '0.26' },
-              { name: '积分限制 (%)', value: '30' }
-            ]
-          },
-          {
-            name: '压力控制',
-            data: [
-              { name: '整定参数', value: 'D' },
-              { name: '比例增益', value: '2.4' },
-              { name: 'MLFB 增益', value: '35' },
-              { name: '启用积分控制', value: 'Yes' },
-              { name: '积分增益 (次/秒)', value: '0.1' }
+              {
+                name: 'HART 标签',
+                key: 'HART Tag',
+                value: 'DVW-R1'
+              }
             ]
           }
         ]
@@ -166,78 +81,290 @@ export const hard_Online = [
     ]
   },
   {
-    name: '报警',
-    key: 'Alerts',
+    name: '状态监视器',
+    key: 'Status Monitor',
     data: [
       {
-        name: '行程历史报警',
+        name: '监视器',
+        key: 'Monitor',
         data: [
-          { name: '循环计数/行程累计死区 (%)', value: '1' },
           {
-            name: '循环计数',
+            name: '',
+            key: '',
             data: [
-              { name: '循环计数高报警', value: '已禁用' },
-              { name: '循环计数报警点', value: '2147483647' },
-              { name: '循环计数', value: '264' }
-            ]
-          },
-          {
-            name: '行程累计器',
-            data: [
-              { name: '行程累加器高报警', value: '已禁用' },
-              { name: '行程累加器报警点 (%)', value: '2147483647' },
-              { name: '行程累计器 (%)', value: '10955' }
+              {
+                name: '行程',
+                key: 'Travel',
+                value: '62.59 %'
+              },
+              {
+                name: '行程偏差',
+                key: 'Travel Deviation',
+                value: '0.09 %'
+              },
+              {
+                name: '供气压力',
+                key: 'Supply Pressure',
+                value: '5.01 bar'
+              },
+              {
+                name: '驱动信号',
+                key: 'Drive Signal',
+                value: '70.44 %'
+              },
+              {
+                name: '仪表模式',
+                key: 'Instrument Mode',
+                value: '投用状态'
+              },
+              {
+                name: '循环计数',
+                key: 'Cycle Count',
+                value: '910 counts'
+              },
+              {
+                name: '行程累计器',
+                key: 'Travel Accumulator',
+                value: '82150 %'
+              },
+              {
+                name: '放大器调整',
+                key: 'Relay Adjustment',
+                value: '63.52 %'
+              },
+              {
+                name: '最高温度记录',
+                key: 'Max Recorded Temp',
+                value: '30.13 C'
+              },
+              {
+                name: '运行时间',
+                key: 'Run Time',
+                value: '123 days'
+              },
+              {
+                name: '启动次数',
+                key: 'Number of Powerups',
+                value: '56'
+              }
             ]
           }
         ]
       },
       {
-        name: '行程报警',
+        name: '设备',
+        key: 'Device',
         data: [
-          { name: '所有行程死区报警 (%)', value: '1' },
           {
-            name: '行程偏差',
+            name: '',
+            key: '',
             data: [
-              { name: '行程偏差报警', value: '已启用' },
-              { name: '行程偏差报警点 (%)', value: '3' },
-              { name: '行程偏差报警时间 (秒)', value: '5' }
+              {
+                name: '仪表等级',
+                key: 'Instrument Level',
+                value: 'PD'
+              },
+              {
+                name: '阀门型式',
+                key: 'Valve Style',
+                value: '旋转轴'
+              },
+              {
+                name: '执行机构类型',
+                key: 'Actuator Style',
+                value: '不带弹簧双动作气缸式'
+              },
+              {
+                name: '标定日期',
+                key: 'Calibration Date',
+                value: '2 Jul 2023'
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    name: '阶跃响应',
+    key: 'Step Response',
+    data: [
+      {
+        name: '组态',
+        key: 'Configuration',
+        data: [
+          {
+            name: '',
+            key: '',
+            data: [
+              {
+                name: '反馈连接方式',
+                key: 'Feedback Connection',
+                value: '旋转式阵列'
+              },
+              {
+                name: '零功率状态:',
+                key: 'Zero Power Condition',
+                value: '阀门开启'
+              }
             ]
           },
           {
-            name: '行程高高',
+            name: '整定',
+            key: 'Tuning',
             data: [
-              { name: '行程高高报警', value: '已禁用' },
-              { name: '行程高高报警点 (%)', value: '125' }
+              {
+                name: '行程整定参数',
+                key: 'Travel Tuning Set',
+                value: '专家级'
+              },
+              {
+                name: '零功率状态:',
+                key: 'Zero Power Condition',
+                value: '阀门开启'
+              }
             ]
           },
           {
-            name: '行程低低',
+            name: '增益',
+            key: 'Tuning',
             data: [
-              { name: '行程低低报警', value: '已禁用' },
-              { name: '行程低低报警点 (%)', value: '-25' }
+              {
+                name: '比例',
+                key: 'Proportional',
+                value: '6.80'
+              },
+              {
+                name: '速度',
+                key: 'Velocity',
+                value: '4.00'
+              },
+              {
+                name: 'MLF',
+                key: 'MLF',
+                value: '45.00'
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    name: '完全扫描',
+    key: 'Total Scan',
+    data: [
+      {
+        name: '输入',
+        key: 'Inputs',
+        data: [
+          {
+            name: '',
+            key: '',
+            data: [
+              {
+                name: '扫描时间',
+                key: 'Scan Time',
+                value: '50.0 秒'
+              }
             ]
           },
           {
-            name: '行程高',
+            name: '已分析的数据',
+            key: 'Analyzed Data',
             data: [
-              { name: '行程高报警', value: '已禁用' },
-              { name: '行程高报警点 (%)', value: '125' }
+              {
+                name: '平均动态误差',
+                key: 'Avg. Dynamic Error',
+                value: '38.33%'
+              },
+              {
+                name: '动态线性度（独立）:',
+                key: 'Dyn. Linearity (Ind.)',
+                value: '1.46%'
+              },
+              {
+                name: '平均扭矩:',
+                key: 'Average Torque:',
+                value: '131 lbf.in'
+              },
+              {
+                name: '弹簧预紧力:',
+                key: 'Bench Se',
+                value: 'NA'
+              }
             ]
           },
           {
-            name: '行程低',
+            name: '增益',
+            key: 'Tuning',
             data: [
-              { name: '行程低报警', value: '已禁用' },
-              { name: '行程低报警点 (%)', value: '-25' }
+              {
+                name: '比例',
+                key: 'Proportional',
+                value: '6.80'
+              },
+              {
+                name: '速度',
+                key: 'Velocity',
+                value: '4.00'
+              },
+              {
+                name: 'MLF',
+                key: 'MLF',
+                value: '45.00'
+              }
             ]
-          },
+          }
+        ]
+      }
+    ]
+  },
+  {
+    name: '完全扫描-规格表',
+    key: 'Total Scan-Spec Sheet',
+    data: [
+      {
+        name: '阀门',
+        key: 'Valve',
+        data: [
           {
-            name: '行程低限位/截止',
-            data: [{ name: '行程限位/截止低报警', value: '已禁用' }]
-          },
+            name: '',
+            key: '',
+            data: [
+              {
+                name: '额定行程',
+                key: 'Rated Travel',
+                value: '90.0 deg'
+              },
+              {
+                name: '实际行程',
+                key: 'Actual Travel',
+                value: '96.10088 deg'
+              }
+            ]
+          }
+        ]
+      },
+      {
+        name: '执行机构',
+        key: 'Actuator',
+        data: [
           {
-            name: '行程高限位/截止',
-            data: [{ name: '行程限位/截止高报警', value: '已禁用' }]
+            name: '',
+            key: '',
+            data: [
+              {
+                name: '下方弹簧预紧力',
+                key: 'Lower Bench Set',
+                value: '0.0 psi'
+              },
+              {
+                name: '上方弹簧预紧力',
+                key: 'Upper Bench Set',
+                value: '0.0 psi'
+              }
+            ]
           }
         ]
       }
