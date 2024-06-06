@@ -13,7 +13,7 @@ export interface SearchParams {
 export interface ContractInfo {
   id: number
   name: string
-  contractTime: number
+  contractTime: string | number
   highValveCount: number
   valveCount: number
   customer: string

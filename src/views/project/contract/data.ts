@@ -44,6 +44,7 @@ export const setSchemas: FormSchema[] = [
   { path: 'name', label: '项目名称', required: true, component: 'NInput' },
   { path: 'customer', label: '客户名称', required: true, component: 'NInput' },
   { path: 'customerPhone', label: '客户联系方式', required: true, component: 'NInput' },
+  { path: 'saler', label: '销售人员', required: true, component: 'NInput' },
   { path: 'valveCount', label: '采购阀门总数', required: true, component: 'NInputNumber' },
   { path: 'highValveCount', label: '高级阀门数量', required: true, component: 'NInputNumber' },
   { path: 'contractTime', label: '签订合同时间', required: true, component: 'NDatePicker' },

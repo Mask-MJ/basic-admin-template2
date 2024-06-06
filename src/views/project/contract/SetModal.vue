@@ -2,7 +2,7 @@
 import { createContract, updateContract, type ContractInfo } from '@/api/project/contract'
 import { useForm } from '@/components/Form'
 import { useModalInner } from '@/components/Modal'
-
+import dayjs from 'dayjs'
 import { setSchemas } from './data'
 
 const emits = defineEmits(['success', 'register'])
@@ -18,6 +18,8 @@ const [registerForm, { validate, getPathsValue, setPathsValue }] = useForm({
 
 const [registerModal, { closeModal, setModalProps }] = useModalInner(async (data: ContractInfo) => {
   if (data.id) {
+    // 把合同时间转为时间戳
+    data.contractTime = dayjs(data.contractTime).valueOf()
     setModalProps({ title: '编辑项目' })
     await setPathsValue(data)
   }
