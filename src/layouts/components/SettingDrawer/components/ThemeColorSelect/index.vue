@@ -2,11 +2,10 @@
 import { computed } from 'vue'
 import { ColorCheckbox, ColorModal } from './components'
 import { isInTraditionColors } from '@/settings/theme'
-import useBoolean from '../../useBoolean'
 
 const theme = useThemeStore()
 
-const { bool: visible, setTrue: openModal, setFalse: closeModal } = useBoolean()
+const [value] = useToggle()
 
 const themeColor = computed(() => theme.themeColor)
 
@@ -27,9 +26,9 @@ const otherColorBtnType = computed(() => (isInOther.value ? 'primary' : 'default
   </n-grid>
   <n-space :vertical="true" class="pt-12px">
     <n-color-picker :value="themeColor" :show-alpha="false" @update-value="theme.setThemeColor" />
-    <n-button :block="true" :type="otherColorBtnType" @click="openModal"> 更多颜色 </n-button>
+    <n-button :block="true" :type="otherColorBtnType" @click="value = true"> 更多颜色 </n-button>
   </n-space>
-  <ColorModal :visible="visible" @close="closeModal" />
+  <ColorModal :visible="value" @close="value = false" />
 </template>
 
 <style scoped></style>

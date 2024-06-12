@@ -1,14 +1,12 @@
 <script setup lang="ts" name="ReloadButton">
-import useLoading from './useLoading'
-
 const app = useAppStore()
-const { loading, startLoading, endLoading } = useLoading()
+const [value] = useToggle()
 
 function handleRefresh() {
-  startLoading()
+  value.value = true
   app.reloadPage()
   setTimeout(() => {
-    endLoading()
+    value.value = false
   }, 1000)
 }
 </script>
@@ -20,7 +18,7 @@ function handleRefresh() {
     placement="bottom-end"
     @click="handleRefresh"
   >
-    <i class="i-ant-design:reload-outlined text-16px" :class="{ 'animate-spin': loading }" />
+    <i class="i-ant-design:reload-outlined text-16px" :class="{ 'animate-spin': value }" />
   </hover-container>
 </template>
 

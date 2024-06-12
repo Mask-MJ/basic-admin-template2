@@ -2,7 +2,6 @@
 import { computed } from 'vue'
 import { CssRender } from 'css-render'
 import IconClose from './IconClose.vue'
-import useBoolean from './useBoolean'
 import { addColorAlpha } from '@/settings/theme/themeColor'
 
 interface Props {
@@ -36,9 +35,9 @@ interface Emits {
   (e: 'close'): void
 }
 
-const { bool: isHover, setTrue, setFalse } = useBoolean()
+const [value] = useToggle()
 
-const isIconActive = computed(() => props.isActive || isHover.value)
+const isIconActive = computed(() => props.isActive || value.value)
 
 const buttonStyle = computed(() => {
   const style: Record<string, string> = {}
@@ -90,8 +89,8 @@ style.mount()
     class="admin-tab__button-tab"
     :class="{ 'admin-tab__button-tab--unclosable': !closable }"
     :style="buttonStyle"
-    @mouseenter="setTrue"
-    @mouseleave="setFalse"
+    @mouseenter="value = true"
+    @mouseleave="value = false"
   >
     <span class="admin-tab__button-tab__preffix">
       <slot />

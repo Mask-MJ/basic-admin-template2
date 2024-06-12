@@ -2,7 +2,6 @@
 import { CssRender } from 'css-render'
 import SvgRadiusBg from './SvgRadiusBg.vue'
 import IconClose from './IconClose.vue'
-import useBoolean from './useBoolean'
 
 /** 填充颜色： [默认颜色, 暗黑主题颜色] */
 type FillColor = [string, string]
@@ -47,7 +46,7 @@ interface Emits {
   (e: 'close'): void
 }
 
-const { bool: isHover, setTrue, setFalse } = useBoolean()
+const [value] = useToggle()
 
 function handleClose(e: MouseEvent) {
   e.stopPropagation()
@@ -120,15 +119,15 @@ style.mount()
 <template>
   <div
     class="admin-tab__chrome-tab"
-    :class="{ 'admin-tab__chrome-tab--active': isActive, 'admin-tab__chrome-tab--hover': isHover }"
-    @mouseenter="setTrue"
-    @mouseleave="setFalse"
+    :class="{ 'admin-tab__chrome-tab--active': isActive, 'admin-tab__chrome-tab--hover': value }"
+    @mouseenter="value = true"
+    @mouseleave="value = false"
   >
     <div class="admin-tab__chrome-tab__bg">
       <SvgRadiusBg
         :dark-mode="darkMode"
         :is-active="isActive"
-        :is-hover="isHover"
+        :is-hover="value"
         :primary-color="primaryColor"
         :bg-color="bgColor"
         :hover-bg-color="hoverBgColor"
@@ -145,7 +144,7 @@ style.mount()
     <div
       class="admin-tab__chrome-tab__divider"
       :class="{
-        'admin-tab__chrome-tab__divider--hide': isHover || isActive,
+        'admin-tab__chrome-tab__divider--hide': value || isActive,
         'admin-tab__chrome-tab__divider--dark': darkMode
       }"
     />

@@ -10,20 +10,20 @@ const theme = useThemeStore()
     <SettingMenu label="深色主题">
       <n-switch :value="theme.darkMode" @update:value="theme.setDarkMode">
         <template #checked>
-          <i class="text-14px text-primary icon-line-md:sunny-outline" />
+          <i class="icon-line-md:sunny-outline text-14px text-primary" />
         </template>
         <template #unchecked>
-          <i class="text-14px text-primary icon-line-md:moon-filled" />
+          <i class="icon-line-md:moon-filled text-14px text-primary" />
         </template>
       </n-switch>
     </SettingMenu>
     <SettingMenu label="跟随系统">
       <n-switch :value="theme.followSystemTheme" @update:value="theme.setFollowSystemTheme">
         <template #checked>
-          <i class="text-14px text-primary icon-ant-design:stop-outlined" />
+          <i class="icon-ant-design:stop-outlined text-14px text-primary" />
         </template>
         <template #unchecked>
-          <i class="text-14px text-primary icon-ant-design:clock-circle-outlined" />
+          <i class="icon-ant-design:clock-circle-outlined text-14px text-primary" />
         </template>
       </n-switch>
     </SettingMenu>

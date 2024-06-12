@@ -2,7 +2,6 @@
 import { CssRender } from 'css-render'
 import SvgClose from './SvgClose.vue'
 import SvgCloseCircle from './SvgCloseCircle.vue'
-import useBoolean from './useBoolean'
 
 interface Props {
   /** 激活状态 */
@@ -19,7 +18,7 @@ withDefaults(defineProps<Props>(), {
   activeColor: '#1890ff'
 })
 
-const { bool: isHover, setTrue, setFalse } = useBoolean()
+const [value] = useToggle()
 
 const { c } = CssRender()
 const style = c(
@@ -49,11 +48,11 @@ style.mount()
   <div
     class="admin-tab__icon"
     :style="{ color: isActive ? activeColor : defaultColor }"
-    @mouseenter="setTrue"
-    @mouseleave="setFalse"
+    @mouseenter="value = true"
+    @mouseleave="value = false"
   >
     <transition name="admin-tab__icon-fade">
-      <SvgCloseCircle v-if="isHover" key="hover" class="admin-tab__icon-svg" />
+      <SvgCloseCircle v-if="value" key="hover" class="admin-tab__icon-svg" />
       <SvgClose v-else key="unhover" class="admin-tab__icon-svg" />
     </transition>
   </div>
