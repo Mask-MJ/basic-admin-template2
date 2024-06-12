@@ -8,12 +8,12 @@ function toggleSiderCollapse() {
 
 <template>
   <hover-container
-    class="w-40px h-full"
+    class="h-full w-40px"
     :inverted="theme.header.inverted"
     @click="toggleSiderCollapse"
   >
-    <div v-if="app.siderCollapse" class="text-16px i-line-md:menu-fold-right" />
-    <div v-else class="text-16px i-line-md:menu-fold-left" />
+    <div v-if="app.siderCollapse" class="i-line-md:menu-fold-right text-16px" />
+    <div v-else class="i-line-md:menu-fold-left text-16px" />
   </hover-container>
 </template>
 

@@ -60,7 +60,7 @@ function handleClick(icon: string) {
               v-for="icon in getPaginationList"
               :key="icon"
               :class="currentSelect === icon ? 'border border-primary' : ''"
-              class="p-2 w-1/8 cursor-pointer mr-1 mt-1 flex justify-center items-center border border-solid hover:border-primary"
+              class="mr-1 mt-1 w-1/8 flex cursor-pointer items-center justify-center border border-solid p-2 hover:border-primary"
               :title="icon"
               @click="handleClick(icon)"
             >
@@ -68,7 +68,7 @@ function handleClick(icon: string) {
             </li>
           </ul>
         </n-scrollbar>
-        <div v-if="getTotal >= pageSize" class="flex py-2 items-center justify-center">
+        <div v-if="getTotal >= pageSize" class="flex items-center justify-center py-2">
           <n-pagination
             size="small"
             :page-size="pageSize"

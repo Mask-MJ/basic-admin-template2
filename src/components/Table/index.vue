@@ -181,11 +181,11 @@ emits('register', tableAction, formActions)
     </dark-mode-container>
     <!-- 表格内容 card -->
     <dark-mode-container
-      class="p-3 flex-1"
+      class="flex-1 p-3"
       :class="getProps.outermost ? 'rounded-lg shadow-md ' : ''"
     >
       <!-- 表格头部 操作按钮 -->
-      <div class="flex-between mb-2">
+      <div class="mb-2 flex-between">
         <div>
           <slot name="toolbar" />
         </div>

@@ -10,12 +10,12 @@ const tooltipContent = computed(() => {
 
 <template>
   <hover-container
-    class="w-40px h-full"
+    class="h-full w-40px"
     :tooltip-content="tooltipContent"
     :inverted="theme.header.inverted"
     @click="toggle"
   >
-    <i v-if="isFullscreen" class="text-18px i-ant-design:fullscreen-exit-outlined" />
-    <i v-else class="text-18px i-ant-design:fullscreen-outlined" />
+    <i v-if="isFullscreen" class="i-ant-design:fullscreen-exit-outlined text-18px" />
+    <i v-else class="i-ant-design:fullscreen-outlined text-18px" />
   </hover-container>
 </template>

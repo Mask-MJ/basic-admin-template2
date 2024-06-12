@@ -15,12 +15,12 @@ function handleRefresh() {
 
 <template>
   <hover-container
-    class="w-64px h-full"
+    class="h-full w-64px"
     tooltip-content="重新加载"
     placement="bottom-end"
     @click="handleRefresh"
   >
-    <i class="text-16px i-ant-design:reload-outlined" :class="{ 'animate-spin': loading }" />
+    <i class="i-ant-design:reload-outlined text-16px" :class="{ 'animate-spin': loading }" />
   </hover-container>
 </template>
 

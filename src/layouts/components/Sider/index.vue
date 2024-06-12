@@ -9,7 +9,7 @@ const showTitle = computed(() => !app.siderCollapse && theme.layout.mode !== 've
 </script>
 
 <template>
-  <DarkModeContainer class="flex flex-col items-stretch h-full" :inverted="theme.sider.inverted">
+  <DarkModeContainer class="h-full flex flex-col items-stretch" :inverted="theme.sider.inverted">
     <Logo
       v-if="!isHorizontalMix"
       :show-title="showTitle"

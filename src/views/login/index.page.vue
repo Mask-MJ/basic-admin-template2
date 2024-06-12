@@ -19,7 +19,7 @@ const handleSubmit = async () => {
 </script>
 
 <template>
-  <div class="wh-full relative">
+  <div class="relative wh-full">
     <Earth />
     <div class="loginForm">
       <header class="text-center">

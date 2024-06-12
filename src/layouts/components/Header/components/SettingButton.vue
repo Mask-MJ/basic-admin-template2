@@ -6,12 +6,12 @@ const theme = useThemeStore()
 
 <template>
   <hover-container
-    class="w-40px h-full"
+    class="h-full w-40px"
     :tooltip-content="t('header.themeConfig')"
     :inverted="theme.header.inverted"
     @click="app.toggleSettingDrawerVisible()"
   >
-    <i class="text-20px i-ant-design:setting-outlined" />
+    <i class="i-ant-design:setting-outlined text-20px" />
   </hover-container>
 </template>
 

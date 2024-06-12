@@ -3,8 +3,8 @@ const theme = useThemeStore()
 </script>
 
 <template>
-  <hover-container class="w-40px h-full" :inverted="theme.header.inverted">
-    <i class="text-16px i-line-md:bell" />
+  <hover-container class="h-full w-40px" :inverted="theme.header.inverted">
+    <i class="i-line-md:bell text-16px" />
   </hover-container>
 </template>
 

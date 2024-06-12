@@ -20,10 +20,10 @@ watch(
 
 <template>
   <dark-mode-container
-    class="global-tab flex-y-center w-full pl-16px"
+    class="global-tab w-full flex-y-center pl-16px"
     :style="{ height: `${themeStore.tab.height}px` }"
   >
-    <div class="flex-1 overflow-hidden h-full">
+    <div class="h-full flex-1 overflow-hidden">
       <TabDetail />
     </div>
     <ReloadButton />

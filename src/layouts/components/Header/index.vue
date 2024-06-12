@@ -30,7 +30,7 @@ const height = computed(() => `${header.value.height}px`)
 
 <template>
   <DarkModeContainer
-    class="flex-y-center h-full border-b-1 border-gray-200 dark:border-gray-700"
+    class="h-full flex-y-center border-b-1 border-gray-200 dark:border-gray-700"
     :style="{ height }"
     :inverted="header.inverted"
   >
@@ -40,12 +40,12 @@ const height = computed(() => `${header.value.height}px`)
       class="h-full"
       :style="{ width: `${theme.sider.width}px` }"
     />
-    <div v-if="!showHeaderMenu" class="flex-1 overflow-hidden flex-y-center h-full">
+    <div v-if="!showHeaderMenu" class="h-full flex-y-center flex-1 overflow-hidden">
       <MenuCollapse v-if="showMenuCollapse || isMobile" />
       <Breadcrumb v-if="header.crumb.visible && !isMobile" />
     </div>
     <!-- <HeaderMenu v-else /> -->
-    <div class="flex justify-end h-full">
+    <div class="h-full flex justify-end">
       <FullScreen />
       <ThemeMode />
       <ToggleLang />

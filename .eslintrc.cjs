@@ -5,6 +5,7 @@ module.exports = {
   root: true,
   'extends': [
     'plugin:vue/vue3-essential',
+    "@unocss",
     'eslint:recommended',
     '@vue/eslint-config-typescript',
     '@vue/eslint-config-prettier/skip-formatting'

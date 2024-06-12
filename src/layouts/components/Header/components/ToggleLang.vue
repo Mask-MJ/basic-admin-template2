@@ -17,7 +17,7 @@ const handleSelect = (key: string) => {
 </script>
 
 <template>
-  <hover-container class="w-40px h-full" :inverted="theme.header.inverted">
+  <hover-container class="h-full w-40px" :inverted="theme.header.inverted">
     <n-dropdown :options="options" trigger="hover" :value="language" @select="handleSelect">
       <div class="wh-full flex-center">
         <svg
