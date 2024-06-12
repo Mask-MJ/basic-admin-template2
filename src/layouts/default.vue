@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { LayoutSider, LayoutHeader, LayoutContent, LayoutTabs } from './components'
+import { LayoutSider, LayoutHeader, LayoutContent, LayoutTabs, SettingDrawer } from './components'
 import { useBasicLayout } from './components/hooks'
 
 const app = useAppStore()
@@ -37,6 +37,7 @@ const siderCollapse = computed(() => app.siderCollapse)
       </n-layout-content>
     </n-layout>
   </n-layout>
+  <SettingDrawer />
 </template>
 
 <style lang="" scoped></style>
