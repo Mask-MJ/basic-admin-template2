@@ -1,5 +1,5 @@
 app:
-  name: VLS 管理系统
+  name: VCM 管理系统
   language: 中文
   logoutTip: 温馨提醒
   logoutMessage: 是否确认退出系统?
