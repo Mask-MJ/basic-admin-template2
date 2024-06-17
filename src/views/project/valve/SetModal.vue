@@ -5,6 +5,7 @@ import { useModalInner } from '@/components/Modal'
 
 import { setSchemas } from './data'
 import { getDeviceDetail } from '@/api/project/device'
+import dayjs from 'dayjs'
 
 const emits = defineEmits(['success', 'register'])
 const router = useRouter()
@@ -31,6 +32,7 @@ const [registerForm, { validate, getPathsValue, setPathsValue }] = useForm({
 
 const [registerModal, { closeModal, setModalProps }] = useModalInner(async (data: ValveInfo) => {
   if (data.id) {
+    data.since = dayjs(data.since).valueOf()
     setModalProps({ title: '编辑阀门' })
     await setPathsValue(data)
   }

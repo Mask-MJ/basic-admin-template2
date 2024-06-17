@@ -35,7 +35,7 @@ export const columns: BasicColumn<ContractInfo & { pendingStatus: boolean }>[] =
   { title: '客户联系方式', key: 'customerPhone', width: 150 },
   { title: '采购阀门总数', key: 'valveCount', width: 150 },
   { title: '高级阀门数量', key: 'highValveCount', width: 150 },
-  { title: '签订合同时间', key: 'contractTime', width: 150 },
+  { title: '签订合同时间', key: 'contractTime', width: 200 },
   { title: '销售人员', key: 'saler', width: 100 }
 ]
 
