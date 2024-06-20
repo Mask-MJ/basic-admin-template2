@@ -15,7 +15,7 @@ export const searchSchemas: FormSchema[] = [
 ]
 
 export const columns: BasicColumn<FactoryInfo & { pendingStatus: boolean }>[] = [
-  { title: '工厂名称', key: 'name', width: 300 },
+  { title: '工厂名称', key: 'name', width: 300, align: 'left' },
   { title: '工厂地址', key: 'address', width: 400 },
   { title: '创建者', key: 'createBy', width: 100 }
 ]
@@ -44,18 +44,18 @@ export const setSchemas: FormSchema[] = [
       placeholder: '请输入工厂地址'
     }
   },
-  {
-    path: 'status',
-    label: '状态',
-    component: 'NRadioGroup',
-    defaultValue: 1,
-    componentProps: {
-      options: [
-        { label: '正常', value: 1 },
-        { label: '停用', value: 0 }
-      ]
-    }
-  },
+  // {
+  //   path: 'status',
+  //   label: '状态',
+  //   component: 'NRadioGroup',
+  //   defaultValue: 1,
+  //   componentProps: {
+  //     options: [
+  //       { label: '正常', value: 1 },
+  //       { label: '停用', value: 0 }
+  //     ]
+  //   }
+  // },
   {
     path: 'remark',
     label: '备注',

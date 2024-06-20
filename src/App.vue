@@ -16,6 +16,7 @@ subscribeThemeStore()
     :theme-overrides="theme.naiveThemeOverrides"
     :locale="zhCN"
     :date-locale="dateZhCN"
+    preflight-style-disabled
     class="h-full"
   >
     <naive-provider>

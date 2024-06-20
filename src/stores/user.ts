@@ -74,7 +74,9 @@ export const useUserStore = defineStore('user-store', {
       }
       this.setToken()
       this.setUserInfo()
-      router.push('/login')
+      // router.push('/login')
+      // 刷新页面
+      location.reload()
     },
     async RedirectHome() {
       router.push(PageEnum.BASE_HOME)

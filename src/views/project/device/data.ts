@@ -2,7 +2,7 @@ import type { FormSchema } from '@/components/Form'
 import type { BasicColumn } from '@/components/Table'
 
 import { type FactoryInfo, getFactoryList } from '@/api/project/factory'
-import { getValveList } from '@/api/project/valve'
+// import { getValveList } from '@/api/project/valve'
 
 export const searchSchemas: FormSchema[] = [
   { path: 'name', label: '装置名称', component: 'NInput', span: 8 },
@@ -63,19 +63,19 @@ export const setSchemas: FormSchema[] = [
   //     ]
   //   }
   // },
-  {
-    path: 'valveIds',
-    label: '绑定阀门',
-    component: 'ApiSelect',
-    componentProps: {
-      immediate: true,
-      api: getValveList,
-      resultField: 'rows',
-      labelField: 'name',
-      valueField: 'id',
-      multiple: true
-    }
-  },
+  // {
+  //   path: 'valveIds',
+  //   label: '绑定阀门',
+  //   component: 'ApiSelect',
+  //   componentProps: {
+  //     immediate: true,
+  //     api: getValveList,
+  //     resultField: 'rows',
+  //     labelField: 'tag',
+  //     valueField: 'id',
+  //     multiple: true
+  //   }
+  // },
   {
     path: 'remark',
     label: '备注',

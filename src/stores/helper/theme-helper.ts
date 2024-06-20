@@ -67,6 +67,9 @@ export function getNaiveThemeOverrides(colors: Record<ColorType, string>): Globa
     },
     LoadingBar: {
       colorLoading
+    },
+    DataTable: {
+      thFontWeight: '700'
     }
   }
 }

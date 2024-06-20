@@ -17,18 +17,18 @@ export const setSchemas: FormSchema[] = [
   { path: 'name', label: '字典名称', required: true, component: 'NInput' },
   { path: 'value', label: '关键字', required: true, component: 'NInput' },
   { path: 'sort', label: '排序', component: 'NInputNumber' },
-  {
-    path: 'status',
-    label: '状态',
-    component: 'NRadioGroup',
-    defaultValue: 1,
-    componentProps: {
-      options: [
-        { label: '正常', value: 1 },
-        { label: '停用', value: 0 }
-      ]
-    }
-  },
+  // {
+  //   path: 'status',
+  //   label: '状态',
+  //   component: 'NRadioGroup',
+  //   defaultValue: 1,
+  //   componentProps: {
+  //     options: [
+  //       { label: '正常', value: 1 },
+  //       { label: '停用', value: 0 }
+  //     ]
+  //   }
+  // },
   {
     path: 'remark',
     label: '备注',
