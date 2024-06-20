@@ -57,13 +57,17 @@ export const setSchemas: FormSchema[] = [
     path: 'deviceId',
     label: '所属装置',
     component: 'ApiSelect',
+    ifShow: ({ values }) => !!values.factoryId,
     span: 8,
-    componentProps: {
-      immediate: true,
-      api: getDeviceList,
-      resultField: 'rows',
-      labelField: 'name',
-      valueField: 'id'
+    componentProps: ({ formModel }) => {
+      return {
+        immediate: true,
+        api: getDeviceList,
+        params: { factoryId: formModel.factoryId },
+        resultField: 'rows',
+        labelField: 'name',
+        valueField: 'id'
+      }
     }
   },
   { path: 'unit', label: '装置', component: 'NInput', span: 8 },
