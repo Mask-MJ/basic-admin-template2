@@ -91,8 +91,25 @@ export interface SearchParams {
   deviceId: number
 }
 
+export interface ValveRunInfo {
+  /// 阀门id
+  id: number
+  /// 状态名
+  name: string
+  /// 状态值
+  value: string
+  /// 单位
+  unit: string
+  /// 读取时间
+  time: Date
+  /// 阀门id
+  valveId: number
+}
+
 enum Api {
-  Valve = 'project/valve'
+  Valve = 'project/valve',
+  ValveRunInfo = 'project/valve/run-info',
+  ValveHistory = 'project/valve/history'
 }
 
 // 获取阀门列表
@@ -107,12 +124,12 @@ export const updateValve = (params: Partial<ValveInfo>) =>
   defHttp.patch({ url: `${Api.Valve}/${params.id}`, params })
 // 删除阀门
 export const deleteValve = (ids: number | string) => defHttp.delete({ url: `${Api.Valve}/${ids}` })
-
+// 获取阀门运行数据
+export const getValveRunInfo = (id: number) =>
+  defHttp.get<ValveRunInfo>({ url: `${Api.ValveRunInfo}/${id}` })
 // 获取阀门历史数据
-export const getValveHistoryList = async () => {
-  return [
-    { id: 1, name: 'DVW-R1', createdAt: '2023-10-01' },
-    { id: 2, name: 'DVW-R1', createdAt: '2022-12-02' },
-    { id: 3, name: 'DVW-R1', createdAt: '2022-10-03' }
-  ]
-}
+export const getValveHistoryList = (params: { valveId: number }) =>
+  defHttp.get<ValveRunInfo[]>({ url: Api.ValveHistory, params })
+// 获取阀门历史数据详情
+export const getValveHistoryDetail = (id: number) =>
+  defHttp.get<ValveRunInfo>({ url: `${Api.ValveHistory}/${id}` })

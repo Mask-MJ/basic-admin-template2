@@ -1,7 +1,13 @@
 <script setup lang="ts">
 import { useModal } from '@/components/Modal'
 import { useTable, Action } from '@/components/Table'
-import { deleteValve, getValveDetail, getValveList, type ValveInfo } from '@/api/project/valve'
+import {
+  deleteValve,
+  getValveDetail,
+  getValveList,
+  getValveRunInfo,
+  type ValveInfo
+} from '@/api/project/valve'
 import { columns, searchSchemas } from './data'
 import SetModal from './SetModal.vue'
 import DescModal from './DescModal.vue'
@@ -51,11 +57,12 @@ const [registerTable, { reload }] = useTable({
           },
           {
             icon: 'i-ant-design:eye-outlined',
-            tooltipProps: { content: '查看数据' },
+            tooltipProps: { content: '查看运行数据' },
             buttonProps: {
               type: 'success',
-              onClick: () => {
-                openDescModel(true)
+              onClick: async () => {
+                const result = await getValveRunInfo(row.id)
+                openDescModel(true, result)
               }
             }
           },
@@ -65,7 +72,7 @@ const [registerTable, { reload }] = useTable({
             buttonProps: {
               type: 'warning',
               onClick: () => {
-                openHistoryModel(true)
+                openHistoryModel(true, row)
               }
             }
           },

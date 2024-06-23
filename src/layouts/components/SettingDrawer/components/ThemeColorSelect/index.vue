@@ -11,6 +11,7 @@ const themeColor = computed(() => theme.themeColor)
 
 const isInOther = computed(() => isInTraditionColors(themeColor.value))
 const otherColorBtnType = computed(() => (isInOther.value ? 'primary' : 'default'))
+const close = () => (value.value = false)
 </script>
 
 <template>
@@ -28,7 +29,7 @@ const otherColorBtnType = computed(() => (isInOther.value ? 'primary' : 'default
     <n-color-picker :value="themeColor" :show-alpha="false" @update-value="theme.setThemeColor" />
     <n-button :block="true" :type="otherColorBtnType" @click="value = true"> 更多颜色 </n-button>
   </n-space>
-  <ColorModal :visible="value" @close="value = false" />
+  <ColorModal :visible="value" @close="close" />
 </template>
 
 <style scoped></style>

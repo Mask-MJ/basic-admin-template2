@@ -6,6 +6,7 @@ import {
   executeAnalysisTask,
   getAnalysisTaskDetail,
   getAnalysisTaskList,
+  getAnalysisTaskResult,
   type AnalysisTaskInfo
 } from '@/api/project/analysisTask'
 import { columns, searchSchemas } from './data'
@@ -28,7 +29,6 @@ const [registerTable, { reload }] = useTable({
   bordered: true,
   rowKey: (rowData) => rowData.id,
   showIndexColumn: false,
-  pagination: false,
   actionColumn: {
     width: 200,
     key: 'ACTION',
@@ -72,7 +72,11 @@ const [registerTable, { reload }] = useTable({
             ifShow: row.status === 2,
             buttonProps: {
               type: 'info',
-              onClick: () => router.push(`/project/valve/analysisTaskId-${row.id}`)
+              onClick: async () => {
+                const result = await getAnalysisTaskResult(row.id)
+                console.log(result)
+                // router.push(`/project/valve/analysisTaskId-${row.id}`)
+              }
             }
           }
         ]
