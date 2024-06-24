@@ -41,7 +41,8 @@ export const columns: BasicColumn<AnalysisTaskInfo & { pendingStatus: boolean }>
       const map = new Map([
         [0, '未执行'],
         [1, '执行中'],
-        [2, '已完成']
+        [2, '已完成'],
+        [3, '解析失败']
       ])
       return map.get(rowData.status)
     }
