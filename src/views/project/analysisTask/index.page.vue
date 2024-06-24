@@ -11,6 +11,7 @@ import {
 } from '@/api/project/analysisTask'
 import { columns, searchSchemas } from './data'
 import SetModal from './SetModal.vue'
+import HistoryModal from './HistoryModal.vue'
 
 const router = useRouter()
 
@@ -20,6 +21,8 @@ const getSchemas = computed(() =>
 )
 
 const [registerSetModal, { openModal: openSetModel }] = useModal()
+const [registerHistoryModal, { openModal: openHistoryModel }] = useModal()
+
 const [registerTable, { reload }] = useTable({
   api: getAnalysisTaskList, // 请求接口
   columns, // 展示的列
@@ -73,9 +76,7 @@ const [registerTable, { reload }] = useTable({
             buttonProps: {
               type: 'info',
               onClick: async () => {
-                const result = await getAnalysisTaskResult(row.id)
-                console.log(result)
-                // router.push(`/project/valve/analysisTaskId-${row.id}`)
+                return openHistoryModel(true, row)
               }
             }
           }
@@ -93,6 +94,7 @@ const [registerTable, { reload }] = useTable({
       </template>
     </Table>
     <SetModal @register="registerSetModal" @success="reload()" />
+    <HistoryModal @register="registerHistoryModal" />
   </PageWrapper>
 </template>
 

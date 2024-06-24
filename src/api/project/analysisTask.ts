@@ -60,5 +60,5 @@ export const executeAnalysisTask = (id: number) => defHttp.post({ url: `${Api.Ex
 // 获取执行状态
 export const getExecuteStatus = (id: number) => defHttp.get({ url: `${Api.ExecuteStatus}/${id}` })
 // 获取分析任务结果
-export const getAnalysisTaskResult = (id: number) =>
-  defHttp.get({ url: `${Api.AnalysisTaskResult}/${id}` })
+export const getAnalysisTaskResult = (params: { id: number }) =>
+  defHttp.get({ url: `${Api.AnalysisTaskResult}/${params.id}` })
