@@ -12,6 +12,7 @@ import { columns, searchSchemas } from './data'
 import SetModal from './SetModal.vue'
 import DescModal from './DescModal.vue'
 import HistoryModal from './HistoryModal.vue'
+import ChartModal from './ChartModal.vue'
 
 const router = useRouter()
 const formType = computed(
@@ -32,6 +33,7 @@ const getSchemas = computed(() => {
 const [registerSetModal, { openModal: openSetModel }] = useModal()
 const [registerDescModal, { openModal: openDescModel }] = useModal()
 const [registerHistoryModal, { openModal: openHistoryModel }] = useModal()
+const [registerChartModal, { openModal: openChartModel }] = useModal()
 
 const [registerTable, { reload }] = useTable({
   api: getValveList, // 请求接口
@@ -43,7 +45,7 @@ const [registerTable, { reload }] = useTable({
   rowKey: (rowData) => rowData.id,
   showIndexColumn: false,
   actionColumn: {
-    width: 200,
+    width: 250,
     key: 'ACTION',
     render: (row: ValveInfo) =>
       h(Action, {
@@ -63,6 +65,16 @@ const [registerTable, { reload }] = useTable({
               onClick: async () => {
                 const result = await getValveRunInfo(row.id)
                 openDescModel(true, result)
+              }
+            }
+          },
+          {
+            icon: 'i-ant-design:line-chart-outlined',
+            tooltipProps: { content: '图表' },
+            buttonProps: {
+              type: 'info',
+              onClick: () => {
+                openChartModel(true, row)
               }
             }
           },
@@ -99,6 +111,7 @@ const [registerTable, { reload }] = useTable({
     <SetModal @register="registerSetModal" @success="reload()" />
     <DescModal @register="registerDescModal" />
     <HistoryModal @register="registerHistoryModal" />
+    <ChartModal @register="registerChartModal" />
   </PageWrapper>
 </template>
 
