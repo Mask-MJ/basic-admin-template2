@@ -18,6 +18,7 @@ export interface DictTypeInfo {
 export interface SearchParams {
   page: number
   pageSize: number
+  dictTypeId: number
   name: string
   value: string
 }
@@ -67,8 +68,8 @@ export const deleteDictType = (ids: number | string) =>
   defHttp.delete({ url: `${Api.DictType}/${ids}` })
 
 // 获取字典数据列表
-export const getDictDataList = (params: SearchParams) =>
-  defHttp.get<DictDataInfo[]>({ url: Api.DictData, params })
+export const getDictDataList = (params?: Partial<SearchParams>) =>
+  defHttp.get({ url: Api.DictData, params })
 // 创建字典数据
 export const createDictData = (params: CreateDictData) =>
   defHttp.post({ url: Api.DictData, params })

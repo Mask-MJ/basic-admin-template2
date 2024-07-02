@@ -129,7 +129,7 @@ export const getValveRunInfo = (id: number) =>
   defHttp.get<ValveRunInfo>({ url: `${Api.ValveRunInfo}/${id}` })
 // 获取阀门历史数据
 export const getValveHistoryList = (params: { valveId: number }) =>
-  defHttp.get<ValveRunInfo[]>({ url: Api.ValveHistory, params })
+  defHttp.get({ url: Api.ValveHistory, params })
 // 获取阀门历史数据详情
 export const getValveHistoryDetail = (id: number) =>
   defHttp.get<ValveRunInfo>({ url: `${Api.ValveHistory}/${id}` })

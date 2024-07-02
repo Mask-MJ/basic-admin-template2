@@ -1,54 +1,58 @@
 <script setup lang="ts">
+import type { BasicColumn } from '@/components/Table'
 import { useModalInner } from '@/components/Modal'
-import { useModal } from '@/components/Modal'
-import { useTable, Action } from '@/components/Table'
-import DescModal from './DescModal.vue'
-import { getValveHistoryDetail, getValveHistoryList } from '@/api/project/valve'
-
+import { useTable } from '@/components/Table'
+import { getValveHistoryList } from '@/api/project/valve'
+import { getDictDataList, type DictTypeInfo } from '@/api/system/dict'
 const valveId = ref()
+const tableData = ref([])
 const [registerModal] = useModalInner(async (data) => {
   valveId.value = data.id
-  console.log(data)
-})
-const [registerDescModal, { openModal: openDescModel }] = useModal()
+  const result = (await getValveHistoryList({ valveId: data.id })).rows
+  tableData.value = result.map((item: any) => {
+    // 数组转对象
 
-const [registerTable] = useTable({
-  api: getValveHistoryList, // 请求接口
+    const condition: any = {}
+    item.valveHistoryData.map((itm: any) => {
+      condition[itm.name] = itm.value
+    })
+    return { tag: item.tag, time: item.time, ...condition }
+  })
+  const dictData = (await getDictDataList({ dictTypeId: 12, pageSize: 1000 })).rows
+  const columns: BasicColumn[] = dictData.map((item: DictTypeInfo) => {
+    return {
+      title: item.name,
+      key: item.name,
+      resizable: true,
+      minWidth: 100,
+      maxWidth: 300
+    }
+  })
+  setColumns([
+    { title: '阀门位号', key: 'tag', resizable: true },
+    { title: '读取时间', key: 'time', minWidth: 200, resizable: true },
+    ...columns
+  ])
+})
+
+const [registerTable, { setColumns }] = useTable({
+  data: tableData,
+  // api: getValveHistoryList, // 请求接口
   columns: [
-    { title: '阀门位号', key: 'tag', width: 200 },
-    { title: '读取时间', key: 'time', width: 200 }
+    { title: '阀门位号', key: 'tag', resizable: true },
+    { title: '读取时间', key: 'time', resizable: true }
   ], // 展示的列
   bordered: true,
   searchInfo: { valveId }, // 额外参数
   rowKey: (rowData) => rowData.id,
-  showIndexColumn: false,
-  actionColumn: {
-    width: 100,
-    key: 'ACTION',
-    render: (row) =>
-      h(Action, {
-        actions: [
-          {
-            icon: 'i-ant-design:eye-outlined',
-            tooltipProps: { content: '查看数据' },
-            buttonProps: {
-              type: 'success',
-              onClick: async () => {
-                const result = await getValveHistoryDetail(row.id)
-                openDescModel(true, result)
-              }
-            }
-          }
-        ]
-      })
-  }
+  showToolbars: false,
+  showIndexColumn: false
 })
 </script>
 
 <template>
   <Modal title="阀门历史数据" class="!w-250" @register="registerModal">
     <Table @register="registerTable"> </Table>
-    <DescModal @register="registerDescModal" />
   </Modal>
 </template>
 
