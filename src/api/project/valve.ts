@@ -106,10 +106,20 @@ export interface ValveRunInfo {
   valveId: number
 }
 
+// export interface ValveScore {
+//   id: number
+//   name: string
+//   value: string
+//   unit: string
+//   time: Date
+//   valveHistoryDataListId: number
+// }
+
 enum Api {
   Valve = 'project/valve',
   ValveRunInfo = 'project/valve/run-info',
-  ValveHistory = 'project/valve/history'
+  ValveHistory = 'project/valve/history',
+  ValveScore = 'project/valve/score'
 }
 
 // 获取阀门列表
@@ -133,3 +143,5 @@ export const getValveHistoryList = (params: { valveId: number }) =>
 // 获取阀门历史数据详情
 export const getValveHistoryDetail = (id: number) =>
   defHttp.get<ValveRunInfo>({ url: `${Api.ValveHistory}/${id}` })
+// 获取阀门健康评分
+export const getValveScore = (id: number) => defHttp.get({ url: `${Api.ValveScore}/${id}` })

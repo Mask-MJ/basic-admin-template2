@@ -13,6 +13,7 @@ import SetModal from './SetModal.vue'
 import DescModal from './DescModal.vue'
 import HistoryModal from './HistoryModal.vue'
 import ChartModal from './ChartModal.vue'
+import ScoreModal from './ScoreModal.vue'
 
 const router = useRouter()
 const formType = computed(
@@ -34,6 +35,7 @@ const [registerSetModal, { openModal: openSetModel }] = useModal()
 const [registerDescModal, { openModal: openDescModel }] = useModal()
 const [registerHistoryModal, { openModal: openHistoryModel }] = useModal()
 const [registerChartModal, { openModal: openChartModel }] = useModal()
+const [registerScoreModal, { openModal: openScoreModal }] = useModal()
 
 const [registerTable, { reload }] = useTable({
   api: getValveList, // 请求接口
@@ -79,6 +81,16 @@ const [registerTable, { reload }] = useTable({
             }
           },
           {
+            icon: 'i-ant-design:audit-outlined',
+            tooltipProps: { content: '评分' },
+            buttonProps: {
+              type: 'success',
+              onClick: () => {
+                openScoreModal(true, row)
+              }
+            }
+          },
+          {
             icon: 'i-ant-design:bar-chart-outlined',
             tooltipProps: { content: '查看历史数据' },
             buttonProps: {
@@ -112,6 +124,7 @@ const [registerTable, { reload }] = useTable({
     <DescModal @register="registerDescModal" />
     <HistoryModal @register="registerHistoryModal" />
     <ChartModal @register="registerChartModal" />
+    <ScoreModal @register="registerScoreModal" />
   </PageWrapper>
 </template>
 
