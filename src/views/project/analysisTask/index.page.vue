@@ -6,7 +6,6 @@ import {
   executeAnalysisTask,
   getAnalysisTaskDetail,
   getAnalysisTaskList,
-  getAnalysisTaskResult,
   type AnalysisTaskInfo
 } from '@/api/project/analysisTask'
 import { columns, searchSchemas } from './data'

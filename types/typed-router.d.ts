@@ -40,6 +40,7 @@ declare module 'vue-router/auto-routes' {
     '/system/menu/': RouteRecordInfo<'/system/menu/', '/system/menu', Record<never, never>, Record<never, never>>,
     '/system/post/': RouteRecordInfo<'/system/post/', '/system/post', Record<never, never>, Record<never, never>>,
     '/system/role/': RouteRecordInfo<'/system/role/', '/system/role', Record<never, never>, Record<never, never>>,
+    '/system/rule/': RouteRecordInfo<'/system/rule/', '/system/rule', Record<never, never>, Record<never, never>>,
     '/system/unit/': RouteRecordInfo<'/system/unit/', '/system/unit', Record<never, never>, Record<never, never>>,
     '/system/user/': RouteRecordInfo<'/system/user/', '/system/user', Record<never, never>, Record<never, never>>,
   }

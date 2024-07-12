@@ -4,6 +4,7 @@ import type { BasicColumn } from '@/components/Table'
 import { getFactoryList } from '@/api/project/factory'
 import { getDictTypeList } from '@/api/system/dict'
 import { uploadAnalysisTaskPdf, type AnalysisTaskInfo } from '@/api/project/analysisTask'
+import { getRuleList } from '@/api/system/rule'
 
 export const searchSchemas: FormSchema[] = [
   { path: 'name', label: '任务名称', component: 'NInput', span: 8 },
@@ -75,6 +76,19 @@ export const setSchemas: FormSchema[] = [
     componentProps: {
       immediate: true,
       api: getDictTypeList,
+      resultField: 'rows',
+      labelField: 'name',
+      valueField: 'id'
+    }
+  },
+  {
+    path: 'ruleId',
+    label: '评分规则',
+    component: 'ApiSelect',
+    required: true,
+    componentProps: {
+      immediate: true,
+      api: getRuleList,
       resultField: 'rows',
       labelField: 'name',
       valueField: 'id'
