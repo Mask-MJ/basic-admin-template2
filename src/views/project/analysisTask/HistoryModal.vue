@@ -2,13 +2,12 @@
 import { useModalInner } from '@/components/Modal'
 import { useModal } from '@/components/Modal'
 import { useTable, Action } from '@/components/Table'
-import DescModal from '../valve/DescModal.vue'
+import DescModal from './DescModal.vue'
 import { getAnalysisTaskResult } from '@/api/project/analysisTask'
 
 const id = ref()
 const [registerModal] = useModalInner(async (data) => {
   id.value = data.id
-  console.log(data)
 })
 const [registerDescModal, { openModal: openDescModel }] = useModal()
 
@@ -34,7 +33,7 @@ const [registerTable] = useTable({
             buttonProps: {
               type: 'success',
               onClick: async () => {
-                openDescModel(true, row.data)
+                openDescModel(true, row.data.data)
               }
             }
           }
