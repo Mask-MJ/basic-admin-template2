@@ -33,7 +33,7 @@ const [registerTable] = useTable({
             buttonProps: {
               type: 'success',
               onClick: async () => {
-                openDescModel(true, row.data.data)
+                openDescModel(true, row.data)
               }
             }
           }
