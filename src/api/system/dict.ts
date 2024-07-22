@@ -46,9 +46,25 @@ export interface DictDataInfo {
   updatedAt: Date
 }
 
+export interface DictDataTreeInfo {
+  id: number
+  name: string
+  value: string
+  remark: string
+  parentId: number
+}
+export interface CreateDictDataTree {
+  name: string
+  value: string
+  dictDataId: number
+  remark: string
+  parentId: number
+}
+
 enum Api {
   DictType = 'system/dict-type',
-  DictData = 'system/dict-data'
+  DictData = 'system/dict-data',
+  DictDataTree = 'system/dict-data-tree'
 }
 
 // 获取字典列表
@@ -82,3 +98,19 @@ export const updateDictData = (params: Partial<DictDataInfo>) =>
 // 删除字典数据
 export const deleteDictData = (ids: number | string) =>
   defHttp.delete({ url: `${Api.DictData}/${ids}` })
+
+// 获取pdf数据树列表
+export const getDictDataTreeList = (params?: Partial<SearchParams>) =>
+  defHttp.get({ url: Api.DictDataTree, params })
+// 创建pdf数据树
+export const createDictDataTree = (params: CreateDictDataTree) =>
+  defHttp.post({ url: Api.DictDataTree, params })
+// 获取单个pdf数据树信息
+export const getDictDataTreeDetail = (id: number) =>
+  defHttp.get<DictDataTreeInfo>({ url: `${Api.DictDataTree}/${id}` })
+// 更新pdf数据树
+export const updateDictDataTree = (params: Partial<DictDataTreeInfo>) =>
+  defHttp.patch({ url: `${Api.DictDataTree}/${params.id}`, params })
+// 删除pdf数据树
+export const deleteDictDataTree = (ids: number | string) =>
+  defHttp.delete({ url: `${Api.DictDataTree}/${ids}` })

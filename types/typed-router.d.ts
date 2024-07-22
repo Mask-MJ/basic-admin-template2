@@ -36,6 +36,7 @@ declare module 'vue-router/auto-routes' {
     '/system/dept/': RouteRecordInfo<'/system/dept/', '/system/dept', Record<never, never>, Record<never, never>>,
     '/system/dictData/': RouteRecordInfo<'/system/dictData/', '/system/dictData', Record<never, never>, Record<never, never>>,
     '/system/dictData/[id]': RouteRecordInfo<'/system/dictData/[id]', '/system/dictData/:id', { id: ParamValue<true> }, { id: ParamValue<false> }>,
+    '/system/dictDataTree/': RouteRecordInfo<'/system/dictDataTree/', '/system/dictDataTree', Record<never, never>, Record<never, never>>,
     '/system/dictType/': RouteRecordInfo<'/system/dictType/', '/system/dictType', Record<never, never>, Record<never, never>>,
     '/system/menu/': RouteRecordInfo<'/system/menu/', '/system/menu', Record<never, never>, Record<never, never>>,
     '/system/post/': RouteRecordInfo<'/system/post/', '/system/post', Record<never, never>, Record<never, never>>,
