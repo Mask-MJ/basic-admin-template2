@@ -8,8 +8,8 @@ import { setSchemas } from './data'
 const emits = defineEmits(['success', 'register'])
 
 const [registerModal, { closeModal, setModalProps }] = useModalInner((data: MenuInfo) => {
+  setModalProps({ title: data.id ? '编辑菜单' : '新增菜单' })
   if (data.id) {
-    setModalProps({ title: '编辑菜单' })
     setPathsValue(data)
   }
 })
@@ -33,7 +33,7 @@ const handleSubmit = async () => {
 </script>
 
 <template>
-  <Modal title="新增菜单" class="!w-100" @register="registerModal" @positive-click="handleSubmit">
+  <Modal class="!w-100" @register="registerModal" @positive-click="handleSubmit">
     <Form @register="registerForm" />
   </Modal>
 </template>

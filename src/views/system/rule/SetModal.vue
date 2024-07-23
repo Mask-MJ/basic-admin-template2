@@ -8,8 +8,8 @@ import { setSchemas } from './data'
 const emits = defineEmits(['success', 'register'])
 
 const [registerModal, { closeModal, setModalProps }] = useModalInner((data: RuleInfo) => {
+  setModalProps({ title: data.id ? '编辑规则' : '新增规则' })
   if (data.id) {
-    setModalProps({ title: '编辑字典' })
     setPathsValue(data)
   }
 })
@@ -38,7 +38,7 @@ const handleSubmit = async () => {
 </script>
 
 <template>
-  <Modal title="新增字典" class="!w-100" @register="registerModal" @positive-click="handleSubmit">
+  <Modal class="!w-100" @register="registerModal" @positive-click="handleSubmit">
     <Form @register="registerForm" />
   </Modal>
 </template>

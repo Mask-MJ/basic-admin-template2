@@ -17,8 +17,8 @@ const [registerForm, { validate, getPathsValue, setPathsValue }] = useForm({
 })
 
 const [registerModal, { closeModal, setModalProps }] = useModalInner(async (data: DeviceInfo) => {
+  setModalProps({ title: data.id ? '编辑装置' : '新增装置' })
   if (data.id) {
-    setModalProps({ title: '编辑装置' })
     await setPathsValue(data)
   }
 })
@@ -38,7 +38,7 @@ const handleSubmit = async () => {
 </script>
 
 <template>
-  <Modal title="新增装置" class="!w-120" @register="registerModal" @positive-click="handleSubmit">
+  <Modal class="!w-120" @register="registerModal" @positive-click="handleSubmit">
     <Form @register="registerForm" />
   </Modal>
 </template>

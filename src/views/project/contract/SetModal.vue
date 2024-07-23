@@ -17,10 +17,10 @@ const [registerForm, { validate, getPathsValue, setPathsValue }] = useForm({
 })
 
 const [registerModal, { closeModal, setModalProps }] = useModalInner(async (data: ContractInfo) => {
+  setModalProps({ title: data.id ? '编辑项目' : '新增项目' })
   if (data.id) {
     // 把合同时间转为时间戳
     data.contractTime = dayjs(data.contractTime).valueOf()
-    setModalProps({ title: '编辑项目' })
     await setPathsValue(data)
   }
 })
@@ -40,7 +40,7 @@ const handleSubmit = async () => {
 </script>
 
 <template>
-  <Modal title="新增项目" class="!w-120" @register="registerModal" @positive-click="handleSubmit">
+  <Modal class="!w-120" @register="registerModal" @positive-click="handleSubmit">
     <Form @register="registerForm" />
   </Modal>
 </template>

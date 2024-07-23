@@ -31,10 +31,10 @@ const [registerForm, { validate, getPathsValue, setPathsValue }] = useForm({
 })
 
 const [registerModal, { closeModal, setModalProps }] = useModalInner(async (data: ValveInfo) => {
+  setModalProps({ title: data.id ? '编辑阀门' : '新增阀门' })
   if (data.id) {
     data.since = dayjs(data.since).valueOf()
-    setModalProps({ title: '编辑阀门' })
-    await setPathsValue(data)
+    setPathsValue(data)
   }
 })
 
@@ -61,7 +61,7 @@ const handleSubmit = async () => {
 </script>
 
 <template>
-  <Modal title="新增阀门" class="!w-250" @register="registerModal" @positive-click="handleSubmit">
+  <Modal class="!w-250" @register="registerModal" @positive-click="handleSubmit">
     <Form @register="registerForm" />
   </Modal>
 </template>

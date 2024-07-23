@@ -22,8 +22,8 @@ const [registerForm, { validate, getPathsValue, setPathsValue }] = useForm({
 
 const [registerModal, { closeModal, setModalProps }] = useModalInner(
   async (data: AnalysisTaskInfo) => {
+    setModalProps({ title: data.id ? '编辑任务' : '新增任务' })
     if (data.id) {
-      setModalProps({ title: '编辑任务' })
       await setPathsValue(data)
     }
   }
@@ -44,7 +44,7 @@ const handleSubmit = async () => {
 </script>
 
 <template>
-  <Modal title="新增任务" class="!w-120" @register="registerModal" @positive-click="handleSubmit">
+  <Modal class="!w-120" @register="registerModal" @positive-click="handleSubmit">
     <Form @register="registerForm" />
   </Modal>
 </template>
