@@ -10,7 +10,7 @@ const [registerModal] = useModalInner(async (data) => {
   <Modal title="阀门运行数据详情" class="!w-200" @register="registerModal">
     <n-descriptions
       label-placement="left"
-      bordered
+      :bordered="true"
       :column="2"
       :title="list.tag"
       v-for="(list, index) in valveRunData"
