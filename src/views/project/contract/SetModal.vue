@@ -7,7 +7,7 @@ import { setSchemas } from './data'
 
 const emits = defineEmits(['success', 'register'])
 const router = useRouter()
-const factoryId = computed(() => (router.currentRoute.value.params as { id: string }).id)
+const factoryId = computed(() => Number((router.currentRoute.value.params as { id: string }).id))
 const getSchemas = computed(() =>
   factoryId.value ? setSchemas.filter((item) => item.path !== 'factoryId') : setSchemas
 )
