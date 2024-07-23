@@ -17,6 +17,7 @@ export const columns: BasicColumn<DictDataTreeInfo & { pendingStatus: boolean }>
   { title: 'pdf树值', key: 'value', width: 200 }
 ]
 export const setSchemas: FormSchema[] = [
+  { path: 'id', component: 'NInputNumber', show: false },
   { path: 'name', label: 'PDF树名称', required: true, component: 'NInput' },
   { path: 'value', label: 'PDF树值', required: true, component: 'NInput' },
   {

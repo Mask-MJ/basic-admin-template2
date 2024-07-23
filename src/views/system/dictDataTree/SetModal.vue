@@ -8,8 +8,8 @@ import { setSchemas } from './data'
 const emits = defineEmits(['success', 'register'])
 
 const [registerModal, { closeModal, setModalProps }] = useModalInner((data: DictDataTreeInfo) => {
+  setModalProps({ title: data.id ? '编辑PDF树' : '新增PDF树' })
   if (data.id) {
-    setModalProps({ title: '编辑PDF树' })
     setPathsValue(data)
   }
 })
@@ -33,7 +33,7 @@ const handleSubmit = async () => {
 </script>
 
 <template>
-  <Modal title="新增PDF树" class="!w-100" @register="registerModal" @positive-click="handleSubmit">
+  <Modal class="!w-100" @register="registerModal" @positive-click="handleSubmit">
     <Form @register="registerForm" />
   </Modal>
 </template>
