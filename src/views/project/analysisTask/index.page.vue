@@ -22,7 +22,7 @@ const getSchemas = computed(() =>
 const [registerSetModal, { openModal: openSetModel }] = useModal()
 const [registerHistoryModal, { openModal: openHistoryModel }] = useModal()
 
-const [registerTable, { reload }] = useTable({
+const [registerTable, { reload, setTableData }] = useTable({
   api: getAnalysisTaskList, // 请求接口
   columns, // 展示的列
   useSearchForm: true, // 启用搜索表单
@@ -82,6 +82,12 @@ const [registerTable, { reload }] = useTable({
         ]
       })
   }
+})
+onMounted(() => {
+  setInterval(async () => {
+    const result = await getAnalysisTaskList({ factoryId: Number(factoryId.value) || undefined })
+    setTableData(result)
+  }, 5000)
 })
 </script>
 

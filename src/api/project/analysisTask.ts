@@ -28,6 +28,7 @@ export interface SearchParams {
   page: number
   pageSize: number
   name: string
+  factoryId: number
 }
 
 enum Api {
