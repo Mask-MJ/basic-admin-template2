@@ -85,8 +85,10 @@ const [registerTable, { reload, setTableData }] = useTable({
 })
 onMounted(() => {
   setInterval(async () => {
-    const result = await getAnalysisTaskList({ factoryId: Number(factoryId.value) || undefined })
-    setTableData(result)
+    const result = (await getAnalysisTaskList({
+      factoryId: Number(factoryId.value) || undefined
+    })) as any
+    setTableData(result.rows)
   }, 5000)
 })
 </script>
