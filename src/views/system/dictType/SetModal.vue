@@ -8,7 +8,7 @@ import { setSchemas } from './data'
 const emits = defineEmits(['success', 'register'])
 
 const [registerModal, { closeModal, setModalProps }] = useModalInner((data: DictTypeInfo) => {
-  setModalProps({ title: data.id ? '编辑字典' : '新增字典' })
+  setModalProps({ title: data.id ? '编辑模板' : '新增模板' })
   if (data.id) {
     setPathsValue(data)
   }

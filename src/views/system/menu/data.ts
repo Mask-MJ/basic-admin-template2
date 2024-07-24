@@ -4,7 +4,7 @@ import { NPopconfirm, NSwitch } from 'naive-ui'
 import type { BasicColumn } from '@/components/Table'
 
 export const searchSchemas: FormSchema[] = [
-  { path: 'name', label: '字典名称', component: 'NInput', span: 8 },
+  { path: 'name', label: '模版名称', component: 'NInput', span: 8 },
   {
     path: '[beginTime, endTime]',
     component: 'NDatePicker',
