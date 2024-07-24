@@ -83,13 +83,18 @@ const [registerTable, { reload, setTableData }] = useTable({
       })
   }
 })
+let timer: any
 onMounted(() => {
-  setInterval(async () => {
+  timer = setInterval(async () => {
     const result = (await getAnalysisTaskList({
       factoryId: Number(factoryId.value) || undefined
     })) as any
     setTableData(result.rows)
   }, 5000)
+})
+
+onBeforeRouteLeave(() => {
+  clearInterval(timer)
 })
 </script>
 

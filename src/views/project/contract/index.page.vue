@@ -22,7 +22,7 @@ const [registerTable, { reload }] = useTable({
   columns, // 展示的列
   useSearchForm: true, // 启用搜索表单
   formConfig: { labelWidth: 100, schemas: getSchemas.value }, // 搜索表单配置
-  searchInfo: { factoryId: Number(factoryId.value) }, // 额外参数
+  searchInfo: { factoryId: Number(factoryId.value) || undefined }, // 额外参数
   bordered: true,
   rowKey: (rowData) => rowData.id,
   showIndexColumn: false,
