@@ -3,7 +3,7 @@ import { getValveScore } from '@/api/project/valve'
 import { useModalInner } from '@/components/Modal'
 import { isObject } from 'lodash-es'
 
-const tableData = ref<{ key: string; value: string }[]>([])
+const tableData = ref<{ key: string; value: number }[]>([])
 
 function digui(data: any) {
   for (const key in data) {
@@ -15,6 +15,16 @@ function digui(data: any) {
         tableData.value.push({ key, value: element })
       }
     }
+  }
+}
+
+function getScoreType(score: number) {
+  if (score >= 90) {
+    return 'success'
+  } else if (score >= 60) {
+    return 'warning'
+  } else {
+    return 'error'
   }
 }
 
@@ -33,7 +43,7 @@ const [registerModal] = useModalInner(async (data) => {
   <Modal title="阀门评分" class="!w-180" @register="registerModal" positiveText="">
     <n-descriptions label-placement="left" bordered :column="1">
       <n-descriptions-item v-for="item in tableData" :key="item.key" :label="item.key">
-        {{ item.value }}
+        <n-tag :type="getScoreType(item.value)">{{ item.value }}</n-tag>
       </n-descriptions-item>
     </n-descriptions>
     <!-- <ul v-for="item in tableData" :key="item.key">

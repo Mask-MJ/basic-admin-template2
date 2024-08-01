@@ -15,11 +15,18 @@ const [registerTable] = useTable({
   api: getAnalysisTaskResult, // 请求接口
   columns: [
     { title: '阀门位号', key: 'tag', width: 200 },
-    { title: '读取时间', key: 'time', width: 200 }
+    { title: '采集时间', key: 'time', width: 200 }
   ], // 展示的列
   bordered: true,
   searchInfo: { id }, // 额外参数
   rowKey: (rowData) => rowData.id,
+  afterFetch: (data) => {
+    const result: any[] = []
+    data.forEach((item: any) => {
+      result.push(...item.data)
+    })
+    return result
+  },
   showIndexColumn: false,
   actionColumn: {
     width: 100,
@@ -33,7 +40,7 @@ const [registerTable] = useTable({
             buttonProps: {
               type: 'success',
               onClick: async () => {
-                openDescModel(true, row.data)
+                openDescModel(true, row)
               }
             }
           }

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useModalInner } from '@/components/Modal'
-const valveRunData = ref()
+const valveRunData = ref<any>({})
 const [registerModal] = useModalInner(async (data) => {
   valveRunData.value = data
 })
@@ -12,12 +12,10 @@ const [registerModal] = useModalInner(async (data) => {
       label-placement="left"
       :bordered="true"
       :column="2"
-      :title="list.tag"
-      v-for="(list, index) in valveRunData"
-      :key="index"
+      :title="valveRunData.tag"
       class="mt-4"
     >
-      <n-descriptions-item v-for="item in list.data" :key="item.name" :label="item.name">
+      <n-descriptions-item v-for="item in valveRunData.data" :key="item.name" :label="item.name">
         {{ item.value }} {{ item.unit ? `${item.unit}` : '' }}
       </n-descriptions-item>
     </n-descriptions>
