@@ -69,7 +69,7 @@ enum Api {
 
 // 获取字典列表
 export const getDictTypeList = (params?: Partial<SearchParams>) =>
-  defHttp.get<DictTypeInfo[]>({ url: Api.DictType, params })
+  defHttp.get({ url: Api.DictType, params })
 // 创建字典
 export const createDictType = (params: CreateDictType) =>
   defHttp.post({ url: Api.DictType, params })

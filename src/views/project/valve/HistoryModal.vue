@@ -3,7 +3,7 @@ import type { BasicColumn } from '@/components/Table'
 import { useModalInner } from '@/components/Modal'
 import { useTable } from '@/components/Table'
 import { getValveHistoryList } from '@/api/project/valve'
-import { getDictDataList, type DictTypeInfo } from '@/api/system/dict'
+import { getDictDataList, getDictTypeList, type DictTypeInfo } from '@/api/system/dict'
 const valveId = ref()
 const tableData = ref([])
 const [registerModal] = useModalInner(async (data) => {
@@ -18,7 +18,9 @@ const [registerModal] = useModalInner(async (data) => {
     })
     return { tag: item.tag, time: item.time, ...condition }
   })
-  const dictData = (await getDictDataList({ dictTypeId: 12, pageSize: 1000 })).rows
+  const dictType = (await getDictTypeList({ name: 'hard', pageSize: 1000 })).rows
+  const dictTypeId = dictType[0].id
+  const dictData = (await getDictDataList({ dictTypeId, pageSize: 1000 })).rows
   const columns: BasicColumn[] = dictData.map((item: DictTypeInfo) => {
     return {
       title: item.name,

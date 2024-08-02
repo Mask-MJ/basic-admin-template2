@@ -5,7 +5,9 @@ import { useModalInner } from '@/components/Modal'
 
 import { setSchemas } from './data'
 
+const route = useRoute() as any
 const emits = defineEmits(['success', 'register'])
+const dictTypeId = computed(() => Number(route.params.id))
 
 const [registerModal, { closeModal, setModalProps }] = useModalInner((data: DictDataInfo) => {
   setModalProps({ title: data.id ? '编辑模版数据' : '新增模版数据' })
@@ -23,7 +25,8 @@ const handleSubmit = async () => {
   try {
     await validate()
     const result = getPathsValue()
-    result.id ? await updateDictData(result) : await createDictData(result)
+    const params = { dictTypeId: dictTypeId.value, ...result }
+    result.id ? await updateDictData(params) : await createDictData(params)
     emits('success')
     closeModal()
   } catch (error) {
