@@ -71,7 +71,7 @@ const [registerTable, { reload, setTableData }] = useTable({
           {
             icon: 'i-ant-design:fund-view-outlined',
             tooltipProps: { content: '查看结果' },
-            ifShow: row.status === 2,
+            // ifShow: row.status === 2,
             buttonProps: {
               type: 'info',
               onClick: async () => {

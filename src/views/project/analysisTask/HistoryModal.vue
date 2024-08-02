@@ -51,7 +51,13 @@ const [registerTable] = useTable({
 </script>
 
 <template>
-  <Modal title="解析结果" class="!w-250" @register="registerModal">
+  <Modal
+    title="解析结果"
+    class="!w-250"
+    @register="registerModal"
+    positiveText=""
+    negativeText="关闭"
+  >
     <Table @register="registerTable"> </Table>
     <DescModal @register="registerDescModal" />
   </Modal>
