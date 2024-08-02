@@ -47,7 +47,7 @@ const [registerTable, { reload }] = useTable({
   rowKey: (rowData) => rowData.id,
   showIndexColumn: false,
   actionColumn: {
-    width: 250,
+    width: 300,
     key: 'ACTION',
     render: (row: ValveInfo) =>
       h(Action, {
