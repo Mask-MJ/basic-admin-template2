@@ -12,6 +12,9 @@ const tableData = ref<any[]>([])
 const [registerModal] = useModalInner(async (data) => {
   id.value = data.id
   const result = (await getAnalysisTaskResult({ id: data.id })).rows
+  if (!result) {
+    return
+  }
   tableData.value = result.map((item: any) => {
     // 数组转对象
 
