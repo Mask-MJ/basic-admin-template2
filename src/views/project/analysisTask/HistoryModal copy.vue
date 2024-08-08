@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { useModalInner } from '@/components/Modal'
-import { useTable, type BasicColumn } from '@/components/Table'
+import { useModal } from '@/components/Modal'
+import { useTable, Action, type BasicColumn } from '@/components/Table'
+import DescModal from './DescModal.vue'
+import { getAnalysisTaskResult } from '@/api/project/analysisTask'
 // import { mockResultData } from './mock'
 import { getDictDataList, getDictTypeList, type DictTypeInfo } from '@/api/system/dict'
-import dayjs from 'dayjs'
-import { Workbook } from 'exceljs'
-import { getAnalysisTaskResult } from '@/api/project/analysisTask'
 
 const id = ref()
 const tableData = ref<any[]>([])
@@ -23,9 +23,10 @@ const [registerModal] = useModalInner(async (data) => {
   }
   tableData.value = res.map((item: any) => {
     // 数组转对象
+
     const condition: any = {}
     item.data.map((itm: any) => {
-      let value = itm.value === null ? '----' : itm.value
+      let value = itm.value === null ? '无' : itm.value
       if (typeof value === 'object') {
         value = Object.keys(value)
           .map((key) => `${key}: ${value[key]}`)
@@ -42,24 +43,21 @@ const [registerModal] = useModalInner(async (data) => {
     return {
       title: item.name,
       key: item.name,
-      width: 150
+      resizable: true,
+      minWidth: 100,
+      maxWidth: 300
     }
   })
   setColumns([
-    { title: '阀门位号', key: 'tag', width: 150 },
-    {
-      title: '读取时间',
-      key: 'time',
-      width: 200,
-      render(rowData: any) {
-        return dayjs(rowData.time).format('YYYY-MM-DD HH:mm:ss')
-      }
-    },
+    { title: '阀门位号', key: 'tag', resizable: true },
+    { title: '读取时间', key: 'time', minWidth: 200, resizable: true },
     ...columns
   ])
 })
+const [registerDescModal, { openModal: openDescModel }] = useModal()
 
-const [registerTable, { setColumns, getTableData, getColumns }] = useTable({
+const [registerTable, { setColumns }] = useTable({
+  // api: getAnalysisTaskResult, // 请求接口
   data: tableData,
   columns: [
     { title: '阀门位号', key: 'tag', width: 200 },
@@ -68,36 +66,34 @@ const [registerTable, { setColumns, getTableData, getColumns }] = useTable({
   bordered: true,
   searchInfo: { id }, // 额外参数
   rowKey: (rowData) => rowData.id,
-  showIndexColumn: false
+  afterFetch: (data) => {
+    const result: any[] = []
+    data.forEach((item: any) => {
+      result.push(...item.data)
+    })
+    return result
+  },
+  showIndexColumn: false,
+  actionColumn: {
+    width: 100,
+    key: 'ACTION',
+    render: (row) =>
+      h(Action, {
+        actions: [
+          {
+            icon: 'i-ant-design:eye-outlined',
+            tooltipProps: { content: '查看数据' },
+            buttonProps: {
+              type: 'success',
+              onClick: async () => {
+                openDescModel(true, row)
+              }
+            }
+          }
+        ]
+      })
+  }
 })
-
-const exportData = async () => {
-  const workbook = new Workbook()
-  const worksheet = workbook.addWorksheet('解析结果')
-  worksheet.columns = getColumns().map((item: any) => {
-    return { header: item.title, key: item.key, width: 30 }
-  })
-  const data = getTableData()
-  worksheet.addRows(data)
-  const arraybuffer: any = new ArrayBuffer(10 * 1024 * 1024)
-  const res = await workbook.xlsx.writeBuffer(arraybuffer)
-  download(res)
-}
-function download(arrayBuffer: any) {
-  const link = document.createElement('a')
-
-  const blob = new Blob([arrayBuffer])
-  const url = URL.createObjectURL(blob)
-  link.href = url
-  link.download = 'guang.xlsx'
-
-  document.body.appendChild(link)
-
-  link.click()
-  link.addEventListener('click', () => {
-    link.remove()
-  })
-}
 </script>
 
 <template>
@@ -108,11 +104,8 @@ function download(arrayBuffer: any) {
     positiveText=""
     negativeText="关闭"
   >
-    <Table @register="registerTable">
-      <template #toolbar>
-        <n-button class="mr-2" type="primary" @click="exportData()"> 导出数据 </n-button>
-      </template>
-    </Table>
+    <Table @register="registerTable"> </Table>
+    <DescModal @register="registerDescModal" />
   </Modal>
 </template>
 
