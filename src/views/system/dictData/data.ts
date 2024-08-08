@@ -8,6 +8,7 @@ export const searchSchemas: FormSchema[] = [
 export const columns = [
   { title: '模版名称', key: 'name', width: 150 },
   { title: '关键字', key: 'value', width: 200 },
+  { title: '排序', key: 'sort', width: 100 },
   { title: '所属PDF树', key: 'tree.name', width: 200 },
   { title: '创建时间', key: 'createdAt', width: 200 },
   { title: '更新时间', key: 'updatedAt', width: 200 }
