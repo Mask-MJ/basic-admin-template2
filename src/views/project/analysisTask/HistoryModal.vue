@@ -9,7 +9,9 @@ import { getAnalysisTaskResult } from '@/api/project/analysisTask'
 
 const id = ref()
 const tableData = ref<any[]>([])
+const task = ref<any>({})
 const [registerModal] = useModalInner(async (data) => {
+  task.value = data
   id.value = data.id
   const res: any[] = []
   const result = await getAnalysisTaskResult({ id: data.id })
@@ -35,7 +37,7 @@ const [registerModal] = useModalInner(async (data) => {
     })
     return { tag: item.tag, time: item.time, ...condition }
   })
-  const dictType = (await getDictTypeList({ name: 'hard', pageSize: 1000 })).rows
+  const dictType = (await getDictTypeList({ name: 'hart', pageSize: 1000 })).rows
   const dictTypeId = dictType[0].id
   const dictData = (await getDictDataList({ dictTypeId, pageSize: 1000 })).rows
   const columns: BasicColumn[] = dictData.map((item: DictTypeInfo) => {
@@ -89,7 +91,7 @@ function download(arrayBuffer: any) {
   const blob = new Blob([arrayBuffer])
   const url = URL.createObjectURL(blob)
   link.href = url
-  link.download = 'guang.xlsx'
+  link.download = task.value.name + ' - 解析结果.xlsx'
 
   document.body.appendChild(link)
 
