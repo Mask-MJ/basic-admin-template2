@@ -13,7 +13,7 @@ export const searchSchemas: FormSchema[] = [
   // }
 ]
 export const columns: BasicColumn<DictDataTreeInfo & { pendingStatus: boolean }>[] = [
-  { title: 'pdf树名称', key: 'name', width: 200 },
+  { title: 'pdf树名称', key: 'name', width: 200, align: 'left' },
   { title: 'pdf树值', key: 'value', width: 200 }
 ]
 export const setSchemas: FormSchema[] = [
