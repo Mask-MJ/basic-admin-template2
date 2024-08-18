@@ -22,7 +22,7 @@ const getSchemas = computed(() =>
 const [registerSetModal, { openModal: openSetModel }] = useModal()
 const [registerHistoryModal, { openModal: openHistoryModel }] = useModal()
 
-const [registerTable, { reload, setTableData }] = useTable({
+const [registerTable, { reload, setTableData, getPagination }] = useTable({
   api: getAnalysisTaskList, // 请求接口
   columns, // 展示的列
   useSearchForm: true, // 启用搜索表单
@@ -86,8 +86,11 @@ const [registerTable, { reload, setTableData }] = useTable({
 let timer: any
 onMounted(() => {
   timer = setInterval(async () => {
+    const pagination = getPagination() as any
     const result = (await getAnalysisTaskList({
-      factoryId: Number(factoryId.value) || undefined
+      factoryId: Number(factoryId.value) || undefined,
+      page: pagination.page,
+      pageSize: pagination.pageSize
     })) as any
     setTableData(result.rows)
   }, 5000)

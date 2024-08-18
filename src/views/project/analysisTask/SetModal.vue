@@ -44,7 +44,7 @@ const handleSubmit = async () => {
 </script>
 
 <template>
-  <Modal class="!w-120" @register="registerModal" @positive-click="handleSubmit">
+  <Modal class="!w-200" @register="registerModal" @positive-click="handleSubmit">
     <Form @register="registerForm" />
   </Modal>
 </template>

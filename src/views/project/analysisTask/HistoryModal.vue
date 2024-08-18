@@ -10,6 +10,8 @@ import { getAnalysisTaskResult } from '@/api/project/analysisTask'
 const id = ref()
 const tableData = ref<any[]>([])
 const task = ref<any>({})
+const dictData = ref<any[]>([])
+const language = ref('zh')
 const [registerModal] = useModalInner(async (data) => {
   task.value = data
   id.value = data.id
@@ -37,15 +39,11 @@ const [registerModal] = useModalInner(async (data) => {
     })
     return { tag: item.tag, time: item.time, ...condition }
   })
-  const dictType = (await getDictTypeList({ name: 'hart', pageSize: 1000 })).rows
+  const dictType = (await getDictTypeList({ name: 'hard', pageSize: 1000 })).rows
   const dictTypeId = dictType[0].id
-  const dictData = (await getDictDataList({ dictTypeId, pageSize: 1000 })).rows
-  const columns: BasicColumn[] = dictData.map((item: DictTypeInfo) => {
-    return {
-      title: item.name,
-      key: item.name,
-      width: 150
-    }
+  dictData.value = (await getDictDataList({ dictTypeId, pageSize: 1000 })).rows
+  const columns: BasicColumn[] = dictData.value.map((item: DictTypeInfo) => {
+    return { title: item.name, key: item.name, width: 150 }
   })
   setColumns([
     { title: '阀门位号', key: 'tag', width: 150 },
@@ -72,6 +70,25 @@ const [registerTable, { setColumns, getTableData, getColumns }] = useTable({
   rowKey: (rowData) => rowData.id,
   showIndexColumn: false
 })
+
+const changeLanguage = () => {
+  language.value = language.value === 'zh' ? 'en' : 'zh'
+  const columns: BasicColumn[] = dictData.value.map((item: DictTypeInfo) => {
+    return { title: language.value === 'zh' ? item.name : item.value, key: item.name, width: 150 }
+  })
+  setColumns([
+    { title: language.value === 'zh' ? '阀门位号' : 'tag', key: 'tag', width: 200 },
+    {
+      title: language.value === 'zh' ? '采集时间' : 'time',
+      key: 'time',
+      width: 200,
+      render(rowData: any) {
+        return dayjs(rowData.time).format('YYYY-MM-DD HH:mm:ss')
+      }
+    },
+    ...columns
+  ])
+}
 
 const exportData = async () => {
   const workbook = new Workbook()
@@ -113,6 +130,9 @@ function download(arrayBuffer: any) {
     <Table @register="registerTable">
       <template #toolbar>
         <n-button class="mr-2" type="primary" @click="exportData()"> 导出数据 </n-button>
+        <n-button class="mr-2" type="primary" @click="changeLanguage">
+          {{ language === 'zh' ? '中文' : '英文' }}
+        </n-button>
       </template>
     </Table>
   </Modal>
