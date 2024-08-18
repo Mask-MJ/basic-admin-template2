@@ -18,7 +18,7 @@ const [registerModal] = useModalInner(async (data) => {
     })
     return { tag: item.tag, time: item.time, ...condition }
   })
-  const dictType = (await getDictTypeList({ name: 'hard', pageSize: 1000 })).rows
+  const dictType = (await getDictTypeList({ name: 'hart', pageSize: 1000 })).rows
   const dictTypeId = dictType[0].id
   const dictData = (await getDictDataList({ dictTypeId, pageSize: 1000 })).rows
   const columns: BasicColumn[] = dictData.map((item: DictTypeInfo) => {
