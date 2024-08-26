@@ -1,19 +1,18 @@
 <script setup lang="ts">
 import * as echarts from 'echarts'
 import { useModalInner } from '@/components/Modal'
-import { getValveHistoryList } from '@/api/project/valve'
+import { getValveHistoryChart } from '@/api/project/valve'
+import { getDictDataList } from '@/api/system/dict'
 
-const historyData = ref()
+const chartData = ref()
 const ChartRef = ref<HTMLElement>()
-const value = ref('1')
+const value = ref('')
 const range = ref()
-const options = [
-  { label: 'Travel （行程）', value: '1' },
-  { label: 'Travel Deviation （行程偏差）', value: '2' },
-  { label: 'Supply Pressure （供气压力）', value: '3' }
-]
+const options = ref<any[]>([])
 const [registerModal] = useModalInner(async (data) => {
-  historyData.value = await getValveHistoryList({ valveId: data.id })
+  options.value = (await getDictDataList({ dictTypeId: 3 })).rows
+  value.value = options.value[0].name
+  chartData.value = await getValveHistoryChart(data.id, value.value)
   const Chart = echarts.init(ChartRef.value)
   Chart.setOption({
     xAxis: {
@@ -43,7 +42,7 @@ const [registerModal] = useModalInner(async (data) => {
   <Modal title="阀门运行数据可视化" class="!w-250" @register="registerModal">
     <n-grid x-gap="12" :cols="4" class="mt-4">
       <n-gi>
-        <n-select v-model:value="value" :options="options" />
+        <n-select v-model:value="value" label-field="name" :options="options" />
       </n-gi>
       <n-gi :span="3">
         <n-date-picker v-model:value="range" type="daterange" clearable />

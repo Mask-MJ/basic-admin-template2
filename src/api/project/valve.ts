@@ -121,7 +121,8 @@ enum Api {
   Valve = 'project/valve',
   ValveRunInfo = 'project/valve/run-info',
   ValveHistory = 'project/valve/history',
-  ValveScore = 'project/valve/score'
+  ValveScore = 'project/valve/score',
+  ValveHistoryChart = 'project/valve/historyChart'
 }
 
 // 获取阀门列表
@@ -147,3 +148,6 @@ export const getValveHistoryDetail = (id: number) =>
   defHttp.get<ValveRunInfo>({ url: `${Api.ValveHistory}/${id}` })
 // 获取阀门健康评分
 export const getValveScore = (id: number) => defHttp.get({ url: `${Api.ValveScore}/${id}` })
+// 获取阀门运行历史数据
+export const getValveHistoryChart = (id: number, name: string) =>
+  defHttp.get<ValveRunInfo>({ url: `${Api.ValveHistoryChart}/${id}/${name}` })
