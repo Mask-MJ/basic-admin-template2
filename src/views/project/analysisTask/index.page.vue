@@ -86,7 +86,7 @@ const [registerTable, { reload, setTableData, getPagination }] = useTable({
 let timer: any
 onMounted(() => {
   timer = setInterval(async () => {
-    const pagination = getPagination() as any
+    const pagination = getPagination()
     const result = (await getAnalysisTaskList({
       factoryId: Number(factoryId.value) || undefined,
       page: pagination.page,

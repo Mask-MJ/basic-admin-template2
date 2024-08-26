@@ -93,7 +93,7 @@ export interface TableActionType {
 
   // 分页
   /** 获取当前分页信息 */
-  getPagination: () => PaginationProps | boolean
+  getPagination: () => PaginationProps
   /** 设置分页信息 */
   setPagination: (info: Partial<PaginationProps> | boolean) => void
 
