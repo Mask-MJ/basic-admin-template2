@@ -8,9 +8,9 @@ const ChartRef = ref<HTMLElement>()
 const value = ref('1')
 const range = ref()
 const options = [
-  { label: '实际行程', value: '1' },
-  { label: '行程偏差', value: '2' },
-  { label: '最高温度记录', value: '3' }
+  { label: 'Travel （行程）', value: '1' },
+  { label: 'Travel Deviation （行程偏差）', value: '2' },
+  { label: 'Supply Pressure （供气压力）', value: '3' }
 ]
 const [registerModal] = useModalInner(async (data) => {
   historyData.value = await getValveHistoryList({ valveId: data.id })
