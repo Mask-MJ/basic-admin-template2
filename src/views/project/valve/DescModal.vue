@@ -6,7 +6,7 @@ const valveRunData = ref<ValveRunInfo[]>()
 // 诊断数据
 const valueDiagnostic = ref<ValveRunInfo[]>()
 const [registerModal] = useModalInner(async (data: ValveRunInfo[]) => {
-  valveRunDataConfig.value = data.filter((item) => item.type === '0')
+  valveRunDataConfig.value = data.filter((item) => item.type === '0' && !item.name.endsWith('诊断'))
   valveRunData.value = data.filter((item) => item.type === '1')
   valueDiagnostic.value = data.filter((item) => item.type === '2' || item.name.endsWith('诊断'))
 })
