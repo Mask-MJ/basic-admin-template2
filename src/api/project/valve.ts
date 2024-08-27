@@ -149,5 +149,9 @@ export const getValveHistoryDetail = (id: number) =>
 // 获取阀门健康评分
 export const getValveScore = (id: number) => defHttp.get({ url: `${Api.ValveScore}/${id}` })
 // 获取阀门运行历史数据
-export const getValveHistoryChart = (id: number, name: string) =>
-  defHttp.get<ValveRunInfo>({ url: `${Api.ValveHistoryChart}/${id}/${name}` })
+export const getValveHistoryChart = (params: {
+  id: number
+  type: string
+  beginTime?: number
+  endTime?: number
+}) => defHttp.get<ValveRunInfo>({ url: `${Api.ValveHistoryChart}`, params })
