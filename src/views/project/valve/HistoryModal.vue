@@ -4,8 +4,13 @@ import { useModalInner } from '@/components/Modal'
 import { useTable } from '@/components/Table'
 import { getValveHistoryList } from '@/api/project/valve'
 import { getDictDataList, getDictTypeList, type DictTypeInfo } from '@/api/system/dict'
+import dayjs from 'dayjs'
+import { Workbook } from 'exceljs'
 const valveId = ref()
-const tableData = ref([])
+const tableData = ref<any[]>([])
+const language = ref('zh')
+const dictData = ref<any[]>([])
+
 const [registerModal] = useModalInner(async (data) => {
   valveId.value = data.id
   const result = (await getValveHistoryList({ valveId: data.id })).rows
@@ -20,8 +25,8 @@ const [registerModal] = useModalInner(async (data) => {
   })
   const dictType = (await getDictTypeList({ name: 'hart', pageSize: 1000 })).rows
   const dictTypeId = dictType[0].id
-  const dictData = (await getDictDataList({ dictTypeId, pageSize: 1000 })).rows
-  const columns: BasicColumn[] = dictData.map((item: DictTypeInfo) => {
+  dictData.value = (await getDictDataList({ dictTypeId, pageSize: 1000 })).rows
+  const columns: BasicColumn[] = dictData.value.map((item: DictTypeInfo) => {
     return {
       title: item.name,
       key: item.name,
@@ -37,7 +42,7 @@ const [registerModal] = useModalInner(async (data) => {
   ])
 })
 
-const [registerTable, { setColumns }] = useTable({
+const [registerTable, { setColumns, getTableData, getColumns }] = useTable({
   data: tableData,
   // api: getValveHistoryList, // 请求接口
   columns: [
@@ -50,11 +55,68 @@ const [registerTable, { setColumns }] = useTable({
   showToolbars: false,
   showIndexColumn: false
 })
+const changeLanguage = () => {
+  language.value = language.value === 'zh' ? 'en' : 'zh'
+  const columns: BasicColumn[] = dictData.value.map((item: DictTypeInfo) => {
+    return { title: language.value === 'zh' ? item.name : item.value, key: item.name, width: 150 }
+  })
+  setColumns([
+    { title: language.value === 'zh' ? '阀门位号' : 'tag', key: 'tag', width: 200 },
+    {
+      title: language.value === 'zh' ? '采集时间' : 'time',
+      key: 'time',
+      width: 200,
+      render(rowData: any) {
+        return dayjs(rowData.time).format('YYYY-MM-DD HH:mm:ss')
+      }
+    },
+    ...columns
+  ])
+}
+const exportData = async () => {
+  const workbook = new Workbook()
+  const worksheet = workbook.addWorksheet('解析结果')
+  worksheet.columns = getColumns().map((item: any) => {
+    return { header: item.title, key: item.key, width: 30 }
+  })
+  const data = getTableData()
+  worksheet.addRows(data)
+  const arraybuffer: any = new ArrayBuffer(10 * 1024 * 1024)
+  const res = await workbook.xlsx.writeBuffer(arraybuffer)
+  download(res)
+}
+function download(arrayBuffer: any) {
+  const link = document.createElement('a')
+
+  const blob = new Blob([arrayBuffer])
+  const url = URL.createObjectURL(blob)
+  const valveTag = tableData.value[0]?.tag
+  if (!valveTag) {
+    window.$message.error('暂无数据')
+    return
+  }
+  link.href = url
+  link.download = valveTag + ' - 阀门历史数据.xlsx'
+
+  document.body.appendChild(link)
+
+  link.click()
+  link.addEventListener('click', () => {
+    link.remove()
+  })
+}
 </script>
 
 <template>
   <Modal title="阀门历史数据" class="!w-250" @register="registerModal">
-    <Table @register="registerTable"> </Table>
+    <Table @register="registerTable">
+      <template #toolbar>
+        <n-button class="mr-2" type="primary" @click="exportData()"> 导出数据 </n-button>
+        <n-button class="mr-2" type="primary" @click="changeLanguage">
+          {{ language === 'zh' ? '中文' : '英文' }}
+        </n-button>
+      </template>
+    </Table>
   </Modal>
 </template>
 
