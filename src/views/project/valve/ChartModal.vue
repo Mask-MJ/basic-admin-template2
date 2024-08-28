@@ -13,7 +13,7 @@ const value = ref('')
 const range = ref<[number, number]>()
 const options = ref<any[]>([])
 const [registerModal] = useModalInner(async (data) => {
-  options.value = (await getDictDataList({ dictTypeId: 3 })).rows
+  options.value = (await getDictDataList({ dictTypeValue: 'chart' })).rows
   valveId.value = data.id
   value.value = options.value[0].name
   change()

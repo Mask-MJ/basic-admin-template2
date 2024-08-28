@@ -19,6 +19,7 @@ export interface SearchParams {
   page: number
   pageSize: number
   dictTypeId: number
+  dictTypeValue: string
   name: string
   value: string
 }
