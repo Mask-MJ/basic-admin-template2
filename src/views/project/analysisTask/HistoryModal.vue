@@ -46,7 +46,7 @@ const [registerModal] = useModalInner(async (data) => {
     return { title: item.name, key: item.name, width: 150 }
   })
   setColumns([
-    { title: '阀门位号', key: 'tag', width: 150 },
+    { title: '阀门位号', key: 'tag', width: 150, fixed: 'left' },
     {
       title: '读取时间',
       key: 'time',
@@ -62,7 +62,7 @@ const [registerModal] = useModalInner(async (data) => {
 const [registerTable, { setColumns, getTableData, getColumns }] = useTable({
   data: tableData,
   columns: [
-    { title: '阀门位号', key: 'tag', width: 200 },
+    { title: '阀门位号', key: 'tag', width: 200, fixed: 'left' },
     { title: '采集时间', key: 'time', width: 200 }
   ], // 展示的列
   bordered: true,
@@ -77,7 +77,7 @@ const changeLanguage = () => {
     return { title: language.value === 'zh' ? item.name : item.value, key: item.name, width: 150 }
   })
   setColumns([
-    { title: language.value === 'zh' ? '阀门位号' : 'tag', key: 'tag', width: 200 },
+    { title: language.value === 'zh' ? '阀门位号' : 'tag', key: 'tag', width: 200, fixed: 'left' },
     {
       title: language.value === 'zh' ? '采集时间' : 'time',
       key: 'time',

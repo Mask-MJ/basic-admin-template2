@@ -36,7 +36,7 @@ const [registerModal] = useModalInner(async (data) => {
     }
   })
   setColumns([
-    { title: '阀门位号', key: 'tag', resizable: true },
+    { title: '阀门位号', key: 'tag', resizable: true, fixed: 'left' },
     { title: '读取时间', key: 'time', minWidth: 200, resizable: true },
     ...columns
   ])
@@ -46,7 +46,7 @@ const [registerTable, { setColumns, getTableData, getColumns }] = useTable({
   data: tableData,
   // api: getValveHistoryList, // 请求接口
   columns: [
-    { title: '阀门位号', key: 'tag', resizable: true },
+    { title: '阀门位号', key: 'tag', resizable: true, fixed: 'left' },
     { title: '读取时间', key: 'time', resizable: true }
   ], // 展示的列
   bordered: true,
@@ -61,7 +61,7 @@ const changeLanguage = () => {
     return { title: language.value === 'zh' ? item.name : item.value, key: item.name, width: 150 }
   })
   setColumns([
-    { title: language.value === 'zh' ? '阀门位号' : 'tag', key: 'tag', width: 200 },
+    { title: language.value === 'zh' ? '阀门位号' : 'tag', key: 'tag', width: 200, fixed: 'left' },
     {
       title: language.value === 'zh' ? '采集时间' : 'time',
       key: 'time',
