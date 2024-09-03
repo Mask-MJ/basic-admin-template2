@@ -54,7 +54,7 @@ const [registerModal] = useModalInner(async (data) => {
       const isRepeat = repeatArray.some((i: any) => JSON.stringify(i) === JSON.stringify(itm))
       if (isRepeat && itm.treeId) {
         const treeData = dictDataTreeList.find((i: any) => i.id === itm.treeId)
-        const name = `${itm.name}(${treeData.name})`
+        const name = `${itm.name}(${treeData.value})`
         condition[name] = value
       } else {
         condition[itm.name] = value
@@ -74,8 +74,8 @@ const [registerModal] = useModalInner(async (data) => {
     const isRepeat = repeatArray.some((i: any) => JSON.stringify(i) === JSON.stringify(item))
     if (isRepeat && item.treeId) {
       columns.push({
-        title: `${name}(${item.tree.name})`,
-        key: `${name}(${item.tree.name})`,
+        title: `${name}(${item.tree.value})`,
+        key: `${name}(${item.tree.value})`,
         width: 150
       })
     } else {
