@@ -1,11 +1,17 @@
 <script setup lang="ts">
 import { useModalInner } from '@/components/Modal'
 import { useTable, type BasicColumn } from '@/components/Table'
-// import { mockResultData } from './mock'
-import { getDictDataList, getDictTypeList, type DictTypeInfo } from '@/api/system/dict'
+// import { mockResultData2 } from './mock'
+import {
+  getDictDataList,
+  getDictTypeList,
+  getDictDataTreeListAll,
+  type DictTypeInfo
+} from '@/api/system/dict'
 import dayjs from 'dayjs'
 import { Workbook } from 'exceljs'
 import { getAnalysisTaskResult } from '@/api/project/analysisTask'
+import { groupBy, flattenDepth } from 'lodash-es'
 
 const id = ref()
 const tableData = ref<any[]>([])
@@ -13,11 +19,15 @@ const task = ref<any>({})
 const dictData = ref<any[]>([])
 const language = ref('zh')
 const [registerModal] = useModalInner(async (data) => {
+  const dictType = (await getDictTypeList({ name: 'hart', pageSize: 1000 })).rows
+  const dictTypeId = dictType[0].id
+  dictData.value = (await getDictDataList({ dictTypeId, pageSize: 1000 })).rows
+  const dictDataTreeList = await getDictDataTreeListAll()
   task.value = data
   id.value = data.id
   const res: any[] = []
   const result = await getAnalysisTaskResult({ id: data.id })
-  // const result = mockResultData
+  // const result = mockResultData2
   if (!result.length) {
     return
   } else {
@@ -28,22 +38,49 @@ const [registerModal] = useModalInner(async (data) => {
   tableData.value = res.map((item: any) => {
     // 数组转对象
     const condition: any = {}
-    item.data.map((itm: any) => {
+    const repeatArray = flattenDepth(
+      Object.values(groupBy(item.data, (i: any) => i.name)).filter((value) => value.length > 1),
+      1
+    )
+    item.data.map(async (itm: any) => {
       let value = itm.value === null ? '----' : itm.value
       if (typeof value === 'object') {
         value = Object.keys(value)
           .map((key) => `${key}: ${value[key]}`)
           .join('; ')
       }
-      condition[itm.name] = value
+
+      // 判断 itm 是否和 repeatArray 数组中的对象完全相等
+      const isRepeat = repeatArray.some((i: any) => JSON.stringify(i) === JSON.stringify(itm))
+      if (isRepeat && itm.treeId) {
+        const treeData = dictDataTreeList.find((i: any) => i.id === itm.treeId)
+        const name = `${itm.name}(${treeData.name})`
+        condition[name] = value
+      } else {
+        condition[itm.name] = value
+      }
     })
     return { tag: item.tag, time: item.time, ...condition }
   })
-  const dictType = (await getDictTypeList({ name: 'hart', pageSize: 1000 })).rows
-  const dictTypeId = dictType[0].id
-  dictData.value = (await getDictDataList({ dictTypeId, pageSize: 1000 })).rows
-  const columns: BasicColumn[] = dictData.value.map((item: DictTypeInfo) => {
-    return { title: item.name, key: item.name, width: 150 }
+
+  const columns: any[] = []
+  const repeatArray = flattenDepth(
+    Object.values(groupBy(dictData.value, (item: any) => item.name)).filter(
+      (value) => value.length > 1
+    )
+  )
+  dictData.value.forEach((item: any) => {
+    const name = item.name
+    const isRepeat = repeatArray.some((i: any) => JSON.stringify(i) === JSON.stringify(item))
+    if (isRepeat && item.treeId) {
+      columns.push({
+        title: `${name}(${item.tree.name})`,
+        key: `${name}(${item.tree.name})`,
+        width: 150
+      })
+    } else {
+      columns.push({ title: name, key: name, width: 150 })
+    }
   })
   setColumns([
     { title: '阀门位号', key: 'tag', width: 150, fixed: 'left' },

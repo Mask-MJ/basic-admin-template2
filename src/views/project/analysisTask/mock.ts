@@ -1243,3 +1243,1609 @@ export const mockResultData = [
     ]
   }
 ]
+export const mockResultData2 = [
+  {
+    id: 1,
+    analysisTaskId: 1,
+    tag: '66FV_03122A_4',
+    time: '2024-09-03 03:30:48',
+    data: [
+      {
+        tag: '66FV_03122A_4',
+        data: [
+          {
+            name: '行程',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '行程偏差',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '供气压力',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '驱动信号',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '仪表模式',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '循环计数',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '行程累计器',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '放大器调整',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '最高温度记录',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '运行时间',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '启动次数',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '仪表等级',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '阀门型式',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '执行机构类型',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '标定日期',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '行程高',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '行程低',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '行程高高',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '行程低低',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '行程偏差',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '循环计数高',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '行程累计高',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '驱动信号',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '组态已更改',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '回路电流验证报警',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '内部传感器超出限制范围',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '变量超出范围',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '处于标定模式',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '自动校验进行中',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '诊断进行中',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '小回路传感器故障',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '行程传感器故障',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '温度传感器故障',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '压力传感器故障',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '驱动电流故障',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '关键 NVM 故障',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '闪存完整性故障',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '参考电压故障',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '报警记录非空',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '报警记录已满',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '积分器饱和高',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '积分器饱和低',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '关机激活',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '压力偏差',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '非关键 NVM 故障',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '仪表时间为大概值',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '诊断数据可用',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '要求手动复位',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '行程高限位/截止',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '行程低限位/截止',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '压力切换激活',
+            unit: null,
+            value: ''
+          },
+          {
+            name: 'NVM 过度写入',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '供气压力高',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '端口 A 过压',
+            unit: null,
+            value: ''
+          },
+          {
+            name: 'SOV 测试最低要求压降',
+            unit: null,
+            value: ''
+          },
+          {
+            name: 'SOV 测试最高可允许压降',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '供气压力性能诊断',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '行程偏差性能诊断',
+            unit: null,
+            value: ''
+          },
+          {
+            name: 'I/P和放大器完整性性能诊断',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '放大器调整性能诊断',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '空气质量流量性能诊断',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '阀门摩擦力性能诊断',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '平均扭矩',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '平均死区',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '平均扭矩',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '平均死区',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '扫描时间',
+            unit: null,
+            value: '50.0 sec'
+          },
+          {
+            name: '平均动态误差',
+            unit: null,
+            value: '1.97%'
+          },
+          {
+            name: '动态线性度（独立）',
+            unit: null,
+            value: '0.36%'
+          },
+          {
+            name: '平均扭矩',
+            unit: null,
+            value: '23 Ibf'
+          },
+          {
+            name: '弹簧预紧力',
+            unit: null,
+            value: '9.29 - 26.58 psi'
+          },
+          {
+            name: '测试状态阀座负载',
+            unit: null,
+            value: '1106.16 lbf'
+          },
+          {
+            name: '投用状态阀座负载',
+            unit: null,
+            value: '1075.65 lbf'
+          },
+          {
+            name: '弹簧预紧力',
+            unit: null,
+            value: '9.29 - 26.58 psi'
+          },
+          {
+            name: '预期总摩擦力',
+            unit: null,
+            value: '115 Ibf'
+          },
+          {
+            name: '测试状态阀座负载',
+            unit: null,
+            value: '1106.16 lbf'
+          },
+          {
+            name: '投用状态阀座负载',
+            unit: null,
+            value: '1075.65 lbf'
+          },
+          {
+            name: '所需阀座负载',
+            unit: null,
+            value: '49.47 Ibf'
+          },
+          {
+            name: '预期总摩擦力',
+            unit: null,
+            value: '115 Ibf'
+          },
+          {
+            name: '类型',
+            unit: null,
+            value: '501T'
+          },
+          {
+            name: '尺寸',
+            unit: null,
+            value: 'DN 20'
+          },
+          {
+            name: '额定行程',
+            unit: null,
+            value: '20.0 mm'
+          },
+          {
+            name: '实际行程',
+            unit: null,
+            value: '20.00000 mm'
+          },
+          {
+            name: '阀杆直径',
+            unit: null,
+            value: '14.0 mm'
+          },
+          {
+            name: '填料类型',
+            unit: null,
+            value: 'Composition'
+          },
+          {
+            name: '增压器',
+            unit: null,
+            value: 'None'
+          },
+          {
+            name: '类型',
+            unit: null,
+            value: '5227'
+          },
+          {
+            name: '尺寸',
+            unit: null,
+            value: '270'
+          },
+          {
+            name: '有效面积',
+            unit: null,
+            value: '310.00003 cm2'
+          },
+          {
+            name: '下方弹簧预紧力',
+            unit: null,
+            value: '80.0 kPa'
+          },
+          {
+            name: '上方弹簧预紧力',
+            unit: null,
+            value: '200.0 kPa'
+          },
+          {
+            name: '反馈连接方式',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '零功率状态',
+            unit: null,
+            value: 'Valve Open'
+          },
+          {
+            name: '行程整定参数',
+            unit: null,
+            value: 'H'
+          },
+          {
+            name: '比例',
+            unit: null,
+            value: '8.40'
+          },
+          {
+            name: '速度',
+            unit: null,
+            value: '4.20'
+          },
+          {
+            name: 'MLF',
+            unit: null,
+            value: '31.00'
+          },
+          {
+            name: '截止和表征',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '死区时间最大值及步数',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '超量 最大值及步数',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '误差 最大值及步数',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '第10步行程时间',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '第11步行程时间',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '第10步误差',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '第11步误差',
+            unit: null,
+            value: ''
+          }
+        ],
+        time: '2023-02-16T00:00:00'
+      },
+      {
+        tag: '66FV_03122A_4',
+        data: [
+          {
+            name: '行程',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '行程偏差',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '供气压力',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '驱动信号',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '仪表模式',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '循环计数',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '行程累计器',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '放大器调整',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '最高温度记录',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '运行时间',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '启动次数',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '仪表等级',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '阀门型式',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '执行机构类型',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '标定日期',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '行程高',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '行程低',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '行程高高',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '行程低低',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '行程偏差',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '循环计数高',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '行程累计高',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '驱动信号',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '组态已更改',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '回路电流验证报警',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '内部传感器超出限制范围',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '变量超出范围',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '处于标定模式',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '自动校验进行中',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '诊断进行中',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '小回路传感器故障',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '行程传感器故障',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '温度传感器故障',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '压力传感器故障',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '驱动电流故障',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '关键 NVM 故障',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '闪存完整性故障',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '参考电压故障',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '报警记录非空',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '报警记录已满',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '积分器饱和高',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '积分器饱和低',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '关机激活',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '压力偏差',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '非关键 NVM 故障',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '仪表时间为大概值',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '诊断数据可用',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '要求手动复位',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '行程高限位/截止',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '行程低限位/截止',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '压力切换激活',
+            unit: null,
+            value: ''
+          },
+          {
+            name: 'NVM 过度写入',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '供气压力高',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '端口 A 过压',
+            unit: null,
+            value: ''
+          },
+          {
+            name: 'SOV 测试最低要求压降',
+            unit: null,
+            value: ''
+          },
+          {
+            name: 'SOV 测试最高可允许压降',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '供气压力性能诊断',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '行程偏差性能诊断',
+            unit: null,
+            value: ''
+          },
+          {
+            name: 'I/P和放大器完整性性能诊断',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '放大器调整性能诊断',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '空气质量流量性能诊断',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '阀门摩擦力性能诊断',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '平均扭矩',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '平均死区',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '平均扭矩',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '平均死区',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '扫描时间',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '平均动态误差',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '动态线性度（独立）',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '平均扭矩',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '弹簧预紧力',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '测试状态阀座负载',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '投用状态阀座负载',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '弹簧预紧力',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '预期总摩擦力',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '测试状态阀座负载',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '投用状态阀座负载',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '所需阀座负载',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '预期总摩擦力',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '类型',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '尺寸',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '额定行程',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '实际行程',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '阀杆直径',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '填料类型',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '增压器',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '类型',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '尺寸',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '有效面积',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '下方弹簧预紧力',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '上方弹簧预紧力',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '反馈连接方式',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '零功率状态',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '行程整定参数',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '比例',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '速度',
+            unit: null,
+            value: ''
+          },
+          {
+            name: 'MLF',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '截止和表征',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '死区时间最大值及步数',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '超量 最大值及步数',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '误差 最大值及步数',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '第10步行程时间',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '第11步行程时间',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '第10步误差',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '第11步误差',
+            unit: null,
+            value: ''
+          }
+        ],
+        time: '2023-02-19T00:00:00'
+      },
+      {
+        tag: '66FV_03122A_4',
+        data: [
+          {
+            name: '行程',
+            unit: null,
+            value: '9.79 %'
+          },
+          {
+            name: '行程偏差',
+            unit: null,
+            value: '1.03 %',
+            treeId: 82
+          },
+          {
+            name: '供气压力',
+            unit: null,
+            value: '313.25 kPa'
+          },
+          {
+            name: '驱动信号',
+            unit: null,
+            value: '68.44 %'
+          },
+          {
+            name: '仪表模式',
+            unit: null,
+            value: 'In Service'
+          },
+          {
+            name: '循环计数',
+            unit: null,
+            value: '12827 counts'
+          },
+          {
+            name: '行程累计器',
+            unit: null,
+            value: '64317 %'
+          },
+          {
+            name: '放大器调整',
+            unit: null,
+            value: 'N/A'
+          },
+          {
+            name: '最高温度记录',
+            unit: null,
+            value: '37.88 C'
+          },
+          {
+            name: '运行时间',
+            unit: null,
+            value: '245 days'
+          },
+          {
+            name: '启动次数',
+            unit: null,
+            value: '14'
+          },
+          {
+            name: '仪表等级',
+            unit: null,
+            value: 'PD'
+          },
+          {
+            name: '阀门型式',
+            unit: null,
+            value: 'Sliding Stem'
+          },
+          {
+            name: '执行机构类型',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '标定日期',
+            unit: null,
+            value: '24 Nov 2021'
+          },
+          {
+            name: '行程高',
+            unit: null,
+            value: '----'
+          },
+          {
+            name: '行程低',
+            unit: null,
+            value: '----'
+          },
+          {
+            name: '行程高高',
+            unit: null,
+            value: '----'
+          },
+          {
+            name: '行程低低',
+            unit: null,
+            value: '----'
+          },
+          {
+            name: '行程偏差',
+            unit: null,
+            value: '222',
+            treeId: 84
+          },
+          {
+            name: '循环计数高',
+            unit: null,
+            value: '----'
+          },
+          {
+            name: '行程累计高',
+            unit: null,
+            value: '----'
+          },
+          {
+            name: '驱动信号',
+            unit: null,
+            value: '----'
+          },
+          {
+            name: '组态已更改',
+            unit: null,
+            value: '----'
+          },
+          {
+            name: '回路电流验证报警',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '内部传感器超出限制范围',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '变量超出范围',
+            unit: null,
+            value: '----'
+          },
+          {
+            name: '处于标定模式',
+            unit: null,
+            value: '----'
+          },
+          {
+            name: '自动校验进行中',
+            unit: null,
+            value: '----'
+          },
+          {
+            name: '诊断进行中',
+            unit: null,
+            value: '----'
+          },
+          {
+            name: '小回路传感器故障',
+            unit: null,
+            value: '----'
+          },
+          {
+            name: '行程传感器故障',
+            unit: null,
+            value: '----'
+          },
+          {
+            name: '温度传感器故障',
+            unit: null,
+            value: '----'
+          },
+          {
+            name: '压力传感器故障',
+            unit: null,
+            value: '----'
+          },
+          {
+            name: '驱动电流故障',
+            unit: null,
+            value: '----'
+          },
+          {
+            name: '关键 NVM 故障',
+            unit: null,
+            value: '----'
+          },
+          {
+            name: '闪存完整性故障',
+            unit: null,
+            value: '----'
+          },
+          {
+            name: '参考电压故障',
+            unit: null,
+            value: '----'
+          },
+          {
+            name: '报警记录非空',
+            unit: null,
+            value: '----'
+          },
+          {
+            name: '报警记录已满',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '积分器饱和高',
+            unit: null,
+            value: '----'
+          },
+          {
+            name: '积分器饱和低',
+            unit: null,
+            value: '----'
+          },
+          {
+            name: '关机激活',
+            unit: null,
+            value: '----'
+          },
+          {
+            name: '压力偏差',
+            unit: null,
+            value: '----'
+          },
+          {
+            name: '非关键 NVM 故障',
+            unit: null,
+            value: '----'
+          },
+          {
+            name: '仪表时间为大概值',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '诊断数据可用',
+            unit: null,
+            value: '----'
+          },
+          {
+            name: '要求手动复位',
+            unit: null,
+            value: '----'
+          },
+          {
+            name: '行程高限位/截止',
+            unit: null,
+            value: '----'
+          },
+          {
+            name: '行程低限位/截止',
+            unit: null,
+            value: '----'
+          },
+          {
+            name: '压力切换激活',
+            unit: null,
+            value: '----'
+          },
+          {
+            name: 'NVM 过度写入',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '供气压力高',
+            unit: null,
+            value: '----'
+          },
+          {
+            name: '端口 A 过压',
+            unit: null,
+            value: '----'
+          },
+          {
+            name: 'SOV 测试最低要求压降',
+            unit: null,
+            value: '----'
+          },
+          {
+            name: 'SOV 测试最高可允许压降',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '供气压力性能诊断',
+            unit: null,
+            value: '{}'
+          },
+          {
+            name: '行程偏差性能诊断',
+            unit: null,
+            value: "{'Supply Pressure OK': ''}"
+          },
+          {
+            name: 'I/P和放大器完整性性能诊断',
+            unit: null,
+            value: "{'Supply Pressure OK': ''}"
+          },
+          {
+            name: '放大器调整性能诊断',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '空气质量流量性能诊断',
+            unit: null,
+            value: '{}'
+          },
+          {
+            name: '阀门摩擦力性能诊断',
+            unit: null,
+            value:
+              "{'Supply Pressure OK': '\\nAnalysis In Progress\\nA friction estimate will be reported when a sufficient number of travel\\nreversals have taken place to compute a reliable value.\\nUncertain Friction\\nEstimated Friction = 0.00 Ibf. User Defined Friction Range: 10.00 - 100.\\n00 Ibf.\\nPossible Cause(s):\\nThere are not sufficient travel reversals to compute a reliable friction.\\nvalue.'}"
+          },
+          {
+            name: '平均扭矩',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '平均死区',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '平均扭矩',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '平均死区',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '扫描时间',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '平均动态误差',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '动态线性度（独立）',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '平均扭矩',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '弹簧预紧力',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '测试状态阀座负载',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '投用状态阀座负载',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '弹簧预紧力',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '预期总摩擦力',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '测试状态阀座负载',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '投用状态阀座负载',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '所需阀座负载',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '预期总摩擦力',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '类型',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '尺寸',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '额定行程',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '实际行程',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '阀杆直径',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '填料类型',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '增压器',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '类型',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '尺寸',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '有效面积',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '下方弹簧预紧力',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '上方弹簧预紧力',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '反馈连接方式',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '零功率状态',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '行程整定参数',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '比例',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '速度',
+            unit: null,
+            value: ''
+          },
+          {
+            name: 'MLF',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '截止和表征',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '死区时间最大值及步数',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '超量 最大值及步数',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '误差 最大值及步数',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '第10步行程时间',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '第11步行程时间',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '第10步误差',
+            unit: null,
+            value: ''
+          },
+          {
+            name: '第11步误差',
+            unit: null,
+            value: ''
+          }
+        ],
+        time: '2023-10-12T00:00:00'
+      }
+    ]
+  }
+]
