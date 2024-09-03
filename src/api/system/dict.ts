@@ -39,6 +39,7 @@ export interface DictDataInfo {
   value: string
   sort: number
   status: boolean
+  type: string
   dictTypeId: number
   createBy: string
   updateBy: string | null
