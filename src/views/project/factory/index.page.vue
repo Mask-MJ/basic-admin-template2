@@ -9,9 +9,12 @@ import {
 } from '@/api/project/factory'
 import { columns, searchSchemas } from './data'
 import SetModal from './SetModal.vue'
+import ImportModal from './ImportModal.vue'
 
 const router = useRouter()
 const [registerSetModal, { openModal: openSetModel }] = useModal()
+const [registerImportModal, { openModal: openImportModel }] = useModal()
+
 const [registerTable, { reload }] = useTable({
   api: getFactoryList, // 请求接口
   columns, // 展示的列
@@ -67,6 +70,14 @@ const [registerTable, { reload }] = useTable({
             }
           },
           {
+            icon: 'i-ant-design:file-search-outlined',
+            tooltipProps: { content: '导入数据' },
+            buttonProps: {
+              type: 'info',
+              onClick: () => openImportModel(true, row)
+            }
+          },
+          {
             type: 'del',
             onClick: async () => {
               await deleteFactory(row.id)
@@ -87,6 +98,7 @@ const [registerTable, { reload }] = useTable({
       </template>
     </Table>
     <SetModal @register="registerSetModal" @success="reload()" />
+    <ImportModal @register="registerImportModal" @success="reload()" />
   </PageWrapper>
 </template>
 

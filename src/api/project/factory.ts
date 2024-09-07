@@ -1,4 +1,4 @@
-import type { Result } from '@/utils/request/types'
+import type { Result, UploadFileParams } from '@/utils/request/types'
 import { defHttp } from '@/utils'
 
 export interface CreatedFactory {
@@ -32,7 +32,8 @@ export interface SearchParams {
 }
 
 enum Api {
-  Factory = 'project/factory'
+  Factory = 'project/factory',
+  Import = 'project/factory/import'
 }
 
 // 获取工厂列表
@@ -43,6 +44,9 @@ export const createFactory = (params: CreatedFactory) => defHttp.post({ url: Api
 // 获取单个工厂信息
 export const getFactoryDetail = (id: number) =>
   defHttp.get<FactoryInfo>({ url: `${Api.Factory}/${id}` })
+// 导入阀门基础数据
+export const importValveData = (params: UploadFileParams) =>
+  defHttp.uploadFile({ url: Api.Import }, params)
 // 更新工厂
 export const updateFactory = (params: Partial<FactoryInfo>) =>
   defHttp.patch({ url: `${Api.Factory}/${params.id}`, params })

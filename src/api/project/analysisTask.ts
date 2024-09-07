@@ -54,6 +54,7 @@ export const updateAnalysisTask = (params: Partial<AnalysisTaskInfo>) =>
 // 删除分析任务
 export const deleteAnalysisTask = (ids: number | string) =>
   defHttp.delete({ url: `${Api.AnalysisTask}/${ids}` })
+// 上传分析任务pdf
 export const uploadAnalysisTaskPdf = (params: UploadFileParams) =>
   defHttp.uploadFile({ url: Api.Upload }, params)
 // 执行分析任务

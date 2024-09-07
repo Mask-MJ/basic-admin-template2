@@ -55,7 +55,7 @@ const getActions = computed(() => {
           tooltipProps: { content: '删除' },
           buttonProps: { type: 'error' },
           popConfirmProps: {
-            content: '是否确认删除',
+            content: '是否确认删除, 如果有关联数据会一并删除',
             onPositiveClick: async () => {
               try {
                 await action.onClick?.()

@@ -1,21 +1,15 @@
 <script setup lang="ts">
 import { useModalInner } from '@/components/Modal'
-import { useTable, type BasicColumn } from '@/components/Table'
+import { useTable } from '@/components/Table'
 // import { mockResultData2 } from './mock'
-import {
-  getDictDataList,
-  getDictTypeList,
-  getDictDataTreeListAll,
-  type DictTypeInfo
-} from '@/api/system/dict'
+import { getDictDataList, getDictTypeList, getDictDataTreeListAll } from '@/api/system/dict'
 import dayjs from 'dayjs'
 import { Workbook } from 'exceljs'
-import { getAnalysisTaskResult } from '@/api/project/analysisTask'
+import { getAnalysisTaskResult, type AnalysisTaskInfo } from '@/api/project/analysisTask'
 import { groupBy, flattenDepth } from 'lodash-es'
 
-const id = ref()
+const taskData = ref<AnalysisTaskInfo>()
 const tableData = ref<any[]>([])
-const task = ref<any>({})
 const dictData = ref<any[]>([])
 const language = ref('zh')
 const [registerModal] = useModalInner(async (data) => {
@@ -23,8 +17,7 @@ const [registerModal] = useModalInner(async (data) => {
   const dictTypeId = dictType[0].id
   dictData.value = (await getDictDataList({ dictTypeId, pageSize: 1000 })).rows
   const dictDataTreeList = await getDictDataTreeListAll()
-  task.value = data
-  id.value = data.id
+  taskData.value = data
   const res: any[] = []
   const result = await getAnalysisTaskResult({ id: data.id })
   // const result = mockResultData2
@@ -35,7 +28,61 @@ const [registerModal] = useModalInner(async (data) => {
       res.push(...item.data)
     })
   }
-  tableData.value = res.map((item: any) => {
+  tableData.value = transformData(res, dictDataTreeList)
+
+  const columns: any[] = transformColums()
+  setColumns([
+    { title: '阀门位号', key: 'tag', width: 150, fixed: 'left' },
+    {
+      title: '读取时间',
+      key: 'time',
+      width: 200,
+      render(rowData: any) {
+        return dayjs(rowData.time).format('YYYY-MM-DD HH:mm:ss')
+      }
+    },
+    ...columns
+  ])
+})
+
+const [registerTable, { setColumns, getTableData, getColumns }] = useTable({
+  data: tableData,
+  columns: [
+    { title: '阀门位号', key: 'tag', width: 200, fixed: 'left' },
+    { title: '采集时间', key: 'time', width: 200 }
+  ], // 展示的列
+  bordered: true,
+  searchInfo: { id: taskData.value?.id }, // 额外参数
+  rowKey: (rowData) => rowData.id,
+  showIndexColumn: false
+})
+
+const transformColums = () => {
+  const columns: any[] = []
+  const repeatArray = flattenDepth(
+    Object.values(groupBy(dictData.value, (item: any) => item.name)).filter(
+      (value) => value.length > 1
+    )
+  )
+
+  dictData.value.forEach((item: any) => {
+    const name = language.value === 'zh' ? item.name : item.value
+    const isRepeat = repeatArray.some((i: any) => JSON.stringify(i) === JSON.stringify(item))
+    if (isRepeat && item.treeId) {
+      columns.push({
+        title: `${name}(${item.tree.value})`,
+        key: `${item.name}(${item.tree.value})`,
+        width: 150
+      })
+    } else {
+      columns.push({ title: name, key: item.name, width: 150 })
+    }
+  })
+  return columns
+}
+
+const transformData = (res: any[], dictDataTreeList: any[]) => {
+  return res.map((item: any) => {
     // 数组转对象
     const condition: any = {}
     const repeatArray = flattenDepth(
@@ -62,57 +109,12 @@ const [registerModal] = useModalInner(async (data) => {
     })
     return { tag: item.tag, time: item.time, ...condition }
   })
-
-  const columns: any[] = []
-  const repeatArray = flattenDepth(
-    Object.values(groupBy(dictData.value, (item: any) => item.name)).filter(
-      (value) => value.length > 1
-    )
-  )
-  dictData.value.forEach((item: any) => {
-    const name = item.name
-    const isRepeat = repeatArray.some((i: any) => JSON.stringify(i) === JSON.stringify(item))
-    if (isRepeat && item.treeId) {
-      columns.push({
-        title: `${name}(${item.tree.value})`,
-        key: `${name}(${item.tree.value})`,
-        width: 150
-      })
-    } else {
-      columns.push({ title: name, key: name, width: 150 })
-    }
-  })
-  setColumns([
-    { title: '阀门位号', key: 'tag', width: 150, fixed: 'left' },
-    {
-      title: '读取时间',
-      key: 'time',
-      width: 200,
-      render(rowData: any) {
-        return dayjs(rowData.time).format('YYYY-MM-DD HH:mm:ss')
-      }
-    },
-    ...columns
-  ])
-})
-
-const [registerTable, { setColumns, getTableData, getColumns }] = useTable({
-  data: tableData,
-  columns: [
-    { title: '阀门位号', key: 'tag', width: 200, fixed: 'left' },
-    { title: '采集时间', key: 'time', width: 200 }
-  ], // 展示的列
-  bordered: true,
-  searchInfo: { id }, // 额外参数
-  rowKey: (rowData) => rowData.id,
-  showIndexColumn: false
-})
+}
 
 const changeLanguage = () => {
   language.value = language.value === 'zh' ? 'en' : 'zh'
-  const columns: BasicColumn[] = dictData.value.map((item: DictTypeInfo) => {
-    return { title: language.value === 'zh' ? item.name : item.value, key: item.name, width: 150 }
-  })
+
+  const columns = transformColums()
   setColumns([
     { title: language.value === 'zh' ? '阀门位号' : 'tag', key: 'tag', width: 200, fixed: 'left' },
     {
@@ -145,7 +147,7 @@ function download(arrayBuffer: any) {
   const blob = new Blob([arrayBuffer])
   const url = URL.createObjectURL(blob)
   link.href = url
-  link.download = task.value.name + ' - 解析结果.xlsx'
+  link.download = taskData.value?.name + ' - 解析结果.xlsx'
 
   document.body.appendChild(link)
 
