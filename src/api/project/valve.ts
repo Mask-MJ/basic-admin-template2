@@ -102,6 +102,8 @@ export interface ValveRunInfo {
   unit: string
   /// 类型 0: 配置 1: 运行
   type: string
+  ///  pdf 树 id
+  treeId: number
   /// 读取时间
   time: Date
   /// 阀门id

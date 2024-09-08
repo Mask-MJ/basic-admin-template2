@@ -114,7 +114,6 @@ const transformData = (res: any[], dictDataTreeList: any[]) => {
 const changeLanguage = () => {
   language.value = language.value === 'zh' ? 'en' : 'zh'
 
-  const columns = transformColums()
   setColumns([
     { title: language.value === 'zh' ? '阀门位号' : 'tag', key: 'tag', width: 200, fixed: 'left' },
     {
@@ -125,7 +124,7 @@ const changeLanguage = () => {
         return dayjs(rowData.time).format('YYYY-MM-DD HH:mm:ss')
       }
     },
-    ...columns
+    ...transformColums()
   ])
 }
 

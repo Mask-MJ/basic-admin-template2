@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import type { BasicColumn } from '@/components/Table'
 import { useModalInner } from '@/components/Modal'
 import { useTable } from '@/components/Table'
 import { getValveHistoryList } from '@/api/project/valve'
-import { getDictDataList, getDictTypeList, type DictTypeInfo } from '@/api/system/dict'
+import { getDictDataList, getDictDataTreeListAll, getDictTypeList } from '@/api/system/dict'
 import dayjs from 'dayjs'
 import { Workbook } from 'exceljs'
+import { groupBy, flattenDepth } from 'lodash-es'
+// import { history } from './mock.data'
+
 const valveId = ref()
 const tableData = ref<any[]>([])
 const language = ref('zh')
@@ -14,37 +16,22 @@ const dictData = ref<any[]>([])
 const [registerModal] = useModalInner(async (data) => {
   valveId.value = data.id
   const result = (await getValveHistoryList({ valveId: data.id })).rows
-  tableData.value = result.map((item: any) => {
-    // 数组转对象
-
-    const condition: any = {}
-    item.valveHistoryData.map((itm: any) => {
-      condition[itm.name] = itm.value
-    })
-    return { tag: item.tag, time: item.time, ...condition }
-  })
+  const dictDataTreeList = await getDictDataTreeListAll()
+  // const result = history
+  tableData.value = transformData(result, dictDataTreeList)
   const dictType = (await getDictTypeList({ name: 'hart', pageSize: 1000 })).rows
   const dictTypeId = dictType[0].id
   dictData.value = (await getDictDataList({ dictTypeId, pageSize: 1000 })).rows
-  const columns: BasicColumn[] = dictData.value.map((item: DictTypeInfo) => {
-    return {
-      title: item.name,
-      key: item.name,
-      resizable: true,
-      minWidth: 100,
-      maxWidth: 300
-    }
-  })
+
   setColumns([
     { title: '阀门位号', key: 'tag', resizable: true, fixed: 'left' },
     { title: '读取时间', key: 'time', minWidth: 200, resizable: true },
-    ...columns
+    ...transformColums()
   ])
 })
 
 const [registerTable, { setColumns, getTableData, getColumns }] = useTable({
   data: tableData,
-  // api: getValveHistoryList, // 请求接口
   columns: [
     { title: '阀门位号', key: 'tag', resizable: true, fixed: 'left' },
     { title: '读取时间', key: 'time', resizable: true }
@@ -55,11 +42,63 @@ const [registerTable, { setColumns, getTableData, getColumns }] = useTable({
   showToolbars: false,
   showIndexColumn: false
 })
+const transformData = (data: any[], dictDataTreeList: any[]) => {
+  return data.map((item: any) => {
+    // 数组转对象
+    const condition: any = {}
+    const repeatArray = flattenDepth(
+      Object.values(groupBy(item.valveHistoryData, (i: any) => i.name)).filter(
+        (value) => value.length > 1
+      ),
+      1
+    )
+    item.valveHistoryData.map((itm: any) => {
+      let value = itm.value === null ? '----' : itm.value
+      if (typeof value === 'object') {
+        value = Object.keys(value)
+          .map((key) => `${key}: ${value[key]}`)
+          .join('; ')
+      }
+      // 判断 itm 是否和 repeatArray 数组中的对象完全相等
+      const isRepeat = repeatArray.some((i: any) => JSON.stringify(i) === JSON.stringify(itm))
+      if (isRepeat && itm.treeId) {
+        const treeData = dictDataTreeList.find((i: any) => i.id === itm.treeId)
+        const name = `${itm.name}(${treeData.value})`
+        condition[name] = value
+      } else {
+        condition[itm.name] = value
+      }
+    })
+    return { tag: item.tag, time: item.time, ...condition }
+  })
+}
+
+const transformColums = () => {
+  const columns: any[] = []
+  const repeatArray = flattenDepth(
+    Object.values(groupBy(dictData.value, (item: any) => item.name)).filter(
+      (value) => value.length > 1
+    )
+  )
+
+  dictData.value.forEach((item: any) => {
+    const name = language.value === 'zh' ? item.name : item.value
+    const isRepeat = repeatArray.some((i: any) => JSON.stringify(i) === JSON.stringify(item))
+    if (isRepeat && item.treeId) {
+      columns.push({
+        title: `${name}(${item.tree.value})`,
+        key: `${item.name}(${item.tree.value})`,
+        width: 150
+      })
+    } else {
+      columns.push({ title: name, key: item.name, width: 150 })
+    }
+  })
+  return columns
+}
+
 const changeLanguage = () => {
   language.value = language.value === 'zh' ? 'en' : 'zh'
-  const columns: BasicColumn[] = dictData.value.map((item: DictTypeInfo) => {
-    return { title: language.value === 'zh' ? item.name : item.value, key: item.name, width: 150 }
-  })
   setColumns([
     { title: language.value === 'zh' ? '阀门位号' : 'tag', key: 'tag', width: 200, fixed: 'left' },
     {
@@ -70,7 +109,7 @@ const changeLanguage = () => {
         return dayjs(rowData.time).format('YYYY-MM-DD HH:mm:ss')
       }
     },
-    ...columns
+    ...transformColums()
   ])
 }
 const exportData = async () => {
