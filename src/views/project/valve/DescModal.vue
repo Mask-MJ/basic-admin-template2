@@ -37,8 +37,7 @@ const transformData = (data: ValveRunInfo[]) => {
         item.name = `${item.name}(${source})`
       }
     } else {
-      item.name =
-        dictData.value.find((i) => i.name === item.name)?.value || '关键字中未找到对应的英文字典'
+      item.name = dictData.value.find((i) => i.name === item.name)?.value || item.name
       if (repeatArray.filter((i) => i.name === item.name).length) {
         // 重复的数据,加上数据来源
         const source = dictDataTreeList.value.find((i) => i.id === item.treeId)?.value
