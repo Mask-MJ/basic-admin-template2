@@ -15,8 +15,10 @@ const runInfoData = ref<ValveRunInfo[]>([])
 
 // 诊断数据
 const valueDiagnostic = ref<ValveRunInfo[]>()
-const [registerModal] = useModalInner(async (data: ValveRunInfo[]) => {
+const [registerModal, { setModalProps }] = useModalInner(async (data: ValveRunInfo[]) => {
   runInfoData.value = data
+  const time = data[0].time || ''
+  setModalProps({ title: `阀门运行数据详情 ${time}` })
   // runInfoData.value = runInfo as any[]
   // 对照关键字表把数据转换为对应的中英文
   const dictType = (await getDictTypeList({ name: 'hart', pageSize: 1000 })).rows
