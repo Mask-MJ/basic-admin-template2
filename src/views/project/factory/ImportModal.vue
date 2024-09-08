@@ -5,7 +5,7 @@ import type { UploadFileInfo } from 'naive-ui'
 
 const factoryId = ref<number>()
 const fileList = ref<UploadFileInfo[]>([])
-const [registerModal] = useModalInner((data) => {
+const [registerModal, { closeModal }] = useModalInner((data) => {
   factoryId.value = data.id
   fileList.value = []
 })
@@ -38,6 +38,7 @@ const submit = async () => {
     } else {
       window.$message.error('导入失败')
     }
+    closeModal()
   } catch (error) {
     window.$message.error('导入失败')
   }

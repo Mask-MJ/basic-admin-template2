@@ -1261,7 +1261,8 @@ export const mockResultData2 = [
           {
             name: '行程偏差',
             unit: null,
-            value: ''
+            value: '',
+            treeId: 82
           },
           {
             name: '供气压力',
@@ -1351,7 +1352,8 @@ export const mockResultData2 = [
           {
             name: '行程偏差',
             unit: null,
-            value: ''
+            value: '',
+            treeId: 84
           },
           {
             name: '循环计数高',
@@ -1792,7 +1794,8 @@ export const mockResultData2 = [
           {
             name: '行程偏差',
             unit: null,
-            value: ''
+            value: '',
+            treeId: 82
           },
           {
             name: '供气压力',
@@ -1882,7 +1885,8 @@ export const mockResultData2 = [
           {
             name: '行程偏差',
             unit: null,
-            value: ''
+            value: '',
+            treeId: 84
           },
           {
             name: '循环计数高',

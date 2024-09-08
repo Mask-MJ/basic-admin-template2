@@ -28,9 +28,9 @@ const [registerModal] = useModalInner(async (data) => {
       res.push(...item.data)
     })
   }
+  // 把数据转换成表格需要的格式
   tableData.value = transformData(res, dictDataTreeList)
-
-  const columns: any[] = transformColums()
+  // 设置表格列
   setColumns([
     { title: '阀门位号', key: 'tag', width: 150, fixed: 'left' },
     {
@@ -41,7 +41,7 @@ const [registerModal] = useModalInner(async (data) => {
         return dayjs(rowData.time).format('YYYY-MM-DD HH:mm:ss')
       }
     },
-    ...columns
+    ...transformColums()
   ])
 })
 
