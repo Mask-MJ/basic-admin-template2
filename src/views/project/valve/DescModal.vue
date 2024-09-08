@@ -3,19 +3,21 @@ import type { ValveRunInfo } from '@/api/project/valve'
 import { getDictDataList, getDictDataTreeListAll, getDictTypeList } from '@/api/system/dict'
 import { useModalInner } from '@/components/Modal'
 // import { runInfo } from './mock.data'
-import { flattenDepth, groupBy } from 'lodash-es'
+import { cloneDeep, flattenDepth, groupBy } from 'lodash-es'
 
 const language = ref('zh')
 const valveRunDataConfig = ref<ValveRunInfo[]>()
 const valveRunData = ref<ValveRunInfo[]>()
 const dictData = ref<any[]>([])
 const dictDataTreeList = ref<any[]>([])
+
 const runInfoData = ref<ValveRunInfo[]>([])
 
 // 诊断数据
 const valueDiagnostic = ref<ValveRunInfo[]>()
 const [registerModal] = useModalInner(async (data: ValveRunInfo[]) => {
   runInfoData.value = data
+  // runInfoData.value = runInfo as any[]
   // 对照关键字表把数据转换为对应的中英文
   const dictType = (await getDictTypeList({ name: 'hart', pageSize: 1000 })).rows
   const dictTypeId = dictType[0].id
@@ -24,12 +26,13 @@ const [registerModal] = useModalInner(async (data: ValveRunInfo[]) => {
   transformData(runInfoData.value)
 })
 
-const transformData = (data: ValveRunInfo[]) => {
+const transformData = (runInfoData: ValveRunInfo[]) => {
+  const data = cloneDeep(runInfoData)
   const repeatArray = flattenDepth(
     Object.values(groupBy(data, (i: any) => i.name)).filter((value) => value.length > 1),
     1
   )
-  data.map((item) => {
+  data.forEach((item) => {
     if (language.value === 'zh') {
       if (repeatArray.filter((i) => i.name === item.name).length) {
         // 重复的数据,加上数据来源
