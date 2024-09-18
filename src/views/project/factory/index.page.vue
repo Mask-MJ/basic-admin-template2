@@ -53,14 +53,14 @@ const [registerTable, { reload }] = useTable({
               onClick: () => router.push(`/project/valve/factoryId-${row.id}`)
             }
           },
-          {
-            icon: 'i-ant-design:cloud-server-outlined',
-            tooltipProps: { content: '项目管理' },
-            buttonProps: {
-              type: 'warning',
-              onClick: () => router.push(`/project/contract/${row.id}`)
-            }
-          },
+          // {
+          //   icon: 'i-ant-design:cloud-server-outlined',
+          //   tooltipProps: { content: '项目管理' },
+          //   buttonProps: {
+          //     type: 'warning',
+          //     onClick: () => router.push(`/project/contract/${row.id}`)
+          //   }
+          // },
           {
             icon: 'i-ant-design:line-chart-outlined',
             tooltipProps: { content: '分析任务' },

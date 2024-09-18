@@ -31,6 +31,7 @@ export const searchSchemas: FormSchema[] = [
 export const columns: BasicColumn<FactoryInfo & { pendingStatus: boolean }>[] = [
   { title: '阀门位号', key: 'tag', width: 200 },
   { title: '所属工厂', key: 'factory.name', width: 300 },
+  { title: '所属装置', key: 'device.name', width: 300 },
   { title: '阀门品牌', key: 'valveBrand', width: 100 },
   { title: '阀体类型', key: 'valveType', width: 100 },
   { title: '创建时间', key: 'createdAt', width: 200 }
