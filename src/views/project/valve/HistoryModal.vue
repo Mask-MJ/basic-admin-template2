@@ -24,7 +24,7 @@ const [registerModal] = useModalInner(async (data) => {
   dictData.value = (await getDictDataList({ dictTypeId, pageSize: 1000 })).rows
 
   setColumns([
-    { title: '阀门位号', key: 'tag', resizable: true, fixed: 'left' },
+    { title: '位号', key: 'tag', resizable: true, fixed: 'left' },
     { title: '读取时间', key: 'time', minWidth: 200, resizable: true },
     ...transformColums()
   ])
@@ -33,7 +33,7 @@ const [registerModal] = useModalInner(async (data) => {
 const [registerTable, { setColumns, getTableData, getColumns }] = useTable({
   data: tableData,
   columns: [
-    { title: '阀门位号', key: 'tag', resizable: true, fixed: 'left' },
+    { title: '位号', key: 'tag', resizable: true, fixed: 'left' },
     { title: '读取时间', key: 'time', resizable: true }
   ], // 展示的列
   bordered: true,
@@ -100,7 +100,7 @@ const transformColums = () => {
 const changeLanguage = () => {
   language.value = language.value === 'zh' ? 'en' : 'zh'
   setColumns([
-    { title: language.value === 'zh' ? '阀门位号' : 'tag', key: 'tag', width: 200, fixed: 'left' },
+    { title: language.value === 'zh' ? '位号' : 'tag', key: 'tag', width: 200, fixed: 'left' },
     {
       title: language.value === 'zh' ? '采集时间' : 'time',
       key: 'time',

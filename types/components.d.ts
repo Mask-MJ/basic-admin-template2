@@ -12,6 +12,7 @@ declare module 'vue' {
     ApiTree: typeof import('./../src/components/Form/components/ApiTree.vue')['default']
     ApiTreeSelect: typeof import('./../src/components/Form/components/ApiTreeSelect.vue')['default']
     AutoComplete: typeof import('./../src/components/Form/components/AutoComplete.vue')['default']
+    CascaderArea: typeof import('./../src/components/Form/components/CascaderArea.vue')['default']
     copy: typeof import('./../src/components/Form/components/Upload copy.vue')['default']
     DarkModeContainer: typeof import('./../src/components/Common/DarkModeContainer.vue')['default']
     DarkModeSwitch: typeof import('./../src/components/Common/DarkModeSwitch.vue')['default']

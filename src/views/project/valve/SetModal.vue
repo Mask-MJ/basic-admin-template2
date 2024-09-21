@@ -46,7 +46,7 @@ const handleSubmit = async () => {
     if (formType.value === 'factoryId') {
       result.factoryId = Number(typeId.value)
     } else if (formType.value === 'deviceId') {
-      // 获取装置id对应的工厂id
+      // 获取装置id对应的最终用户id
       const { factoryId } = await getDeviceDetail(Number(typeId.value))
       result.factoryId = factoryId
       result.deviceId = Number(typeId.value)

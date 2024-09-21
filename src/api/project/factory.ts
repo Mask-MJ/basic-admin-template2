@@ -36,20 +36,20 @@ enum Api {
   Import = 'project/factory/import'
 }
 
-// 获取工厂列表
+// 获取最终用户列表
 export const getFactoryList = (params?: Partial<SearchParams>) =>
   defHttp.get<Result<FactoryInfo[]>>({ url: Api.Factory, params })
-// 创建工厂
+// 创建最终用户
 export const createFactory = (params: CreatedFactory) => defHttp.post({ url: Api.Factory, params })
-// 获取单个工厂信息
+// 获取单个最终用户信息
 export const getFactoryDetail = (id: number) =>
   defHttp.get<FactoryInfo>({ url: `${Api.Factory}/${id}` })
 // 导入阀门基础数据
 export const importValveData = (params: UploadFileParams) =>
   defHttp.uploadFile({ url: Api.Import }, params)
-// 更新工厂
+// 更新最终用户
 export const updateFactory = (params: Partial<FactoryInfo>) =>
   defHttp.patch({ url: `${Api.Factory}/${params.id}`, params })
-// 删除工厂
+// 删除最终用户
 export const deleteFactory = (ids: number | string) =>
   defHttp.delete({ url: `${Api.Factory}/${ids}` })

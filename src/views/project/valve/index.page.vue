@@ -6,6 +6,7 @@ import {
   getValveDetail,
   getValveList,
   getValveRunInfo,
+  getAllValveList,
   type ValveInfo
 } from '@/api/project/valve'
 import { columns, searchSchemas } from './data'
@@ -14,6 +15,7 @@ import DescModal from './DescModal.vue'
 import HistoryModal from './HistoryModal.vue'
 import ChartModal from './ChartModal.vue'
 import ScoreModal from './ScoreModal.vue'
+import { Workbook } from 'exceljs'
 
 const router = useRouter()
 const formType = computed(
@@ -37,7 +39,7 @@ const [registerHistoryModal, { openModal: openHistoryModel }] = useModal()
 const [registerChartModal, { openModal: openChartModel }] = useModal()
 const [registerScoreModal, { openModal: openScoreModal }] = useModal()
 
-const [registerTable, { reload }] = useTable({
+const [registerTable, { reload, getColumns, getForm }] = useTable({
   api: getValveList, // 请求接口
   columns, // 展示的列
   useSearchForm: true, // 启用搜索表单
@@ -102,6 +104,7 @@ const [registerTable, { reload }] = useTable({
           },
           {
             type: 'del',
+            ifShow: ['factoryId', 'deviceId'].includes(formType.value),
             onClick: async () => {
               await deleteValve(row.id)
               await reload()
@@ -111,6 +114,45 @@ const [registerTable, { reload }] = useTable({
       })
   }
 })
+
+const exportData = async () => {
+  const workbook = new Workbook()
+  const worksheet = workbook.addWorksheet('解析结果')
+  worksheet.columns = getColumns()
+    .map((item: any) => ({ header: item.title, key: item.key, width: 30 }))
+    .filter((item: any) => item.key !== 'ACTION')
+  const formValue = getForm().getPathsValue()
+  const data = await getAllValveList({
+    ...formValue,
+    [formType.value]: Number(typeId.value)
+  })
+  data.map((item: any) => {
+    item['factory.name'] = item.factory.name
+    item['device.name'] = item.device?.name || ''
+  })
+  if (!data.length) {
+    return window.$message.error('暂无数据')
+  }
+  worksheet.addRows(data)
+  const arraybuffer: any = new ArrayBuffer(10 * 1024 * 1024)
+  const res = await workbook.xlsx.writeBuffer(arraybuffer)
+  download(res)
+}
+function download(arrayBuffer: any) {
+  const link = document.createElement('a')
+
+  const blob = new Blob([arrayBuffer])
+  const url = URL.createObjectURL(blob)
+  link.href = url
+  link.download = '阀门数据.xlsx'
+
+  document.body.appendChild(link)
+
+  link.click()
+  link.addEventListener('click', () => {
+    link.remove()
+  })
+}
 </script>
 
 <template>
@@ -118,6 +160,7 @@ const [registerTable, { reload }] = useTable({
     <Table @register="registerTable">
       <template #toolbar>
         <n-button class="mr-2" type="primary" @click="openSetModel(true)"> 新增 </n-button>
+        <n-button class="mr-2" type="success" @click="exportData"> 导出全部数据 </n-button>
       </template>
     </Table>
     <SetModal @register="registerSetModal" @success="reload()" />

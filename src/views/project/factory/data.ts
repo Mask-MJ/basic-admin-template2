@@ -1,10 +1,10 @@
 import type { FormSchema } from '@/components/Form'
 import type { BasicColumn } from '@/components/Table'
-
 import { type FactoryInfo, getFactoryList } from '@/api/project/factory'
-
+import { useCascaderAreaData } from './areaData'
+const areaData = useCascaderAreaData()
 export const searchSchemas: FormSchema[] = [
-  { path: 'name', label: '工厂名称', component: 'NInput', span: 8 },
+  { path: 'name', label: '最终用户名称', component: 'NInput', span: 8 },
   {
     path: '[beginTime, endTime]',
     component: 'NDatePicker',
@@ -15,8 +15,8 @@ export const searchSchemas: FormSchema[] = [
 ]
 
 export const columns: BasicColumn<FactoryInfo & { pendingStatus: boolean }>[] = [
-  { title: '工厂名称', key: 'name', width: 300, align: 'left' },
-  { title: '工厂地址', key: 'address', width: 400 },
+  { title: '最终用户名称', key: 'name', width: 300, align: 'left' },
+  { title: '最终用户地址', key: 'address', width: 400 },
   { title: '创建者', key: 'createBy', width: 100 }
 ]
 
@@ -34,14 +34,24 @@ export const setSchemas: FormSchema[] = [
       cascade: true
     }
   },
-  { path: 'name', label: '工厂名称', required: true, component: 'NInput' },
+  { path: 'name', label: '名称', required: true, component: 'NInput' },
+  {
+    path: 'code',
+    label: '城市',
+    required: true,
+    component: 'NCascader',
+    componentProps: {
+      options: areaData,
+      checkStrategy: 'child'
+    }
+  },
   {
     path: 'address',
-    label: '工厂地址',
+    label: '详细地址',
     component: 'NInput',
     componentProps: {
       type: 'text',
-      placeholder: '请输入工厂地址'
+      placeholder: '请输入详细地址'
     }
   },
   // {
@@ -61,25 +71,5 @@ export const setSchemas: FormSchema[] = [
     label: '备注',
     component: 'NInput',
     componentProps: { type: 'textarea', placeholder: '请输入内容' }
-  }
-]
-
-export const resetSchemas: FormSchema[] = [
-  { path: 'id', component: 'NInputNumber', show: false },
-  {
-    path: 'password',
-    label: '新密码',
-    component: 'NInput',
-    componentProps: { type: 'password', showPasswordOn: 'click' },
-    rule: [
-      {
-        required: true,
-        trigger: 'change',
-        validator: (_rule, value) =>
-          new RegExp(/^.{4,20}$/).test(value)
-            ? Promise.resolve()
-            : Promise.reject('用户密码长度必须介于 4 和 20 之间')
-      }
-    ]
   }
 ]

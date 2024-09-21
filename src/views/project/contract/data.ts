@@ -15,7 +15,7 @@ export const searchSchemas: FormSchema[] = [
   },
   {
     path: 'factoryId',
-    label: '所属工厂',
+    label: '所属最终用户',
     component: 'ApiTreeSelect',
     span: 8,
     componentProps: {
@@ -30,7 +30,7 @@ export const searchSchemas: FormSchema[] = [
 
 export const columns: BasicColumn<ContractInfo & { pendingStatus: boolean }>[] = [
   { title: '项目名称', key: 'name', width: 200 },
-  { title: '所属工厂', key: 'factory.name', width: 250 },
+  { title: '所属最终用户', key: 'factory.name', width: 250 },
   { title: '客户名称', key: 'customer', width: 100 },
   { title: '客户联系方式', key: 'customerPhone', width: 150 },
   { title: '采购阀门总数', key: 'valveCount', width: 150 },
@@ -50,7 +50,7 @@ export const setSchemas: FormSchema[] = [
   { path: 'contractTime', label: '签订合同时间', required: true, component: 'NDatePicker' },
   {
     path: 'factoryId',
-    label: '所属工厂',
+    label: '所属最终用户',
     component: 'ApiTreeSelect',
     required: true,
     componentProps: {

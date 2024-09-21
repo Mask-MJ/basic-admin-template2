@@ -62,7 +62,7 @@ components:
     preview: 预览
 router:
   dict: 字典管理
-  factory: 工厂管理
+  factory: 最终用户管理
   project: 项目管理
   valve: 阀门管理
   charts: 数据可视化

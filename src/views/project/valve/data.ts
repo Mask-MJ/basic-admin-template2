@@ -5,17 +5,16 @@ import { type FactoryInfo, getFactoryList } from '@/api/project/factory'
 import { getDeviceList } from '@/api/project/device'
 
 export const searchSchemas: FormSchema[] = [
-  { path: 'tag', label: '阀门位号', component: 'NInput', span: 8 },
-  {
-    path: '[beginTime, endTime]',
-    component: 'NDatePicker',
-    label: '创建时间',
-    span: 16,
-    componentProps: { type: 'datetimerange' }
-  },
+  // {
+  //   path: '[beginTime, endTime]',
+  //   component: 'NDatePicker',
+  //   label: '创建时间',
+  //   span: 16,
+  //   componentProps: { type: 'datetimerange' }
+  // },
   {
     path: 'factoryId',
-    label: '所属工厂',
+    label: '最终用户',
     component: 'ApiTreeSelect',
     span: 8,
     componentProps: {
@@ -25,24 +24,27 @@ export const searchSchemas: FormSchema[] = [
       keyField: 'id',
       cascade: true
     }
-  }
+  },
+  { path: 'tag', label: '位号', component: 'NInput', span: 8 },
+  { path: 'device', label: '装置', component: 'NInput', span: 8 },
+  { path: 'serialNumber', label: '阀体序列号', component: 'NInput', span: 8 },
+  { path: 'valveSeries', label: '系列', component: 'NInput', span: 8 }
 ]
 
 export const columns: BasicColumn<FactoryInfo & { pendingStatus: boolean }>[] = [
-  { title: '阀门位号', key: 'tag', width: 200 },
-  { title: '所属工厂', key: 'factory.name', width: 300 },
-  { title: '所属装置', key: 'device.name', width: 300 },
-  { title: '阀门品牌', key: 'valveBrand', width: 100 },
-  { title: '阀体类型', key: 'valveType', width: 100 },
-  { title: '创建时间', key: 'createdAt', width: 200 }
+  { title: '最终用户', key: 'factory.name', width: 300 },
+  { title: '装置', key: 'device.name', width: 150 },
+  { title: '位号', key: 'tag', width: 150 },
+  { title: '阀体序列号', key: 'serialNumber', width: 150 },
+  { title: '系列', key: 'valveSeries', width: 100 }
 ]
 
 export const setSchemas: FormSchema[] = [
   { path: 'id', component: 'NInputNumber', show: false },
-  { path: 'tag', label: '阀门位号', required: true, component: 'NInput', span: 8 },
+  { path: 'tag', label: '位号', required: true, component: 'NInput', span: 8 },
   {
     path: 'factoryId',
-    label: '所属工厂',
+    label: '所属最终用户',
     component: 'ApiTreeSelect',
     required: true,
     span: 8,
@@ -76,6 +78,7 @@ export const setSchemas: FormSchema[] = [
   { path: 'serialNumber', label: '阀体序列号', component: 'NInput', span: 8 },
   { path: 'since', label: '投用时间', component: 'NDatePicker', span: 8 },
   { path: 'valveBrand', label: '阀体品牌', component: 'NInput', span: 8 },
+  { path: 'valveSeries', label: '系列', component: 'NInput', span: 8 },
   { path: 'valveType', label: '阀体类型', component: 'NInput', span: 8 },
   { path: 'valveSize', label: '阀体口径', component: 'NInput', span: 8 },
   { path: 'valveBodyMaterial', label: '阀体材质', component: 'NInput', span: 8 },

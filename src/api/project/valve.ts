@@ -9,7 +9,7 @@ export interface CreatedValve {
 
 export interface ValveInfo {
   id: number
-  /// 阀门位号
+  /// 位号
   tag: string
   /// 装置
   unit: string
@@ -76,6 +76,14 @@ export interface ValveInfo {
   /// 分析任务id
   analysisTaskId: number
   factoryId: number
+  factory: {
+    id: number
+    name: string
+  }
+  device: {
+    id: number
+    name: string
+  }
   createBy: string
   updateBy: string
   createdAt: Date
@@ -85,10 +93,13 @@ export interface ValveInfo {
 export interface SearchParams {
   page: number
   pageSize: number
-  name: string
   status: number
   factoryId: number
   deviceId: number
+  device: string
+  tag: string
+  serialNumber: string
+  valveSeries: string
 }
 
 export interface ValveRunInfo {
@@ -121,6 +132,7 @@ export interface ValveRunInfo {
 
 enum Api {
   Valve = 'project/valve',
+  ValveAll = 'project/valve/all',
   ValveRunInfo = 'project/valve/run-info',
   ValveHistory = 'project/valve/history',
   ValveScore = 'project/valve/score',
@@ -130,6 +142,9 @@ enum Api {
 // 获取阀门列表
 export const getValveList = (params?: Partial<SearchParams>) =>
   defHttp.get<ValveInfo[]>({ url: Api.Valve, params })
+// 获取全部阀门列表
+export const getAllValveList = (params?: Partial<SearchParams>) =>
+  defHttp.get<ValveInfo[]>({ url: Api.ValveAll, params })
 // 创建阀门
 export const createValve = (params: CreatedValve) => defHttp.post({ url: Api.Valve, params })
 // 获取单个阀门信息

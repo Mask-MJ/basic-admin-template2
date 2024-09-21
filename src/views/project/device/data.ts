@@ -15,7 +15,7 @@ export const searchSchemas: FormSchema[] = [
   },
   {
     path: 'factoryId',
-    label: '所属工厂',
+    label: '所属最终用户',
     component: 'ApiTreeSelect',
     span: 8,
     componentProps: {
@@ -30,7 +30,7 @@ export const searchSchemas: FormSchema[] = [
 
 export const columns: BasicColumn<FactoryInfo & { pendingStatus: boolean }>[] = [
   { title: '装置名称', key: 'name', width: 200 },
-  { title: '所属工厂', key: 'factory.name', width: 300 },
+  { title: '所属最终用户', key: 'factory.name', width: 300 },
   { title: '创建者', key: 'createBy', width: 100 },
   { title: '创建时间', key: 'createdAt', width: 200 }
 ]
@@ -39,7 +39,7 @@ export const setSchemas: FormSchema[] = [
   { path: 'id', component: 'NInputNumber', show: false },
   {
     path: 'factoryId',
-    label: '所属工厂',
+    label: '所属最终用户',
     component: 'ApiTreeSelect',
     required: true,
     componentProps: {
