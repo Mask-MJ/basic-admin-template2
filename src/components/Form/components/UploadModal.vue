@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { useModalInner } from '@/components/Modal'
-import { isArray } from 'lodash-es'
 import type { UploadFileInfo } from 'naive-ui'
 import type { UploadFileParams } from '@/utils/request/types'
+import { useModalInner } from '@/components/Modal'
 
 const emits = defineEmits(['success', 'register', 'update:fileList'])
 const attrs = useAttrs()
@@ -15,27 +14,17 @@ const props = defineProps({
     default: () => {}
   },
   value: {
-    type: [String, Array] as PropType<
-      { url: string; name: string } | { url: string; name: string }[]
-    >,
+    type: Array as PropType<{ url: string; name: string; status?: string }[]>,
     default: () => []
   }
 })
 
-const getFileList = computed((): UploadFileInfo[] => {
-  if (isArray(props.value)) {
-    return props.value.map((item) => ({
-      id: item.url,
-      name: item.name,
-      status: 'finished',
-      url: item.url
-    }))
-  } else {
-    return [
-      { id: props.value.url, name: props.value.name, status: 'finished', url: props.value.url }
-    ]
-  }
-})
+const fileList = ref<UploadFileInfo[]>([])
+
+const getHeaders = computed(() => ({
+  Authorization: `Bearer ${useUserStore().getToken}`
+}))
+
 const beforeUpload = async (data: { file: UploadFileInfo; fileList: UploadFileInfo[] }) => {
   if (props.type.length) {
     if (props.type.includes(data.file.file?.type)) {
@@ -47,7 +36,14 @@ const beforeUpload = async (data: { file: UploadFileInfo; fileList: UploadFileIn
   }
   return true
 }
-const getBindValue = computed(() => ({ ...attrs, name: props.name, max: props.max }))
+const getBindValue = computed(() => ({
+  multiple: true,
+  directoryDnd: true,
+  ...attrs,
+  name: props.name,
+  headers: getHeaders.value,
+  max: props.max
+}))
 
 const customRequest = async ({ file }: { file: UploadFileInfo }) => {
   try {
@@ -65,13 +61,36 @@ const customRequest = async ({ file }: { file: UploadFileInfo }) => {
         ? [...props.value, result.data]
         : [props.value, result.data]
       emits('update:fileList', updatedFileList)
-      window.$message.success('上传成功')
+      // window.$message.success('上传成功')
     }
   } catch (error) {
-    window.$message.error('上传失败')
+    console.warn(error, file)
+    const errorFile = {
+      id: file.id,
+      url: file.fullPath,
+      name: file.name,
+      status: 'error'
+    }
+    const updatedFileList = Array.isArray(props.value)
+      ? [...props.value, errorFile]
+      : [props.value, errorFile]
+    emits('update:fileList', updatedFileList)
+    window.$message.error('上传失败, 请检查网络并重新上传')
   }
 }
+
 const [registerModal] = useModalInner()
+
+watchEffect(() => {
+  if (props.value.length) {
+    fileList.value = props.value.map((item) => ({
+      id: item.url,
+      name: item.name,
+      status: item.status || 'finished',
+      url: item.url
+    })) as UploadFileInfo[]
+  }
+})
 </script>
 
 <template>
@@ -82,14 +101,7 @@ const [registerModal] = useModalInner()
     negativeText="关闭"
     positive-text=""
   >
-    <n-upload
-      multiple
-      directory-dnd
-      v-bind="getBindValue"
-      :file-list="getFileList"
-      @before-upload="beforeUpload"
-      @change="customRequest"
-    >
+    <n-upload v-model:file-list="fileList" v-bind="getBindValue" @before-upload="beforeUpload">
       <n-upload-dragger>
         <div style="margin-bottom: 12px">
           <n-icon size="48" :depth="3">

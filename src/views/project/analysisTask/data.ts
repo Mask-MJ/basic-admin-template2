@@ -100,7 +100,10 @@ export const setSchemas: FormSchema[] = [
     label: '上传PDF文件',
     required: true,
     componentProps: {
-      api: uploadAnalysisTaskPdf,
+      // api: uploadAnalysisTaskPdf,
+      // http://localhost:3100/api/project/analysisTask/uploadPdf
+      // http://localhost:3100/api/project/analysis-task/uploadPdf
+      action: '/api/project/analysis-task/uploadPdf',
       listType: 'text'
     }
   },
