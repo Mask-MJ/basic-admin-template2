@@ -3,7 +3,7 @@ import type { BasicColumn } from '@/components/Table'
 
 import { getFactoryList } from '@/api/project/factory'
 import { getDictTypeList } from '@/api/system/dict'
-import { uploadAnalysisTaskPdf, type AnalysisTaskInfo } from '@/api/project/analysisTask'
+import { type AnalysisTaskInfo } from '@/api/project/analysisTask'
 import { getRuleList } from '@/api/system/rule'
 
 export const searchSchemas: FormSchema[] = [
@@ -104,7 +104,10 @@ export const setSchemas: FormSchema[] = [
       // http://localhost:3100/api/project/analysisTask/uploadPdf
       // http://localhost:3100/api/project/analysis-task/uploadPdf
       action: '/api/project/analysis-task/uploadPdf',
-      listType: 'text'
+      listType: 'text',
+      multiple: true,
+      directoryDnd: true,
+      accept: '.pdf'
     }
   },
   {
