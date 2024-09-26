@@ -9,7 +9,7 @@ import {
   getAllValveList,
   type ValveInfo
 } from '@/api/project/valve'
-import { columns, searchSchemas } from './data'
+import { columns, searchSchemas, setSchemas } from './data'
 import SetModal from './SetModal.vue'
 import DescModal from './DescModal.vue'
 import HistoryModal from './HistoryModal.vue'
@@ -39,7 +39,7 @@ const [registerHistoryModal, { openModal: openHistoryModel }] = useModal()
 const [registerChartModal, { openModal: openChartModel }] = useModal()
 const [registerScoreModal, { openModal: openScoreModal }] = useModal()
 
-const [registerTable, { reload, getColumns, getForm }] = useTable({
+const [registerTable, { reload, getForm }] = useTable({
   api: getValveList, // 请求接口
   columns, // 展示的列
   useSearchForm: true, // 启用搜索表单
@@ -118,17 +118,21 @@ const [registerTable, { reload, getColumns, getForm }] = useTable({
 const exportData = async () => {
   const workbook = new Workbook()
   const worksheet = workbook.addWorksheet('解析结果')
-  worksheet.columns = getColumns()
-    .map((item: any) => ({ header: item.title, key: item.key, width: 30 }))
-    .filter((item: any) => item.key !== 'ACTION')
+  const columns = setSchemas
+    .filter((item) => item.path !== 'id' && item.path)
+    .map((item) => {
+      return { header: item.label, key: item.path, width: 30 }
+    })
+  worksheet.columns = columns
+
   const formValue = getForm().getPathsValue()
   const data = await getAllValveList({
     ...formValue,
     [formType.value]: Number(typeId.value)
   })
   data.map((item: any) => {
-    item['factory.name'] = item.factory.name
-    item['device.name'] = item.device?.name || ''
+    item['factoryId'] = item.factory.name
+    item['deviceId'] = item.device?.name || ''
   })
   if (!data.length) {
     return window.$message.error('暂无数据')
