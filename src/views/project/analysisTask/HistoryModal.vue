@@ -53,6 +53,8 @@ const [registerTable, { setColumns, getTableData, getColumns }] = useTable({
     { title: '采集时间', key: 'time', width: 200 }
   ], // 展示的列
   bordered: true,
+  virtualScroll: true,
+  virtualScrollX: true,
   searchInfo: { id: taskData.value?.id }, // 额外参数
   rowKey: (rowData) => rowData.id,
   showIndexColumn: false
