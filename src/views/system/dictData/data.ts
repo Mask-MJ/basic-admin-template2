@@ -3,11 +3,11 @@ import type { FormSchema } from '@/components/Form'
 import type { BasicColumn } from '@/components/Table'
 
 export const searchSchemas: FormSchema[] = [
-  { path: 'name', label: '模版名称', component: 'NInput', span: 8 }
+  { path: 'name', label: '关键字名称', component: 'NInput', span: 8 }
 ]
 
 export const columns: BasicColumn<DictDataInfo>[] = [
-  { title: '模版名称', key: 'name', width: 150 },
+  { title: '关键字名称', key: 'name', width: 150 },
   { title: '关键字', key: 'value', width: 200 },
   { title: '排序', key: 'sort', width: 100 },
   {
@@ -24,7 +24,7 @@ export const columns: BasicColumn<DictDataInfo>[] = [
 export const setSchemas: FormSchema[] = [
   { path: 'id', component: 'NInputNumber', show: false },
   { path: 'dictTypeId', component: 'NInputNumber', show: false },
-  { path: 'name', label: '模版名称', required: true, component: 'NInput' },
+  { path: 'name', label: '关键字名称', required: true, component: 'NInput' },
   { path: 'value', label: '关键字', required: true, component: 'NInput' },
   {
     path: 'treeId',
