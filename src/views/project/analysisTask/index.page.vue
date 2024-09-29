@@ -11,6 +11,7 @@ import {
 import { columns, searchSchemas } from './data'
 import SetModal from './SetModal.vue'
 import HistoryModal from './HistoryModal.vue'
+import type { PaginationProps } from 'naive-ui'
 
 const router = useRouter()
 
@@ -22,7 +23,7 @@ const getSchemas = computed(() =>
 const [registerSetModal, { openModal: openSetModel }] = useModal()
 const [registerHistoryModal, { openModal: openHistoryModel }] = useModal()
 
-const [registerTable, { reload, setTableData, getPagination }] = useTable({
+const [registerTable, { reload, setTableData, getPagination, getForm }] = useTable({
   api: getAnalysisTaskList, // 请求接口
   columns, // 展示的列
   useSearchForm: true, // 启用搜索表单
@@ -86,11 +87,13 @@ const [registerTable, { reload, setTableData, getPagination }] = useTable({
 let timer: any
 onMounted(() => {
   timer = setInterval(async () => {
-    const pagination = getPagination()
+    const formValue = getForm().getPathsValue()
+    const pagination = getPagination() as PaginationProps
     const result = (await getAnalysisTaskList({
       factoryId: Number(factoryId.value) || undefined,
       page: pagination.page,
-      pageSize: pagination.pageSize
+      pageSize: pagination.pageSize,
+      ...formValue
     })) as any
     setTableData(result.rows)
   }, 5000)

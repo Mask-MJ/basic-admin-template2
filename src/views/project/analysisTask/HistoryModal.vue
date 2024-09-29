@@ -13,7 +13,8 @@ const tableData = ref<any[]>([])
 const dictData = ref<any[]>([])
 const language = ref('zh')
 const [registerModal] = useModalInner(async (data) => {
-  const dictType = (await getDictTypeList({ name: 'hart', pageSize: 1000 })).rows
+  const dictName = data.dict.name
+  const dictType = (await getDictTypeList({ name: dictName, pageSize: 1000 })).rows
   const dictTypeId = dictType[0].id
   dictData.value = (await getDictDataList({ dictTypeId, pageSize: 1000 })).rows
   const dictDataTreeList = await getDictDataTreeListAll()

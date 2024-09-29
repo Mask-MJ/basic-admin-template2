@@ -121,6 +121,11 @@ export interface ValveRunInfo {
   valveId: number
 }
 
+export interface ValveHistory {
+  times: string[]
+  values: number[]
+}
+
 // export interface ValveScore {
 //   id: number
 //   name: string
@@ -171,4 +176,4 @@ export const getValveHistoryChart = (params: {
   type: string
   beginTime?: number
   endTime?: number
-}) => defHttp.get<ValveRunInfo>({ url: `${Api.ValveHistoryChart}`, params })
+}) => defHttp.get<ValveHistory>({ url: `${Api.ValveHistoryChart}`, params })

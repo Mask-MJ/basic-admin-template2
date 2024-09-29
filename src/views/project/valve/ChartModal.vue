@@ -2,12 +2,27 @@
 import { useModalInner } from '@/components/Modal'
 import { getValveHistoryChart } from '@/api/project/valve'
 import { getDictDataList } from '@/api/system/dict'
-import { useEcharts } from '@/utils/chart/use-echarts'
-import EchartsUI from '@/utils/chart/echarts-ui.vue'
+import { use } from 'echarts/core'
+import VChart from 'vue-echarts'
+import { CanvasRenderer } from 'echarts/renderers'
+import { LineChart } from 'echarts/charts'
+import {
+  TitleComponent,
+  TooltipComponent,
+  LegendComponent,
+  GridComponent
+} from 'echarts/components'
+use([CanvasRenderer, LineChart, GridComponent, TitleComponent, TooltipComponent, LegendComponent])
 
-const chartData = ref()
-const ChartRef = ref<HTMLElement>()
-const { renderEcharts } = useEcharts(ChartRef)
+const option = ref<{
+  xAxis: { type: string; data: string[] }
+  yAxis: { type: string }
+  series: { data: number[]; type: string }[]
+}>({
+  xAxis: { type: 'category', data: [] },
+  yAxis: { type: 'value' },
+  series: [{ data: [], type: 'line' }]
+})
 const valveId = ref()
 const value = ref('')
 const range = ref<[number, number]>()
@@ -16,25 +31,28 @@ const [registerModal] = useModalInner(async (data) => {
   options.value = (await getDictDataList({ dictTypeValue: 'chart' })).rows
   valveId.value = data.id
   value.value = options.value[0].name
-  change()
 })
 const change = async () => {
-  chartData.value = await getValveHistoryChart({
+  let result = await getValveHistoryChart({
     id: valveId.value,
     type: value.value,
     beginTime: range.value?.[0],
     endTime: range.value?.[1]
   })
-  renderEcharts({
-    xAxis: { type: 'category', data: chartData.value.times },
-    yAxis: { type: 'value' },
-    series: [{ data: chartData.value.values, type: 'line' }]
-  })
-}
 
-watch([range, value], () => {
-  change()
-})
+  option.value = {
+    xAxis: { type: 'category', data: result.times },
+    yAxis: { type: 'value' },
+    series: [{ data: result.values, type: 'line' }]
+  }
+}
+watch(
+  [range, value, options],
+  () => {
+    change()
+  },
+  { deep: true, immediate: true }
+)
 </script>
 
 <template>
@@ -47,6 +65,12 @@ watch([range, value], () => {
         <n-date-picker v-model:value="range" type="daterange" clearable />
       </n-gi>
     </n-grid>
-    <EchartsUI ref="ChartRef" />
+    <VChart class="chart" :option="option" autoresize />
   </Modal>
 </template>
+
+<style scoped>
+.chart {
+  height: 300px;
+}
+</style>
