@@ -33,7 +33,7 @@ const [registerForm, { validate, getPathsValue, setPathsValue }] = useForm({
 const [registerModal, { closeModal, setModalProps }] = useModalInner(async (data: ValveInfo) => {
   setModalProps({ title: data.id ? '编辑阀门' : '新增阀门' })
   if (data.id) {
-    data.since = dayjs(data.since).valueOf()
+    data.since = data.since ? dayjs(data.since).valueOf() : null
     setPathsValue(data)
   }
 })

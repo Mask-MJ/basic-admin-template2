@@ -20,7 +20,7 @@ export interface ValveInfo {
   /// 阀体序列号
   serialNumber: string
   /// 投用时间
-  since: string | number
+  since: string | number | null
   /// 阀体品牌
   valveBrand: string
   /// 阀体类型
