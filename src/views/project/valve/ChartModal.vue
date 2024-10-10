@@ -51,7 +51,7 @@ watch(
   () => {
     change()
   },
-  { deep: true, immediate: true }
+  { deep: true }
 )
 </script>
 

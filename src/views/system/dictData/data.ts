@@ -26,6 +26,8 @@ export const setSchemas: FormSchema[] = [
   { path: 'dictTypeId', component: 'NInputNumber', show: false },
   { path: 'name', label: '关键字名称', required: true, component: 'NInput' },
   { path: 'value', label: '关键字', required: true, component: 'NInput' },
+  { path: 'cnTitle', label: '中文标题', component: 'NInput' },
+  { path: 'enTitle', label: '英文标题', component: 'NInput' },
   {
     path: 'treeId',
     label: '所属PDF树',

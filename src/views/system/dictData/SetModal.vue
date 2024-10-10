@@ -10,7 +10,7 @@ const emits = defineEmits(['success', 'register'])
 const dictTypeId = computed(() => Number(route.params.id))
 
 const [registerModal, { closeModal, setModalProps }] = useModalInner((data: DictDataInfo) => {
-  setModalProps({ title: data.id ? '编辑模版数据' : '新增模版数据' })
+  setModalProps({ title: data.id ? '编辑关键字数据' : '新增关键字数据' })
   if (data.id) {
     setPathsValue(data)
   }

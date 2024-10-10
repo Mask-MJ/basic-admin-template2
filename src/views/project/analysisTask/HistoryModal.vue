@@ -69,7 +69,12 @@ const transformColums = () => {
   )
 
   dictData.value.forEach((item: any) => {
-    const name = language.value === 'zh' ? item.name : item.value
+    let name = item.name
+    if (language.value === 'zh') {
+      name = item.cnTitle || item.name
+    } else {
+      name = item.enTitle || item.value
+    }
     const isRepeat = repeatArray.some((i: any) => JSON.stringify(i) === JSON.stringify(item))
     if (isRepeat && item.treeId) {
       columns.push({
@@ -93,7 +98,7 @@ const transformData = (res: any[], dictDataTreeList: any[]) => {
       1
     )
     item.data.map(async (itm: any) => {
-      let value = itm.value === null ? '----' : itm.value
+      let value = itm.value === null ? '----' : itm.value + (itm.unit || '')
       if (typeof value === 'object') {
         value = Object.keys(value)
           .map((key) => `${key}: ${value[key]}`)

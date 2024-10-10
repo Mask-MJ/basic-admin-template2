@@ -53,7 +53,7 @@ const transformData = (data: any[], dictDataTreeList: any[]) => {
       1
     )
     item.valveHistoryData.map((itm: any) => {
-      let value = itm.value === null ? '----' : itm.value
+      let value = itm.value === null ? '----' : itm.value + (itm.unit || '')
       if (typeof value === 'object') {
         value = Object.keys(value)
           .map((key) => `${key}: ${value[key]}`)
@@ -82,7 +82,13 @@ const transformColums = () => {
   )
 
   dictData.value.forEach((item: any) => {
-    const name = language.value === 'zh' ? item.name : item.value
+    // const name = language.value === 'zh' ? item.name : item.value
+    let name = item.name
+    if (language.value === 'zh') {
+      name = item.cnTitle || item.name
+    } else {
+      name = item.enTitle || item.value
+    }
     const isRepeat = repeatArray.some((i: any) => JSON.stringify(i) === JSON.stringify(item))
     if (isRepeat && item.treeId) {
       columns.push({
