@@ -1,5 +1,5 @@
 app:
-  name: VLS Admin
+  name: Valve Connected Service
   language: English
   logoutTip: Reminder
   logoutMessage: Confirm to exit the system?

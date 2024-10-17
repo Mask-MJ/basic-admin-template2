@@ -16,7 +16,7 @@ export const searchSchemas: FormSchema[] = [
 
 export const columns: BasicColumn<FactoryInfo & { pendingStatus: boolean }>[] = [
   { title: '最终用户名称', key: 'name', width: 300, align: 'left' },
-  { title: '最终用户地址', key: 'address', width: 400 },
+  { title: '最终用户地址', key: 'address', width: 400, align: 'left' },
   { title: '创建者', key: 'createBy', width: 100 }
 ]
 

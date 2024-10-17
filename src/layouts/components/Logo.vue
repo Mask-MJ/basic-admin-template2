@@ -2,7 +2,7 @@
 import { PageEnum } from '@/settings/enums'
 
 defineProps({ showTitle: { type: Boolean, default: true } })
-const { t } = useI18n()
+// const { t } = useI18n()
 </script>
 
 <template>
@@ -13,9 +13,11 @@ const { t } = useI18n()
     <img src="@/assets/images/logo.svg" width="40" height="40" />
     <h2
       v-show="showTitle"
-      class="pl-8px text-20px text-primary font-bold transition duration-300 ease-in-out"
+      class="pl-8px text-16px text-primary font-bold transition duration-300 ease-in-out"
     >
-      {{ t('app.name') }}
+      <!-- {{ t('app.name') }} -->
+      VCS阀门全生命周期 <br />
+      信息管理系统
     </h2>
   </router-link>
 </template>

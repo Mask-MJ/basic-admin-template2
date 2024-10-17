@@ -5,18 +5,11 @@ import { type FactoryInfo, getFactoryList } from '@/api/project/factory'
 import { getDeviceList } from '@/api/project/device'
 
 export const searchSchemas: FormSchema[] = [
-  // {
-  //   path: '[beginTime, endTime]',
-  //   component: 'NDatePicker',
-  //   label: '创建时间',
-  //   span: 16,
-  //   componentProps: { type: 'datetimerange' }
-  // },
   {
     path: 'factoryId',
     label: '最终用户',
     component: 'ApiTreeSelect',
-    span: 8,
+    span: 6,
     componentProps: {
       immediate: true,
       api: getFactoryList,
@@ -25,10 +18,17 @@ export const searchSchemas: FormSchema[] = [
       cascade: true
     }
   },
-  { path: 'tag', label: '位号', component: 'NInput', span: 8 },
-  { path: 'device', label: '装置', component: 'NInput', span: 8 },
-  { path: 'serialNumber', label: '阀体序列号', component: 'NInput', span: 8 },
-  { path: 'valveSeries', label: '系列', component: 'NInput', span: 8 }
+  { path: 'tag', label: '位号', component: 'NInput', span: 6 },
+  { path: 'device', label: '装置', component: 'NInput', span: 6 },
+  { path: 'serialNumber', label: '阀体序列号', component: 'NInput', span: 6 },
+  { path: 'valveSeries', label: '阀体系列', component: 'NInput', span: 6 },
+  {
+    path: '[beginTime, endTime]',
+    component: 'NDatePicker',
+    label: '创建时间',
+    span: 12,
+    componentProps: { type: 'daterange' }
+  }
 ]
 
 export const columns: BasicColumn<FactoryInfo & { pendingStatus: boolean }>[] = [
@@ -36,7 +36,19 @@ export const columns: BasicColumn<FactoryInfo & { pendingStatus: boolean }>[] = 
   { title: '装置', key: 'device.name', width: 150 },
   { title: '位号', key: 'tag', width: 150 },
   { title: '阀体序列号', key: 'serialNumber', width: 150 },
-  { title: '系列', key: 'valveSeries', width: 100 }
+  { title: '阀体系列', key: 'valveSeries', width: 100 },
+  {
+    title: '创建时间',
+    key: 'createdAt',
+    width: 100,
+    render: ({ createdAt }) => createdAt.split(' ')[0]
+  },
+  {
+    title: '更新时间',
+    key: 'updatedAt',
+    width: 100,
+    render: ({ updatedAt }) => updatedAt.split(' ')[0]
+  }
 ]
 
 export const setSchemas: FormSchema[] = [

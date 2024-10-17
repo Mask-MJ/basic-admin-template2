@@ -20,6 +20,7 @@ export interface SearchParams {
   pageSize: number
   dictTypeId: number
   dictTypeValue: string
+  isChart: boolean
   name: string
   value: string
 }
