@@ -67,6 +67,7 @@ export interface CreateDictDataTree {
 enum Api {
   DictType = 'system/dict-type',
   DictData = 'system/dict-data',
+  DictDataCharts = 'system/dict-data/charts',
   DictDataTree = 'system/dict-data-tree',
   DictDataTreeAll = 'system/dict-data-tree/all'
 }
@@ -90,6 +91,9 @@ export const deleteDictType = (ids: number | string) =>
 // 获取字典数据列表
 export const getDictDataList = (params?: Partial<SearchParams>) =>
   defHttp.get({ url: Api.DictData, params })
+// 获取字典数据图表数据
+export const getDictDataCharts = (params: Partial<SearchParams>) =>
+  defHttp.get({ url: Api.DictDataCharts, params })
 // 创建字典数据
 export const createDictData = (params: CreateDictData) =>
   defHttp.post({ url: Api.DictData, params })
