@@ -13,7 +13,7 @@ defineProps({ showTitle: { type: Boolean, default: true } })
     <img src="@/assets/images/logo.svg" width="40" height="40" />
     <h2
       v-show="showTitle"
-      class="pl-8px text-16px text-primary font-bold transition duration-300 ease-in-out"
+      class="pl-8px text-align-center text-16px text-primary font-bold transition duration-300 ease-in-out"
     >
       <!-- {{ t('app.name') }} -->
       VCS阀门全生命周期 <br />

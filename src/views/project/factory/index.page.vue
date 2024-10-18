@@ -88,6 +88,13 @@ const [registerTable, { reload }] = useTable({
       })
   }
 })
+
+const download = async () => {
+  const link = document.createElement('a')
+  link.href =
+    'http://200.200.200.18:9000/pdf/1729251279478-%E9%98%80%E9%97%A8%E5%AF%BC%E5%85%A5%E6%95%B0%E6%8D%AE%E6%A8%A1%E6%9D%BF.xlsx'
+  link.click()
+}
 </script>
 
 <template>
@@ -95,6 +102,7 @@ const [registerTable, { reload }] = useTable({
     <Table @register="registerTable">
       <template #toolbar>
         <n-button class="mr-2" type="primary" @click="openSetModel(true)"> 新增 </n-button>
+        <n-button class="mr-2" type="success" @click="download"> 下载模板 </n-button>
       </template>
     </Table>
     <SetModal @register="registerSetModal" @success="reload()" />

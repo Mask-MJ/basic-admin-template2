@@ -45,8 +45,8 @@ const change = async () => {
     beginTime: range.value?.[0],
     endTime: range.value?.[1]
   })
-  result.times = ['2021-01-01', '2021-01-02', '2021-01-03', '2021-01-04', '2021-01-05']
-  result.values = [4, 2, 13, 4, 15]
+  // result.times = ['2021-01-01', '2021-01-02', '2021-01-03', '2021-01-04', '2021-01-05']
+  // result.values = [4, 2, null, 4, 15]
   const dictData = options.value.find((item) => item.name === value.value)
   const min =
     Math.min(...result.values, dictData.lowerLimit, dictData.upperLimit) === dictData.lowerLimit
