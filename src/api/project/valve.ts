@@ -122,8 +122,13 @@ export interface ValveRunInfo {
 }
 
 export interface ValveHistory {
-  times: string[]
-  values: number[]
+  dataLine: [number[], string[]]
+  predictionLine: {
+    linearRegression: [number[], string[]]
+  }
+  auxiliaryLine: {
+    averageValue: [number[], string[]]
+  }
 }
 
 // export interface ValveScore {
@@ -172,8 +177,8 @@ export const getValveHistoryDetail = (id: number) =>
 export const getValveScore = (id: number) => defHttp.get({ url: `${Api.ValveScore}/${id}` })
 // 获取阀门运行历史数据
 export const getValveHistoryChart = (params: {
-  id: number
-  type: string
+  valveId: number
+  keywordId: number
   beginTime?: number
   endTime?: number
 }) => defHttp.get<ValveHistory>({ url: `${Api.ValveHistoryChart}`, params })

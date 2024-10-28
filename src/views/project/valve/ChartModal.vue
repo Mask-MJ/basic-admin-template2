@@ -39,36 +39,65 @@ const [registerModal] = useModalInner(async (data) => {
   value.value = options.value[0].name
 })
 const change = async () => {
-  let result = await getValveHistoryChart({
-    id: valveId.value,
-    type: value.value,
-    beginTime: range.value?.[0],
-    endTime: range.value?.[1]
-  })
-  // result.times = ['2021-01-01', '2021-01-02', '2021-01-03', '2021-01-04', '2021-01-05']
-  // result.values = [4, 2, null, 4, 15]
   const dictData = options.value.find((item) => item.name === value.value)
-  const min =
-    Math.min(...result.values, dictData.lowerLimit, dictData.upperLimit) === dictData.lowerLimit
-      ? dictData.lowerLimit
-      : undefined
-  const max =
-    Math.max(...result.values, dictData.lowerLimit, dictData.upperLimit) === dictData.upperLimit
-      ? dictData.upperLimit
-      : undefined
+  console.log(value.value)
+  // let result = await getValveHistoryChart({
+  //   // valveId: valveId.value,
+  //   // keywordId: dictData.id,
+  //   valveId: 1,
+  //   keywordId: 1,
+  //   beginTime: range.value?.[0],
+  //   endTime: range.value?.[1]
+  // })
+  let result = {
+    dataLine: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    predictionLine: {
+      linearRegression: [11, 12, 13, 14, 15, 6, 7, 8, 19, 10]
+    },
+    auxiliaryLine: {
+      averageValue: [12, 12, 23, 4, 15, 6, 7, 18, 9, 10]
+    },
+    times: [
+      '2021-01-01',
+      '2021-01-02',
+      '2021-01-03',
+      '2021-01-04',
+      '2021-01-05',
+      '2021-01-06',
+      '2021-01-07',
+      '2021-01-08',
+      '2021-01-09',
+      '2021-01-10'
+    ]
+  }
+  const lowerLimit = Number(dictData.lowerLimit)
+  const upperLimit = Number(dictData.upperLimit)
   option.value = {
-    xAxis: { type: 'category', data: result.times },
-    yAxis: { type: 'value', max, min },
+    legend: { data: ['数据线', '预测线', '辅助线'] },
+    tooltip: { trigger: 'axis' },
+    xAxis: { type: 'category', data: result.dataLine[1] },
+    yAxis: { type: 'value' },
     series: [
       {
-        data: result.values,
         type: 'line',
+        name: '数据线',
+        data: result.dataLine[0],
         markLine: {
           data: [
-            { name: '下限值', yAxis: dictData.lowerLimit },
-            { name: '上限值', yAxis: dictData.upperLimit }
+            { name: '下限值', yAxis: lowerLimit },
+            { name: '上限值', yAxis: upperLimit }
           ]
         }
+      },
+      {
+        type: 'line',
+        name: '预测线',
+        data: result.predictionLine.linearRegression[0]
+      },
+      {
+        type: 'line',
+        name: '辅助线',
+        data: result.auxiliaryLine.averageValue[0]
       }
     ]
   }
