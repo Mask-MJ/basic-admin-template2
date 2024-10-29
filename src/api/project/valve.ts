@@ -122,13 +122,14 @@ export interface ValveRunInfo {
 }
 
 export interface ValveHistory {
-  dataLine: [number[], string[]]
+  dataLine: number[]
   predictionLine: {
-    linearRegression: [number[], string[]]
+    linearRegression: number[]
   }
   auxiliaryLine: {
-    averageValue: [number[], string[]]
+    averageValue: number[]
   }
+  times: string[]
 }
 
 // export interface ValveScore {
