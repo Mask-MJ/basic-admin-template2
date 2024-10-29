@@ -10,12 +10,14 @@ const props = defineProps({
   formItem: { type: Object as PropType<FormItemGiProps>, required: true },
   formAction: { type: Object as PropType<FormAction>, required: true }
 })
+const collapsed = ref(false)
 const getResetBtnOptions = computed(() =>
   Object.assign({ label: t('components.form.resetText') }, props.formAction.resetButtonOptions)
 )
 const getSubmitBtnOptions = computed(() =>
   Object.assign({ label: t('components.form.queryText') }, props.formAction.submitButtonOptions)
 )
+
 // 当小于搜索临界值时，不显示收起按钮
 const isShowAdvanced = computed(() => {
   const total = props.schemas.reduce(
@@ -33,6 +35,14 @@ const resetAction = () => emits('action', 'reset')
 const submitAction = () => emits('action', 'submit')
 /** 更改收起状态 */
 const toggleAdvanced = () => emits('action', 'toggle')
+
+watch(
+  () => props,
+  () => {
+    collapsed.value = props.formGrid.collapsed || false
+  },
+  { deep: true }
+)
 </script>
 
 <template>
@@ -53,10 +63,9 @@ const toggleAdvanced = () => emits('action', 'toggle')
       {{ getSubmitBtnOptions.label }}
     </n-button>
     <n-button v-if="isShowAdvanced" quaternary @click="toggleAdvanced">
-      {{ formGrid.collapsed ? t('components.form.unfold') : t('components.form.putAway') }}
+      {{ collapsed ? t('components.form.unfold') : t('components.form.putAway') }}
       <template #icon>
-        <i :class="formGrid.collapsed ? 'i-ant-design:down-outlined' : 'i-ant-design:up-outlined'">
-        </i>
+        <i :class="collapsed ? 'i-ant-design:down-outlined' : 'i-ant-design:up-outlined'"> </i>
       </template>
     </n-button>
   </n-space>
