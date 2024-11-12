@@ -54,10 +54,10 @@ const change = async () => {
   //   valveId: valveId,
   //   dataLine: [46.83, 17.66, 41.32, 98.17, 24.37, 13.45, 8.59, 18.61, 11.29, 30.1],
   //   auxiliaryLine: {
-  //     averageValue: [46.83, 17.66, 41.32, 98.17, 24.37, 13.45, 8.59, 18.61, 11.29, 30.1]
+  //     averageValue: [36.83, 27.66, 31.32, 78.17, 34.37, 13.45, 8.59, 18.61, 11.29, 30.1]
   //   },
   //   predictionLine: {
-  //     linearRegression: [46.83, 17.66, 41.32, 98.17, 24.37, 13.45, 8.59, 18.61, 11.29, 30.1]
+  //     linearRegression: [22.83, 44.66, 55.32, 66.17, 77.37, 13.45, 8.59, 18.61, 11.29, 30.1]
   //   },
   //   times: [
   //     '2024-01-01',
@@ -87,6 +87,7 @@ const change = async () => {
         name: '数据线',
         data: result.dataLine,
         markLine: {
+          lineStyle: { color: 'red' },
           data: [
             { name: '下限值', yAxis: lowerLimit },
             { name: '上限值', yAxis: upperLimit }
