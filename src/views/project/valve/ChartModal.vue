@@ -77,7 +77,7 @@ const change = async () => {
   const lowerLimit = Number(dictData.lowerLimit)
   const upperLimit = Number(dictData.upperLimit)
   option.value = {
-    legend: { data: ['数据线', '预测线', '辅助线'] },
+    legend: { data: ['数据线', '预测线', '辅助线', '标准线'] },
     tooltip: { trigger: 'axis' },
     xAxis: { type: 'category', data: result.times },
     yAxis: { type: 'value', max, min },
@@ -85,14 +85,14 @@ const change = async () => {
       {
         type: 'line',
         name: '数据线',
-        data: result.dataLine,
-        markLine: {
-          lineStyle: { color: 'red' },
-          data: [
-            { name: '下限值', yAxis: lowerLimit },
-            { name: '上限值', yAxis: upperLimit }
-          ]
-        }
+        data: result.dataLine
+        // markLine: {
+        //   lineStyle: { color: 'red' },
+        //   data: [
+        //     { name: '下限值', yAxis: lowerLimit },
+        //     { name: '上限值', yAxis: upperLimit }
+        //   ]
+        // }
       },
       {
         type: 'line',
@@ -103,6 +103,17 @@ const change = async () => {
         type: 'line',
         name: '辅助线',
         data: result.auxiliaryLine.averageValue
+      },
+      {
+        type: 'line',
+        name: '标准线',
+        markLine: {
+          lineStyle: { color: 'red' },
+          data: [
+            { name: '下限值', yAxis: lowerLimit },
+            { name: '上限值', yAxis: upperLimit }
+          ]
+        }
       }
     ]
   }
