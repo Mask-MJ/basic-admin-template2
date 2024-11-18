@@ -25,11 +25,19 @@ const [registerTable, { reload }] = useTable({
   showIndexColumn: false,
   pagination: false,
   actionColumn: {
-    width: 300,
+    width: 200,
     key: 'ACTION',
     render: (row: FactoryInfo) =>
       h(Action, {
         actions: [
+          {
+            icon: 'i-ant-design:laptop-outlined',
+            tooltipProps: { content: '工作台' },
+            buttonProps: {
+              type: 'success',
+              onClick: () => router.push(`/project/factory/${row.id}`)
+            }
+          },
           {
             type: 'edit',
             onClick: async () => {
@@ -37,19 +45,19 @@ const [registerTable, { reload }] = useTable({
               return openSetModel(true, result)
             }
           },
-          {
-            icon: 'i-ant-design:deployment-unit-outlined',
-            tooltipProps: { content: '装置管理' },
-            buttonProps: {
-              type: 'success',
-              onClick: () => router.push(`/project/device/${row.id}`)
-            }
-          },
+          // {
+          //   icon: 'i-ant-design:deployment-unit-outlined',
+          //   tooltipProps: { content: '装置管理' },
+          //   buttonProps: {
+          //     type: 'success',
+          //     onClick: () => router.push(`/project/device/${row.id}`)
+          //   }
+          // },
           {
             icon: 'i-ant-design:dashboard-outlined',
             tooltipProps: { content: '阀门管理' },
             buttonProps: {
-              type: 'info',
+              type: 'warning',
               onClick: () => router.push(`/project/valve/factoryId-${row.id}`)
             }
           },
@@ -61,28 +69,45 @@ const [registerTable, { reload }] = useTable({
           //     onClick: () => router.push(`/project/contract/${row.id}`)
           //   }
           // },
-          {
-            icon: 'i-ant-design:line-chart-outlined',
-            tooltipProps: { content: '分析任务' },
-            buttonProps: {
-              type: 'success',
-              onClick: () => router.push(`/project/analysisTask/${row.id}`)
-            }
-          },
-          {
-            icon: 'i-ant-design:file-search-outlined',
-            tooltipProps: { content: '导入数据' },
-            buttonProps: {
-              type: 'info',
-              onClick: () => openImportModel(true, row)
-            }
-          },
+          // {
+          //   icon: 'i-ant-design:line-chart-outlined',
+          //   tooltipProps: { content: '分析任务' },
+          //   buttonProps: {
+          //     type: 'success',
+          //     onClick: () => router.push(`/project/analysisTask/${row.id}`)
+          //   }
+          // },
+          // {
+          //   icon: 'i-ant-design:file-search-outlined',
+          //   tooltipProps: { content: '导入数据' },
+          //   buttonProps: {
+          //     type: 'info',
+          //     onClick: () => openImportModel(true, row)
+          //   }
+          // },
           {
             type: 'del',
             onClick: async () => {
               await deleteFactory(row.id)
               await reload()
             }
+          }
+        ],
+        dropDownActions: [
+          {
+            props: { icon: 'i-ant-design:deployment-unit-outlined' },
+            label: '装置管理',
+            onClick: () => router.push(`/project/device/${row.id}`)
+          },
+          {
+            props: { icon: 'i-ant-design:line-chart-outlined' },
+            label: '分析任务',
+            onClick: () => router.push(`/project/analysisTask/${row.id}`)
+          },
+          {
+            props: { icon: 'i-ant-design:file-search-outlined' },
+            label: '导入数据',
+            onClick: () => openImportModel(true, row)
           }
         ]
       })

@@ -6,7 +6,7 @@ import { getUserInfo, login, type LoginParams, type UserInfo } from '@/api/syste
 import { router } from '@/router'
 import { CACHE_ROUTES, PageEnum, TOKEN_KEY, USER_INFO_KEY } from '@/settings/enums'
 import { defineStore } from 'pinia'
-import { flatMapDeep } from 'lodash-es'
+import { flatMapDeep, flatMapDepth } from 'lodash-es'
 import { transformersMenus } from './helper/user-helper'
 
 interface UserState {
@@ -86,9 +86,37 @@ export const useUserStore = defineStore('user-store', {
       const data = await getMenuList()
 
       const routes = router.getRoutes()
+      console.log(
+        'data',
+        flatMapDepth<MenuInfo>(
+          data,
+          (route) => {
+            console.log('route', route.children)
+            return [route, route.children]
+          },
+          4
+        )
+      )
+
+      // function convertToFlat(data, parentId = null) {
+      //   return data.reduce((acc, curr) => {
+      //     acc.push({ ...curr, parentId })
+      //     if (curr.children) {
+      //       acc = acc.concat(convertToFlat(curr.children, curr.id))
+      //     }
+      //     return acc
+      //   }, [])
+      // }
+
       // 把路由同步到 router 中
       flatMapDeep(data, (route) => [route, route.children] as MenuInfo[]).forEach((route) => {
         routes.forEach((item) => {
+          if (route.path === '/project/factory/workTable/:id') {
+            // console.log('route', route)
+          }
+          if (item.path === '/project/factory/workTable/:id') {
+            // console.log('item', item)
+          }
           if (route?.path === item.path) {
             item.meta = {
               ...item.meta,
@@ -101,6 +129,28 @@ export const useUserStore = defineStore('user-store', {
           }
         })
       })
+      // 递归获取所有的后台路由, 并且序列化添加到路由中
+      // function transformersRoute() {}
+      // function transformersRoute(data: MenuInfo[]) {
+      //   data.forEach((item) => {
+      //     if (item.hidden) return
+      //     const route = routes.find((route) => route.path === item.path)
+      //     if (route) {
+      //       route.meta = {
+      //         ...route.meta,
+      //         title: item.name,
+      //         icon: item.icon,
+      //         hidden: item.hidden,
+      //         parentId: item.parentId,
+      //         sort: item.sort
+      //       }
+      //     }
+      //     if (Array.isArray(item.children)) {
+      //       transformersRoute(item.children)
+      //     }
+      //   })
+      // }
+      // transformersRoute(data)
       // const route = router.currentRoute.value
       // const tabStore = useTabStore()
       // console.log('route', route)
