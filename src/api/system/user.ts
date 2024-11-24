@@ -1,6 +1,7 @@
 import type { Result } from '@/utils/request/types'
 
 import { defHttp } from '@/utils'
+import type { OperationLogInfo } from '../monitor'
 export interface RegisterParams {
   account: string
   password: string
@@ -62,12 +63,21 @@ export interface SearchParams {
   pageSize: number
 }
 
+export interface Charts {
+  factoryTotal: number
+  valveTotal: number
+  taskTotal: number
+  taskCount: { name: string; value: number }[]
+  operationLog: OperationLogInfo[]
+}
+
 enum Api {
   Register = 'authentication/sign-up',
   Login = 'authentication/sign-in',
 
   Users = 'system/user',
   UserInfo = 'system/user/info',
+  Charts = 'system/user/charts',
   ChangePassword = 'system/user/changePassword',
   Logout = 'system/user/logout'
 }
@@ -80,6 +90,8 @@ export const login = (params: LoginParams) => defHttp.post<LoginResult>({ url: A
 export const doLogout = () => defHttp.post({ url: Api.Logout })
 // 获取自身用户信息
 export const getUserInfo = () => defHttp.get<UserInfo>({ url: Api.UserInfo })
+// 获取用户工作台信息
+export const getCharts = () => defHttp.get<Charts>({ url: Api.Charts })
 
 // 获取用户列表
 export const getUsersList = (params?: Partial<SearchParams>) =>
