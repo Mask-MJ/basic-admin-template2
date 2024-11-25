@@ -179,12 +179,15 @@ onMounted(async () => {
         <ul class="list">
           <n-scrollbar style="max-height: 280px">
             <li
-              class="mb-2 border border-slate-400 rounded px-2 py-1"
+              class="mb-2 border-b-1 border-slate-300 rounded px-2 py-1 text-slate-500"
               v-for="item in chartsData.operationLog"
               :key="item.id"
             >
-              <span class="mr-4">{{ item.createdAt }}</span>
-              <span class="">{{ item.title }}</span>
+              <div class="mb-2 text-base text-slate-800 font-bold">{{ item.module }}</div>
+              <div class="flex-between">
+                <span class="">{{ item.title }}</span>
+                <span class="mr-2">{{ item.createdAt }}</span>
+              </div>
             </li>
           </n-scrollbar>
         </ul>
