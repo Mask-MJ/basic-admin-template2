@@ -95,19 +95,25 @@ const [registerTable, { reload }] = useTable({
         ],
         dropDownActions: [
           {
-            props: { icon: 'i-ant-design:deployment-unit-outlined' },
-            label: '装置管理',
-            onClick: () => router.push(`/project/device/${row.id}`)
+            props: {
+              icon: 'i-ant-design:deployment-unit-outlined',
+              onClick: () => router.push(`/project/device/${row.id}`)
+            },
+            label: '装置管理'
           },
           {
-            props: { icon: 'i-ant-design:line-chart-outlined' },
-            label: '分析任务',
-            onClick: () => router.push(`/project/analysisTask/${row.id}`)
+            props: {
+              icon: 'i-ant-design:line-chart-outlined',
+              onClick: () => router.push(`/project/analysisTask/${row.id}`)
+            },
+            label: '分析任务'
           },
           {
-            props: { icon: 'i-ant-design:file-search-outlined' },
-            label: '导入数据',
-            onClick: () => openImportModel(true, row)
+            props: {
+              icon: 'i-ant-design:file-search-outlined',
+              onClick: () => openImportModel(true, row)
+            },
+            label: '导入数据'
           }
         ]
       })
