@@ -112,7 +112,7 @@ export const setSchemas: FormSchema[] = [
   { path: '', label: '', component: 'NDivider', renderComponentContent: '定位器' },
   { path: 'positionerBrand', label: '定位器品牌', component: 'NInput', span: 8 },
   { path: 'positionerModel', label: '定位器型号', component: 'NInput', span: 8 },
-  { path: 'positionerType', label: '定位器类型', component: 'NInput', span: 8 },
+  // { path: 'positionerType', label: '定位器类型', component: 'NInput', span: 8 },
   { path: 'positionerDescription', label: '定位器描述', component: 'NInput', span: 8 },
   { path: '', label: '', component: 'NDivider', renderComponentContent: '附件' },
   { path: 'accessory', label: '附件种类', component: 'NInput', span: 8 },
