@@ -39,6 +39,8 @@ export interface DictDataInfo {
   name: string
   value: string
   sort: number
+  lowerLimit: number
+  upperLimit: number
   status: boolean
   type: string
   dictTypeId: number
@@ -90,7 +92,7 @@ export const deleteDictType = (ids: number | string) =>
 
 // 获取字典数据列表
 export const getDictDataList = (params?: Partial<SearchParams>) =>
-  defHttp.get({ url: Api.DictData, params })
+  defHttp.get<DictDataInfo[]>({ url: Api.DictData, params })
 // 获取字典数据图表数据
 export const getDictDataCharts = (params: Partial<SearchParams>) =>
   defHttp.get({ url: Api.DictDataCharts, params })

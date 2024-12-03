@@ -36,7 +36,7 @@ const [registerModal] = useModalInner(async (data) => {
   const source = data.source || 'hart'
   options.value = await getDictDataCharts({ dictTypeValue: source })
   valveId.value = data.id
-  value.value = options.value[0].name
+  value.value = options.value[0]?.name
 })
 const change = async () => {
   const dictData = options.value.find((item) => item.name === value.value)

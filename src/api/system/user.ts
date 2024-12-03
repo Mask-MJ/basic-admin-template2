@@ -65,6 +65,11 @@ export interface SearchParams {
 
 export interface Charts {
   factoryTotal: number
+  factoryProvinceGroup: { name: string; value: number }[]
+  factoryIndustryGroup: { name: string; value: number }[]
+  valveBrandGroup: { name: string; value: number }[]
+  valveModelGroup: { name: string; value: number }[]
+  positionerModelGroup: { name: string; value: number }[]
   valveTotal: number
   taskTotal: number
   taskCount: { name: string; value: number }[]

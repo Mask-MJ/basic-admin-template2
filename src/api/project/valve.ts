@@ -13,6 +13,8 @@ export interface ValveInfo {
   tag: string
   /// 装置
   unit: string
+  /// 来源
+  source: string
   /// 介质
   fluidName: string
   /// 关键应用
