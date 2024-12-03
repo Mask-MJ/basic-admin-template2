@@ -55,6 +55,14 @@ const [registerTable, { reload, getForm }] = useTable({
       h(Action, {
         actions: [
           {
+            icon: 'i-ant-design:laptop-outlined',
+            tooltipProps: { content: '工作台' },
+            buttonProps: {
+              type: 'success',
+              onClick: () => router.push(`/project/valve/${row.id}`)
+            }
+          },
+          {
             type: 'edit',
             onClick: async () => {
               const result = await getValveDetail(row.id)
