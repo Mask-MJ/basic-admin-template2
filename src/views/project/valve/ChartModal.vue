@@ -33,7 +33,7 @@ const value = ref('')
 const range = ref<[number, number]>()
 const options = ref<any[]>([])
 const [registerModal] = useModalInner(async (data) => {
-  const source = data.source || 'hart'
+  const source = data.source || 'HART'
   options.value = await getDictDataCharts({ dictTypeValue: source })
   valveId.value = data.id
   value.value = options.value[0]?.name

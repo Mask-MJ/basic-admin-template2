@@ -22,7 +22,7 @@ const [registerModal, { setModalProps }] = useModalInner(async (data: ValveRunIn
   setModalProps({ title: `阀门运行数据详情 ${time}` })
   // runInfoData.value = runInfo as any[]
   // 对照关键字表把数据转换为对应的中英文
-  const dictType = (await getDictTypeList({ name: 'hart', pageSize: 1000 })).rows
+  const dictType = (await getDictTypeList({ name: 'HART', pageSize: 1000 })).rows
   const dictTypeId = dictType[0].id
   dictData.value = (await getDictDataList({ dictTypeId, pageSize: 1000 })).rows
   dictDataTreeList.value = await getDictDataTreeListAll()

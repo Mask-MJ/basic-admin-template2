@@ -15,17 +15,15 @@ export function useRouterPush(inSetup = true) {
    * @param to - 需要跳转的路由
    * @param newTab - 是否在新的浏览器Tab标签打开
    */
-  const routerPush = (to: any, newTab = false) =>
-    newTab ? window.open(router.resolve(to).href, '_blank') : router.push(to)
+  const routerPush = (to: any) => router.push(to)
 
   /** 返回上一级路由 */
   const routerBack = () => router.go(-1)
 
   /**
    * 跳转首页
-   * @param newTab - 在新的浏览器标签打开
    */
-  const toHome = (newTab = false) => routerPush({ name: 'Root' }, newTab)
+  const toHome = () => routerPush({ name: 'Root' })
   /**
    * 跳转登录页面
    * @param redirectUrl - 重定向地址(登录成功后跳转的地址),默认undefined表示取当前地址为重定向地址

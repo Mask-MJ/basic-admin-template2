@@ -36,7 +36,7 @@ const getOption = (data: DictDataInfo) => {
 
 onMounted(async () => {
   const valveDetail = await getValveDetail(valveId.value)
-  dictDatas.value = await getDictDataCharts({ dictTypeValue: valveDetail.source || 'hart' })
+  dictDatas.value = await getDictDataCharts({ dictTypeValue: valveDetail.source || 'HART' })
   const beginTime = dayjs().subtract(1, 'year').valueOf()
   const endTime = dayjs().valueOf()
   result.value = await Promise.all(
