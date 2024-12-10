@@ -33,7 +33,8 @@ export interface SearchParams {
 
 enum Api {
   Factory = 'project/factory',
-  Import = 'project/factory/import'
+  Import = 'project/factory/import',
+  Chart = 'project/factory/chart'
 }
 
 // 获取最终用户列表
@@ -44,6 +45,8 @@ export const createFactory = (params: CreatedFactory) => defHttp.post({ url: Api
 // 获取单个最终用户信息
 export const getFactoryDetail = (id: number) =>
   defHttp.get<FactoryInfo>({ url: `${Api.Factory}/${id}` })
+// 获取最终用户图表数据
+export const getFactoryChart = (id: number) => defHttp.get({ url: `${Api.Chart}/${id}` })
 // 导入阀门基础数据
 export const importValveData = (params: UploadFileParams) =>
   defHttp.uploadFile({ url: Api.Import }, params)

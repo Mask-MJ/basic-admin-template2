@@ -12,7 +12,7 @@ import {
   GeoComponent,
   VisualMapComponent
 } from 'echarts/components'
-import { BarOption, LineOption, MapData } from './data'
+import { BarOption, LineOption } from './data'
 import { cloneDeep, flatMap, sortBy, map } from 'lodash-es'
 import china from '@/assets/json/china.json'
 import { getCharts, type Charts } from '@/api/system/user'
@@ -36,11 +36,16 @@ if (themeStore.darkMode) {
 }
 
 const chartsData = ref<Charts>({
-  factoryTotal: 0,
-  valveTotal: 0,
-  taskTotal: 0,
-  taskCount: [],
-  operationLog: []
+  factoryTotal: 0, // 最终用户数量
+  factoryProvinceGroup: [], // 最终用户地区分组
+  factoryIndustryGroup: [], // 最终用户行业分组
+  valveBrandGroup: [], // 阀门品牌分组
+  valveModelGroup: [], // 阀门型号分组
+  positionerModelGroup: [], // 定位器型号分组
+  valveTotal: 0, // 阀门数量
+  taskTotal: 0, // 分析任务数量
+  taskCount: [], // 本周任务数量
+  operationLog: [] // 工作记录
 })
 
 const weekTaskOption = computed(() => {
@@ -62,7 +67,7 @@ const factoryMapOption = computed(() => {
     },
     visualMap: {
       min: 0,
-      max: 1000,
+      max: 10,
       text: ['High', 'Low'],
       realtime: false,
       calculable: true,
@@ -81,7 +86,7 @@ const factoryMapOption = computed(() => {
         zoom: true, //默认地图在容器中显示zoom:1,可根据需求放大缩小地图
         label: { show: true, color: '#fff' },
         // 数据
-        data: MapData
+        data: chartsData.value.factoryProvinceGroup
       }
     ]
   }
@@ -90,7 +95,7 @@ const factoryMapOption = computed(() => {
 
 const factoryBarOption = computed(() => {
   const option: any = cloneDeep(BarOption)
-  const data = sortBy(MapData, (item) => item.value)
+  const data = sortBy(chartsData.value.factoryProvinceGroup, (item) => item.value)
   option.xAxis = { type: 'value', boundaryGap: [0, 0.01] }
   option.yAxis = {
     type: 'category',
@@ -103,22 +108,22 @@ const factoryBarOption = computed(() => {
 
 const industryOption = computed(() => {
   const option = cloneDeep(BarOption)
-  option.xAxis[0].data = ['新能源', '石油化工', '电力', '钢铁', '水泥']
-  option.series[0].data = [430, 200, 500, 400, 500]
+  option.xAxis[0].data = map(chartsData.value.factoryIndustryGroup, 'name')
+  option.series[0].data = map(chartsData.value.factoryIndustryGroup, 'value')
   return option
 })
 
-const brandOption = computed(() => {
+const valveBrandOption = computed(() => {
   const option = cloneDeep(BarOption)
-  option.xAxis[0].data = ['品牌1', '品牌2', '品牌3', '品牌4', '品牌5']
-  option.series[0].data = [330, 200, 700, 400, 500]
+  option.xAxis[0].data = map(chartsData.value.valveBrandGroup, 'name')
+  option.series[0].data = map(chartsData.value.valveBrandGroup, 'value')
   return option
 })
 
-const modelOption = computed(() => {
+const positionerModelOption = computed(() => {
   const option = cloneDeep(BarOption)
-  option.xAxis[0].data = ['型号1', '型号2', '型号3', '型号4', '型号5']
-  option.series[0].data = [330, 200, 700, 400, 500]
+  option.xAxis[0].data = map(chartsData.value.positionerModelGroup, 'name')
+  option.series[0].data = map(chartsData.value.positionerModelGroup, 'value')
   return option
 })
 
@@ -210,12 +215,12 @@ onMounted(async () => {
     </n-gi>
     <n-gi>
       <n-card title="阀门品牌分析" hoverable>
-        <VChart class="chart" :option="brandOption" autoresize />
+        <VChart class="chart" :option="valveBrandOption" autoresize />
       </n-card>
     </n-gi>
     <n-gi>
       <n-card title="定位器型号分析" hoverable>
-        <VChart class="chart" :option="modelOption" autoresize />
+        <VChart class="chart" :option="positionerModelOption" autoresize />
       </n-card>
     </n-gi>
     <n-gi>

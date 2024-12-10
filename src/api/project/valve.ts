@@ -13,6 +13,8 @@ export interface ValveInfo {
   tag: string
   /// 装置
   unit: string
+  /// 来源
+  source: string
   /// 介质
   fluidName: string
   /// 关键应用
@@ -51,8 +53,8 @@ export interface ValveInfo {
   actuatorDescription: string
   /// 定位器品牌
   positionerBrand: string
-  /// 定位器类型
-  positionerType: string
+  /// 定位器型号
+  positionerModel: string
   /// 定位器描述
   positionerDescription: string
   /// 附件种类

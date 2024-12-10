@@ -20,7 +20,7 @@ export interface RequestOptions {
 export interface Result<T = any> {
   statusCode: number
   message: string
-  data: T
+  rows: T
   page?: number
   pageSize?: number
   total: number

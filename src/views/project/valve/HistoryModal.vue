@@ -19,7 +19,7 @@ const [registerModal] = useModalInner(async (data) => {
   const dictDataTreeList = await getDictDataTreeListAll()
   // const result = history
   tableData.value = transformData(result, dictDataTreeList)
-  const dictType = (await getDictTypeList({ name: 'hart', pageSize: 1000 })).rows
+  const dictType = (await getDictTypeList({ name: 'HART', pageSize: 1000 })).rows
   const dictTypeId = dictType[0].id
   dictData.value = (await getDictDataList({ dictTypeId, pageSize: 1000 })).rows
 
