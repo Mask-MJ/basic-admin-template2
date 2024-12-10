@@ -26,7 +26,9 @@ const getSchemas = computed(() => {
   }
 })
 const [registerForm, { validate, getPathsValue, setPathsValue }] = useForm({
-  labelWidth: 100,
+  formItem: {
+    labelWidth: 120
+  },
   schemas: getSchemas.value
 })
 
