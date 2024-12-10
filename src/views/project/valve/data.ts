@@ -87,7 +87,7 @@ export const setSchemas: FormSchema[] = [
     }
   },
   // { path: 'unit', label: '装置', component: 'NInput', span: 8 },
-  { path: 'no', label: '编码', component: 'NInput', span: 8 },
+  { path: 'no', label: '序号', component: 'NInput', span: 8 },
   { path: 'fluidName', label: '介质', component: 'NInput', span: 8 },
   { path: 'criticalApplication', label: '关键应用', component: 'NInput', span: 8 },
   { path: 'since', label: '投用时间', component: 'NDatePicker', span: 8 },

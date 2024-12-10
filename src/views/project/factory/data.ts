@@ -1,6 +1,6 @@
 import type { FormSchema } from '@/components/Form'
 import type { BasicColumn } from '@/components/Table'
-import { type FactoryInfo, getFactoryList } from '@/api/project/factory'
+import { type FactoryInfo } from '@/api/project/factory'
 import { useCascaderAreaData } from './areaData'
 const areaData = useCascaderAreaData()
 export const searchSchemas: FormSchema[] = [
@@ -26,10 +26,8 @@ export const setSchemas: FormSchema[] = [
   {
     path: 'parentId',
     label: '上级菜单',
-    component: 'ApiTreeSelect',
+    component: 'NTreeSelect',
     componentProps: {
-      immediate: true,
-      api: getFactoryList,
       labelField: 'name',
       keyField: 'id',
       cascade: true

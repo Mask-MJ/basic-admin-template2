@@ -1,4 +1,4 @@
-import type { Result, UploadFileParams } from '@/utils/request/types'
+import type { UploadFileParams } from '@/utils/request/types'
 import { defHttp } from '@/utils'
 
 export interface CreatedFactory {
@@ -29,6 +29,7 @@ export interface SearchParams {
   createdAt: number
   updatedAt: number
   name: string | null
+  filterId: number | null
 }
 
 enum Api {
@@ -39,7 +40,8 @@ enum Api {
 
 // 获取最终用户列表
 export const getFactoryList = (params?: Partial<SearchParams>) =>
-  defHttp.get<Result<FactoryInfo[]>>({ url: Api.Factory, params })
+  defHttp.get<FactoryInfo[]>({ url: Api.Factory, params })
+
 // 创建最终用户
 export const createFactory = (params: CreatedFactory) => defHttp.post({ url: Api.Factory, params })
 // 获取单个最终用户信息

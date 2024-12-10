@@ -29,14 +29,15 @@ const valveId = computed(() => {
   return Number((router.currentRoute.value.params as { id: string }).id)
 })
 const dictDatas = ref<DictDataInfo[]>([])
+const valveDetail = ref()
 const result = ref<any[]>([])
 const getOption = (data: DictDataInfo) => {
   return result.value.filter((item) => item._id === data.id)[0]
 }
 
 onMounted(async () => {
-  const valveDetail = await getValveDetail(valveId.value)
-  dictDatas.value = await getDictDataCharts({ dictTypeValue: valveDetail.source || 'HART' })
+  valveDetail.value = await getValveDetail(valveId.value)
+  dictDatas.value = await getDictDataCharts({ dictTypeValue: valveDetail.value.source || 'HART' })
   const beginTime = dayjs().subtract(1, 'year').valueOf()
   const endTime = dayjs().valueOf()
   result.value = await Promise.all(
@@ -111,6 +112,13 @@ onMounted(async () => {
 <template>
   <div>
     <div v-if="valveId">
+      <n-card title="阀门详情">
+        <ul>
+          <li>所属最终用户：{{ valveDetail?.factory?.name || '' }}</li>
+          <li>所属装置：{{ valveDetail?.device?.name || '' }}</li>
+          <li>阀门位号：{{ valveDetail?.tag || '' }}</li>
+        </ul>
+      </n-card>
       <n-grid x-gap="12" :cols="3" class="mt-4">
         <n-gi v-for="item in dictDatas" :key="item.id">
           <n-card :title="item.name">

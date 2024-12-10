@@ -189,9 +189,9 @@ onMounted(async () => {
               :key="item.id"
             >
               <div class="mb-2 text-base text-slate-800 font-bold">{{ item.module }}</div>
-              <div class="flex-between">
-                <span class="">{{ item.title }}</span>
-                <span class="mr-2">{{ item.createdAt }}</span>
+              <div class="">
+                <div class="">{{ item.title }}</div>
+                <div class="">{{ item.createdAt }}</div>
               </div>
             </li>
           </n-scrollbar>

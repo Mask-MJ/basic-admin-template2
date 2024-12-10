@@ -3,6 +3,7 @@ import { useModal } from '@/components/Modal'
 import { useTable, Action } from '@/components/Table'
 import {
   deleteFactory,
+  // downloadFactoryReport,
   getFactoryDetail,
   getFactoryList,
   type FactoryInfo
@@ -83,6 +84,28 @@ const [registerTable, { reload }] = useTable({
           //   buttonProps: {
           //     type: 'info',
           //     onClick: () => openImportModel(true, row)
+          //   }
+          // },
+          // {
+          //   icon: 'i-ant-design:file-search-outlined',
+          //   tooltipProps: { content: '生成报告' },
+          //   buttonProps: {
+          //     type: 'info',
+          //     onClick: async () => {
+          //       const link = document.createElement('a')
+          //       const response = await downloadFactoryReport(row.id)
+          //       const blob2 = new Blob([response.data])
+          //       const url = URL.createObjectURL(blob2)
+          //       link.href = url
+          //       link.download = '报告结果.docx'
+
+          //       document.body.appendChild(link)
+
+          //       link.click()
+          //       link.addEventListener('click', () => {
+          //         link.remove()
+          //       })
+          //     }
           //   }
           // },
           {
