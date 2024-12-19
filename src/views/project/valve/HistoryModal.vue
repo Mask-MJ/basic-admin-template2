@@ -6,7 +6,6 @@ import { getDictDataList, getDictDataTreeListAll, getDictTypeList } from '@/api/
 import dayjs from 'dayjs'
 import { Workbook } from 'exceljs'
 import { groupBy, flattenDepth } from 'lodash-es'
-// import { history } from './mock.data'
 
 const valveId = ref()
 const tableData = ref<any[]>([])
@@ -15,10 +14,6 @@ const dictData = ref<any[]>([])
 
 const [registerModal] = useModalInner(async (data) => {
   valveId.value = data.id
-  const result = (await getValveHistoryList({ valveId: data.id })).rows
-  const dictDataTreeList = await getDictDataTreeListAll()
-  // const result = history
-  tableData.value = transformData(result, dictDataTreeList)
   const dictType = (await getDictTypeList({ name: 'HART', pageSize: 1000 })).rows
   const dictTypeId = dictType[0].id
   dictData.value = (await getDictDataList({ dictTypeId, pageSize: 1000 })).rows
@@ -31,7 +26,7 @@ const [registerModal] = useModalInner(async (data) => {
 })
 
 const [registerTable, { setColumns, getTableData, getColumns }] = useTable({
-  data: tableData,
+  api: getValveHistoryList,
   columns: [
     { title: '位号', key: 'tag', resizable: true, fixed: 'left' },
     { title: '读取时间', key: 'time', resizable: true }
@@ -40,7 +35,11 @@ const [registerTable, { setColumns, getTableData, getColumns }] = useTable({
   searchInfo: { valveId }, // 额外参数
   rowKey: (rowData) => rowData.id,
   showToolbars: false,
-  showIndexColumn: false
+  showIndexColumn: false,
+  afterFetch: async (data) => {
+    const dictDataTreeList = await getDictDataTreeListAll()
+    return transformData(data, dictDataTreeList)
+  }
 })
 const transformData = (data: any[], dictDataTreeList: any[]) => {
   return data.map((item: any) => {

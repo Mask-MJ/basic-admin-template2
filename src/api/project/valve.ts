@@ -1,4 +1,5 @@
 import { defHttp } from '@/utils'
+// import { history } from '@/views/project/valve/mock.data'
 
 export interface CreatedValve {
   name: string
@@ -171,8 +172,12 @@ export const deleteValve = (ids: number | string) => defHttp.delete({ url: `${Ap
 export const getValveRunInfo = (id: number) =>
   defHttp.get<ValveRunInfo>({ url: `${Api.ValveRunInfo}/${id}` })
 // 获取阀门历史数据
-export const getValveHistoryList = (params: { valveId: number }) =>
-  defHttp.get({ url: Api.ValveHistory, params })
+export const getValveHistoryList = (params: { valveId: number }) => {
+  return defHttp.get({ url: Api.ValveHistory, params })
+  // return new Promise((resolve) => {
+  //   resolve(history)
+  // })
+}
 // 获取阀门历史数据详情
 export const getValveHistoryDetail = (id: number) =>
   defHttp.get<ValveRunInfo>({ url: `${Api.ValveHistory}/${id}` })
