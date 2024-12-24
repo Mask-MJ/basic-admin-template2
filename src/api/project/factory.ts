@@ -58,3 +58,16 @@ export const updateFactory = (params: Partial<FactoryInfo>) =>
 // 删除最终用户
 export const deleteFactory = (ids: number | string) =>
   defHttp.delete({ url: `${Api.Factory}/${ids}` })
+// 生成报告
+export const getFactoryReportData = (id: number) =>
+  defHttp.post(
+    {
+      url: `${Api.Factory}/report/${id}`,
+      // headers: {
+      //   responseType: 'blob',
+      //   Accept: '*/*'
+      // }
+      responseType: 'blob'
+    },
+    { isReturnNativeResponse: true, isTransformResponse: false }
+  )

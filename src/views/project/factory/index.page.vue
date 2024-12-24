@@ -3,7 +3,7 @@ import { useModal } from '@/components/Modal'
 import { useTable, Action } from '@/components/Table'
 import {
   deleteFactory,
-  // downloadFactoryReport,
+  getFactoryReportData,
   getFactoryDetail,
   getFactoryList,
   type FactoryInfo
@@ -11,7 +11,6 @@ import {
 import { columns, searchSchemas } from './data'
 import SetModal from './SetModal.vue'
 import ImportModal from './ImportModal.vue'
-
 const router = useRouter()
 const [registerSetModal, { openModal: openSetModel }] = useModal()
 const [registerImportModal, { openModal: openImportModel }] = useModal()
@@ -86,28 +85,33 @@ const [registerTable, { reload }] = useTable({
           //     onClick: () => openImportModel(true, row)
           //   }
           // },
-          // {
-          //   icon: 'i-ant-design:file-search-outlined',
-          //   tooltipProps: { content: '生成报告' },
-          //   buttonProps: {
-          //     type: 'info',
-          //     onClick: async () => {
-          //       const link = document.createElement('a')
-          //       const response = await downloadFactoryReport(row.id)
-          //       const blob2 = new Blob([response.data])
-          //       const url = URL.createObjectURL(blob2)
-          //       link.href = url
-          //       link.download = '报告结果.docx'
+          {
+            icon: 'i-ant-design:file-search-outlined',
+            tooltipProps: { content: '生成报告' },
+            buttonProps: {
+              type: 'info',
+              onClick: async () => {
+                const link = document.createElement('a')
+                // 返回的是 streamableFile 对象
+                const response = await getFactoryReportData(row.id)
+                // 转换成 blob 对象
+                const disposition = response.headers['content-disposition']
+                const fileName = decodeURI(disposition.split("filename*=UTF-8''")[1])
+                const blob = new Blob([response.data], {
+                  type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document;charset=utf-8'
+                })
+                const url = URL.createObjectURL(blob)
+                link.href = url
+                link.download = fileName
+                document.body.appendChild(link)
 
-          //       document.body.appendChild(link)
-
-          //       link.click()
-          //       link.addEventListener('click', () => {
-          //         link.remove()
-          //       })
-          //     }
-          //   }
-          // },
+                link.click()
+                link.addEventListener('click', () => {
+                  link.remove()
+                })
+              }
+            }
+          },
           {
             type: 'del',
             onClick: async () => {
