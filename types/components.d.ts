@@ -28,8 +28,6 @@ declare module 'vue' {
     NBreadcrumbItem: typeof import('naive-ui')['NBreadcrumbItem']
     NButton: typeof import('naive-ui')['NButton']
     NCard: typeof import('naive-ui')['NCard']
-    NCardContent: typeof import('naive-ui')['NCardContent']
-    NCardHeader: typeof import('naive-ui')['NCardHeader']
     NCheckbox: typeof import('naive-ui')['NCheckbox']
     NColorPicker: typeof import('naive-ui')['NColorPicker']
     NConfigProvider: typeof import('naive-ui')['NConfigProvider']

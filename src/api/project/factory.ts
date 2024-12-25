@@ -61,13 +61,6 @@ export const deleteFactory = (ids: number | string) =>
 // 生成报告
 export const getFactoryReportData = (id: number) =>
   defHttp.post(
-    {
-      url: `${Api.Factory}/report/${id}`,
-      // headers: {
-      //   responseType: 'blob',
-      //   Accept: '*/*'
-      // }
-      responseType: 'blob'
-    },
+    { url: `${Api.Factory}/report/${id}`, responseType: 'blob' },
     { isReturnNativeResponse: true, isTransformResponse: false }
   )
