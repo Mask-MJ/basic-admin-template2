@@ -43,8 +43,6 @@ const change = async () => {
   let result = await getValveHistoryChart({
     valveId: valveId.value,
     keywordId: dictData.id,
-    // valveId: 1,
-    // keywordId: 1,
     beginTime: range.value?.[0],
     endTime: range.value?.[1]
   })

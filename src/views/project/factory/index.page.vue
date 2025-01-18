@@ -61,22 +61,26 @@ const [registerTable, { reload }] = useTable({
               onClick: async () => {
                 const link = document.createElement('a')
                 // 返回的是 streamableFile 对象
-                const response = await getFactoryReportData(row.id)
-                // 转换成 blob 对象
-                const disposition = response.headers['content-disposition']
-                const fileName = decodeURI(disposition.split("filename*=UTF-8''")[1])
-                const blob = new Blob([response.data], {
-                  type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document;charset=utf-8'
-                })
-                const url = URL.createObjectURL(blob)
-                link.href = url
-                link.download = fileName
-                document.body.appendChild(link)
+                try {
+                  const response = await getFactoryReportData(row.id)
+                  // 转换成 blob 对象
+                  const disposition = response.headers['content-disposition']
+                  const fileName = decodeURI(disposition.split("filename*=UTF-8''")[1])
+                  const blob = new Blob([response.data], {
+                    type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document;charset=utf-8'
+                  })
+                  const url = URL.createObjectURL(blob)
+                  link.href = url
+                  link.download = fileName
+                  document.body.appendChild(link)
 
-                link.click()
-                link.addEventListener('click', () => {
-                  link.remove()
-                })
+                  link.click()
+                  link.addEventListener('click', () => {
+                    link.remove()
+                  })
+                } catch (e) {
+                  window.$message.error('生成报告失败')
+                }
               }
             }
           }
