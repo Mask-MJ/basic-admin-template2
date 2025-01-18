@@ -25,7 +25,7 @@ const [registerTable, { reload }] = useTable({
   showIndexColumn: false,
   pagination: false,
   actionColumn: {
-    width: 200,
+    width: 250,
     key: 'ACTION',
     render: (row: FactoryInfo) =>
       h(Action, {
