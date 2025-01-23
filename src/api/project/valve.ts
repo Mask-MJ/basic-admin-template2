@@ -170,7 +170,7 @@ export const updateValve = (params: Partial<ValveInfo>) =>
 export const deleteValve = (ids: number | string) => defHttp.delete({ url: `${Api.Valve}/${ids}` })
 // 获取阀门运行数据
 export const getValveRunInfo = (id: number) =>
-  defHttp.get<ValveRunInfo>({ url: `${Api.ValveRunInfo}/${id}` })
+  defHttp.get<ValveRunInfo[]>({ url: `${Api.ValveRunInfo}/${id}` })
 // 获取阀门历史数据
 export const getValveHistoryList = (params: { valveId: number }) => {
   return defHttp.get({ url: Api.ValveHistory, params })

@@ -1,17 +1,9 @@
 <script setup lang="ts">
 import { useModal } from '@/components/Modal'
 import { useTable, Action } from '@/components/Table'
-import {
-  deleteValve,
-  getValveDetail,
-  getValveList,
-  getValveRunInfo,
-  getAllValveList,
-  type ValveInfo
-} from '@/api/project/valve'
+import { deleteValve, getValveList, getAllValveList, type ValveInfo } from '@/api/project/valve'
 import { columns, searchSchemas, setSchemas } from './data'
 import SetModal from './SetModal.vue'
-import DescModal from './DescModal.vue'
 import HistoryModal from './HistoryModal.vue'
 import ChartModal from './ChartModal.vue'
 import ScoreModal from './ScoreModal.vue'
@@ -34,7 +26,6 @@ const getSchemas = computed(() => {
 })
 
 const [registerSetModal, { openModal: openSetModel }] = useModal()
-const [registerDescModal, { openModal: openDescModel }] = useModal()
 const [registerHistoryModal, { openModal: openHistoryModel }] = useModal()
 const [registerChartModal, { openModal: openChartModel }] = useModal()
 const [registerScoreModal, { openModal: openScoreModal }] = useModal()
@@ -65,8 +56,9 @@ const [registerTable, { reload, getForm }] = useTable({
           {
             type: 'edit',
             onClick: async () => {
-              const result = await getValveDetail(row.id)
-              return openSetModel(true, result)
+              // const result = await getValveDetail(row.id)
+              // return openSetModel(true, result)
+              router.push(`/project/valve/detail/${row.id}`)
             }
           },
           {
@@ -75,8 +67,9 @@ const [registerTable, { reload, getForm }] = useTable({
             buttonProps: {
               type: 'success',
               onClick: async () => {
-                const result = await getValveRunInfo(row.id)
-                openDescModel(true, result)
+                // const result = await getValveRunInfo(row.id)
+                // openDescModel(true, result)
+                router.push(`/project/valve/runInfo/${row.id}`)
               }
             }
           },
@@ -176,7 +169,6 @@ function download(arrayBuffer: any) {
       </template>
     </Table>
     <SetModal @register="registerSetModal" @success="reload()" />
-    <DescModal @register="registerDescModal" />
     <HistoryModal @register="registerHistoryModal" />
     <ChartModal @register="registerChartModal" />
     <ScoreModal @register="registerScoreModal" />
