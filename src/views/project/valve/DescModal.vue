@@ -18,7 +18,7 @@ const runInfoData = ref<ValveRunInfo[]>([])
 const valueDiagnostic = ref<ValveRunInfo[]>()
 const [registerModal, { setModalProps }] = useModalInner(async (data: ValveRunInfo[]) => {
   runInfoData.value = data
-  const time = dayjs(data[0].time).format('YYYY-MM-DD') || ''
+  const time = dayjs(data[0]?.time).format('YYYY-MM-DD') || ''
   setModalProps({ title: `阀门运行数据详情 ${time}` })
   // runInfoData.value = runInfo as any[]
   // 对照关键字表把数据转换为对应的中英文
