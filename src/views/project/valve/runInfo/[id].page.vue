@@ -83,17 +83,23 @@ watch(
         <n-radio-button value="zh">中文</n-radio-button>
         <n-radio-button value="en">English</n-radio-button>
       </n-radio-group>
-      <n-descriptions title="阀门设置参数" label-placement="left" :column="4">
+      <n-descriptions
+        title="阀门设置参数"
+        label-placement="left"
+        :column="3"
+        bordered
+        label-style="width: 120px"
+      >
         <n-descriptions-item v-for="item in valveRunDataConfig" :key="item.name" :label="item.name">
           {{ item.value }} {{ item.unit ? `${item.unit}` : '' }}
         </n-descriptions-item>
       </n-descriptions>
-      <n-descriptions title="阀门运行数据" label-placement="left" :column="4">
+      <n-descriptions title="阀门运行数据" label-placement="left" :column="3" bordered>
         <n-descriptions-item v-for="item in valveRunData" :key="item.name" :label="item.name">
           {{ item.value }} {{ item.unit ? `${item.unit}` : '' }}
         </n-descriptions-item>
       </n-descriptions>
-      <n-descriptions title="诊断数据" label-placement="left" :column="1">
+      <n-descriptions title="诊断数据" label-placement="left" :column="1" bordered>
         <n-descriptions-item v-for="item in valueDiagnostic" :key="item.name" :label="item.name">
           {{ item.value }} {{ item.unit ? `${item.unit}` : '' }}
         </n-descriptions-item>
