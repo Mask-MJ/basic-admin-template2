@@ -6,7 +6,6 @@ import { columns, searchSchemas, setSchemas } from './data'
 import SetModal from './SetModal.vue'
 import HistoryModal from './HistoryModal.vue'
 import ChartModal from './ChartModal.vue'
-import ScoreModal from './ScoreModal.vue'
 import { Workbook } from 'exceljs'
 
 const router = useRouter()
@@ -28,7 +27,6 @@ const getSchemas = computed(() => {
 const [registerSetModal, { openModal: openSetModel }] = useModal()
 const [registerHistoryModal, { openModal: openHistoryModel }] = useModal()
 const [registerChartModal, { openModal: openChartModel }] = useModal()
-const [registerScoreModal, { openModal: openScoreModal }] = useModal()
 
 const [registerTable, { reload, getForm }] = useTable({
   api: getValveList, // 请求接口
@@ -89,7 +87,8 @@ const [registerTable, { reload, getForm }] = useTable({
             buttonProps: {
               type: 'success',
               onClick: () => {
-                openScoreModal(true, row)
+                // openScoreModal(true, row)
+                router.push(`/project/valve/score/${row.id}`)
               }
             }
           },
@@ -171,7 +170,6 @@ function download(arrayBuffer: any) {
     <SetModal @register="registerSetModal" @success="reload()" />
     <HistoryModal @register="registerHistoryModal" />
     <ChartModal @register="registerChartModal" />
-    <ScoreModal @register="registerScoreModal" />
   </PageWrapper>
 </template>
 

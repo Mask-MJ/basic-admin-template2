@@ -36,6 +36,7 @@ declare module 'vue-router/auto-routes' {
     '/project/valve/[id]': RouteRecordInfo<'/project/valve/[id]', '/project/valve/:id', { id: ParamValue<true> }, { id: ParamValue<false> }>,
     '/project/valve/detail/[id]': RouteRecordInfo<'/project/valve/detail/[id]', '/project/valve/detail/:id', { id: ParamValue<true> }, { id: ParamValue<false> }>,
     '/project/valve/runInfo/[id]': RouteRecordInfo<'/project/valve/runInfo/[id]', '/project/valve/runInfo/:id', { id: ParamValue<true> }, { id: ParamValue<false> }>,
+    '/project/valve/score/[id]': RouteRecordInfo<'/project/valve/score/[id]', '/project/valve/score/:id', { id: ParamValue<true> }, { id: ParamValue<false> }>,
     '/system/dept/': RouteRecordInfo<'/system/dept/', '/system/dept', Record<never, never>, Record<never, never>>,
     '/system/dictData/': RouteRecordInfo<'/system/dictData/', '/system/dictData', Record<never, never>, Record<never, never>>,
     '/system/dictData/[id]': RouteRecordInfo<'/system/dictData/[id]', '/system/dictData/:id', { id: ParamValue<true> }, { id: ParamValue<false> }>,
