@@ -1,5 +1,5 @@
 import type { UploadFileParams } from '@/utils/request/types'
-import { defHttp } from '@/utils'
+import { defHttp, defHttp2 } from '@/utils'
 
 export interface CreatedFactory {
   name: string
@@ -60,7 +60,7 @@ export const deleteFactory = (ids: number | string) =>
   defHttp.delete({ url: `${Api.Factory}/${ids}` })
 // 生成报告
 export const getFactoryReportData = (id: number) =>
-  defHttp.post(
+  defHttp2.post(
     { url: `${Api.Factory}/report/${id}`, responseType: 'blob' },
     { isReturnNativeResponse: true, isTransformResponse: false }
   )
