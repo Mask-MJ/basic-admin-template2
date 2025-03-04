@@ -29,7 +29,8 @@ export interface CreatedDevice {
 }
 
 enum Api {
-  Device = 'project/device'
+  Device = 'project/device',
+  DeviceRemoveAll = 'project/device/removeAll'
 }
 
 // 获取装置列表
@@ -46,3 +47,5 @@ export const updateDevice = (params: Partial<DeviceInfo>) =>
 // 删除装置
 export const deleteDevice = (ids: number | string) =>
   defHttp.delete({ url: `${Api.Device}/${ids}` })
+// 删除所有装置
+export const deleteAllDevice = () => defHttp.post({ url: Api.DeviceRemoveAll })

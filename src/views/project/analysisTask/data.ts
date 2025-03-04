@@ -107,6 +107,7 @@ export const setSchemas: FormSchema[] = [
       listType: 'text',
       multiple: true,
       directoryDnd: true,
+      max: 25,
       accept: '.pdf'
     }
   },

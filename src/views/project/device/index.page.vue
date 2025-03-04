@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { deleteDevice, getDeviceList, type DeviceInfo } from '@/api/project/device'
+import { deleteAllDevice, deleteDevice, getDeviceList, type DeviceInfo } from '@/api/project/device'
 import EditTableColum from './EditTableColum.vue'
 import EditTableColum2 from './EditTableColum2.vue'
 import { useModal } from '@/components/Modal'
@@ -113,6 +113,11 @@ const reload = () => {
   getData()
 }
 
+const handlePositiveClick = async () => {
+  await deleteAllDevice()
+  reload()
+}
+
 onMounted(() => {
   getData()
   getFactory()
@@ -133,6 +138,12 @@ onMounted(() => {
     </NCard>
     <NCard>
       <NButton class="mb-4 mr-2" type="primary" @click="openSetModel(true)"> 新增 </NButton>
+      <NPopconfirm @positive-click="handlePositiveClick">
+        <template #trigger>
+          <NButton class="mr-2" type="error"> 删除全部 </NButton>
+        </template>
+        是否确认删除, 如果有关联数据会一并删除
+      </NPopconfirm>
       <n-data-table
         :columns="columns"
         :data="data"

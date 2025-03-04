@@ -6,6 +6,7 @@ import {
   executeAnalysisTask,
   getAnalysisTaskDetail,
   getAnalysisTaskList,
+  deleteAllAnalysisTask,
   type AnalysisTaskInfo
 } from '@/api/project/analysisTask'
 import { columns, searchSchemas } from './data'
@@ -99,6 +100,11 @@ onMounted(() => {
   }, 5000)
 })
 
+const handlePositiveClick = async () => {
+  await deleteAllAnalysisTask()
+  reload()
+}
+
 onBeforeRouteLeave(() => {
   clearInterval(timer)
 })
@@ -109,6 +115,12 @@ onBeforeRouteLeave(() => {
     <Table @register="registerTable">
       <template #toolbar>
         <n-button class="mr-2" type="primary" @click="openSetModel(true)"> 新增 </n-button>
+        <n-popconfirm @positive-click="handlePositiveClick">
+          <template #trigger>
+            <n-button class="mr-2" type="error"> 删除全部 </n-button>
+          </template>
+          是否确认删除, 如果有关联数据会一并删除
+        </n-popconfirm>
       </template>
     </Table>
     <SetModal @register="registerSetModal" @success="reload()" />

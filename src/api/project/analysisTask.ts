@@ -33,6 +33,7 @@ export interface SearchParams {
 
 enum Api {
   AnalysisTask = 'project/analysis-task',
+  AnalysisTaskRemoveAll = 'project/analysis-task/removeAll',
   AnalysisTaskResult = 'project/analysis-task/result',
   Upload = 'project/analysis-task/uploadPdf',
   Execute = 'project/analysis-task/execute',
@@ -64,3 +65,5 @@ export const getExecuteStatus = (id: number) => defHttp.get({ url: `${Api.Execut
 // 获取分析任务结果
 export const getAnalysisTaskResult = (params: { id: number }) =>
   defHttp.get({ url: `${Api.AnalysisTaskResult}/${params.id}` })
+// 删除所有分析任务
+export const deleteAllAnalysisTask = () => defHttp.delete({ url: Api.AnalysisTaskRemoveAll })

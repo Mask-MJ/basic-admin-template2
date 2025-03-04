@@ -6,7 +6,8 @@ import {
   getFactoryReportData,
   getFactoryDetail,
   getFactoryList,
-  type FactoryInfo
+  type FactoryInfo,
+  deleteAllFactory
 } from '@/api/project/factory'
 import { columns, searchSchemas } from './data'
 import SetModal from './SetModal.vue'
@@ -127,6 +128,10 @@ const download = async () => {
   link.href = 'http://200.200.200.18:9000/pdf/阀门导入数据模板 V4.xlsx'
   link.click()
 }
+const handlePositiveClick = async () => {
+  await deleteAllFactory()
+  reload()
+}
 </script>
 
 <template>
@@ -135,6 +140,12 @@ const download = async () => {
       <template #toolbar>
         <n-button class="mr-2" type="primary" @click="openSetModel(true)"> 新增 </n-button>
         <n-button class="mr-2" type="success" @click="download"> 下载模板 </n-button>
+        <n-popconfirm @positive-click="handlePositiveClick">
+          <template #trigger>
+            <n-button class="mr-2" type="error"> 删除全部 </n-button>
+          </template>
+          是否确认删除, 如果有关联数据会一并删除
+        </n-popconfirm>
       </template>
     </Table>
     <SetModal @register="registerSetModal" @success="reload()" />

@@ -1,7 +1,13 @@
 <script setup lang="ts">
 import { useModal } from '@/components/Modal'
 import { useTable, Action } from '@/components/Table'
-import { deleteValve, getValveList, getAllValveList, type ValveInfo } from '@/api/project/valve'
+import {
+  deleteValve,
+  getValveList,
+  getAllValveList,
+  type ValveInfo,
+  deleteAllValve
+} from '@/api/project/valve'
 import { columns, searchSchemas, setSchemas } from './data'
 import SetModal from './SetModal.vue'
 import HistoryModal from './HistoryModal.vue'
@@ -157,6 +163,10 @@ function download(arrayBuffer: any) {
     link.remove()
   })
 }
+const handlePositiveClick = async () => {
+  await deleteAllValve()
+  reload()
+}
 </script>
 
 <template>
@@ -165,6 +175,12 @@ function download(arrayBuffer: any) {
       <template #toolbar>
         <n-button class="mr-2" type="primary" @click="openSetModel(true)"> 新增 </n-button>
         <n-button class="mr-2" type="success" @click="exportData"> 导出全部数据 </n-button>
+        <n-popconfirm @positive-click="handlePositiveClick">
+          <template #trigger>
+            <n-button class="mr-2" type="error"> 删除全部 </n-button>
+          </template>
+          是否确认删除, 如果有关联数据会一并删除
+        </n-popconfirm>
       </template>
     </Table>
     <SetModal @register="registerSetModal" @success="reload()" />

@@ -34,6 +34,7 @@ export interface SearchParams {
 
 enum Api {
   Factory = 'project/factory',
+  FactoryRemoveAll = 'project/factory/removeAll',
   Import = 'project/factory/import',
   Chart = 'project/factory/chart'
 }
@@ -64,3 +65,5 @@ export const getFactoryReportData = (id: number) =>
     { url: `${Api.Factory}/report/${id}`, responseType: 'blob' },
     { isReturnNativeResponse: true, isTransformResponse: false }
   )
+// 删除所有最终用户
+export const deleteAllFactory = () => defHttp.delete({ url: Api.FactoryRemoveAll })

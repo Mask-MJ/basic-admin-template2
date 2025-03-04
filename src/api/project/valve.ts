@@ -146,6 +146,7 @@ export interface ValveHistory {
 
 enum Api {
   Valve = 'project/valve',
+  ValveRemoveAll = 'project/valve/removeAll',
   ValveAll = 'project/valve/all',
   ValveRunInfo = 'project/valve/run-info',
   ValveHistory = 'project/valve/history',
@@ -190,3 +191,5 @@ export const getValveHistoryChart = (params: {
   beginTime?: number
   endTime?: number
 }) => defHttp.get<ValveHistory>({ url: `${Api.ValveHistoryChart}`, params })
+// 删除所有阀门
+export const deleteAllValve = () => defHttp.delete({ url: Api.ValveRemoveAll })
