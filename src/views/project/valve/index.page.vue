@@ -99,6 +99,17 @@ const [registerTable, { reload, getForm }] = useTable({
             }
           },
           {
+            icon: 'i-ant-design:audit-outlined',
+            tooltipProps: { content: '历史评分' },
+            buttonProps: {
+              type: 'info',
+              onClick: () => {
+                // openScoreModal(true, row)
+                router.push(`/project/valve/history/${row.id}`)
+              }
+            }
+          },
+          {
             icon: 'i-ant-design:bar-chart-outlined',
             tooltipProps: { content: '查看历史数据' },
             buttonProps: {

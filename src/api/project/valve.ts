@@ -151,6 +151,7 @@ enum Api {
   ValveRunInfo = 'project/valve/run-info',
   ValveHistory = 'project/valve/history',
   ValveScore = 'project/valve/score',
+  ValveHistoryScore = 'project/valve/historyScore',
   ValveHistoryChart = 'project/valve/historyChart'
 }
 
@@ -193,3 +194,6 @@ export const getValveHistoryChart = (params: {
 }) => defHttp.get<ValveHistory>({ url: `${Api.ValveHistoryChart}`, params })
 // 删除所有阀门
 export const deleteAllValve = () => defHttp.delete({ url: Api.ValveRemoveAll })
+// 获取阀门运行历史评分
+export const getValveHistoryScore = (params: any) =>
+  defHttp.get({ url: `${Api.ValveHistoryScore}`, params })
