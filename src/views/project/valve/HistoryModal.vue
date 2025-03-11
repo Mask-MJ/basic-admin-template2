@@ -126,10 +126,12 @@ const exportData = async () => {
     return { header: item.title, key: item.key, width: 30 }
   })
   // const data = getTableData()
-  tableData.value = (await getValveHistoryList({
-    valveId: valveId.value,
-    pageSize: 10000
-  })) as any[]
+  tableData.value = (
+    await getValveHistoryList({
+      valveId: valveId.value,
+      pageSize: 10000
+    })
+  ).rows
   const data = transformData(tableData.value, dictDataTreeList.value)
   worksheet.addRows(data)
   const arraybuffer: any = new ArrayBuffer(10 * 1024 * 1024)
