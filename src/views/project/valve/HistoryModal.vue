@@ -124,6 +124,7 @@ const exportData = async () => {
     return { header: item.title, key: item.key, width: 30 }
   })
   const data = getTableData()
+  console.log(data)
   worksheet.addRows(data)
   const arraybuffer: any = new ArrayBuffer(10 * 1024 * 1024)
   const res = await workbook.xlsx.writeBuffer(arraybuffer)
