@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { getValveRunInfo, getValveDetail, type ValveRunInfo } from '@/api/project/valve'
 import { getDictDataList, getDictDataTreeListAll, getDictTypeList } from '@/api/system/dict'
-import { runInfo } from '../mock.data'
+// import { runInfo } from '../mock.data'
 import { cloneDeep, flattenDepth, groupBy } from 'lodash-es'
 import dayjs from 'dayjs'
 
@@ -58,7 +58,7 @@ watch(
     const result = await getValveRunInfo(Number(val))
     time.value = dayjs(result[0]?.time).format('YYYY-MM-DD') || ''
     runInfoData.value = result
-    runInfoData.value = runInfo as any[]
+    // runInfoData.value = runInfo as any[]
     // 对照关键字表把数据转换为对应的中英文
     const dictType = (await getDictTypeList({ name: 'HART', pageSize: 1000 })).rows
     const dictTypeId = dictType[0].id
