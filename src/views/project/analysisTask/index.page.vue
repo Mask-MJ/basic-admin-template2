@@ -13,6 +13,7 @@ import { columns, searchSchemas } from './data'
 import SetModal from './SetModal.vue'
 import HistoryModal from './HistoryModal.vue'
 import type { PaginationProps } from 'naive-ui'
+import { getFactoryReportData } from '@/api/project/factory'
 
 const router = useRouter()
 
@@ -78,6 +79,40 @@ const [registerTable, { reload, setTableData, getPagination, getForm }] = useTab
               type: 'info',
               onClick: async () => {
                 return openHistoryModel(true, row)
+              }
+            }
+          },
+          {
+            icon: 'i-ant-design:file-search-outlined',
+            tooltipProps: { content: '生成报告' },
+            buttonProps: {
+              type: 'info',
+              onClick: async () => {
+                const link = document.createElement('a')
+                // 返回的是 streamableFile 对象
+                try {
+                  const response = await getFactoryReportData({
+                    analysisTaskId: row.id,
+                    reportMode: 'analysisTask'
+                  })
+                  // 转换成 blob 对象
+                  const disposition = response.headers['content-disposition']
+                  const fileName = decodeURI(disposition.split("filename*=UTF-8''")[1])
+                  const blob = new Blob([response.data], {
+                    type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document;charset=utf-8'
+                  })
+                  const url = URL.createObjectURL(blob)
+                  link.href = url
+                  link.download = fileName
+                  document.body.appendChild(link)
+
+                  link.click()
+                  link.addEventListener('click', () => {
+                    link.remove()
+                  })
+                } catch (e) {
+                  window.$message.error('生成报告失败')
+                }
               }
             }
           }

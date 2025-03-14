@@ -3,7 +3,6 @@ import { useModal } from '@/components/Modal'
 import { useTable, Action } from '@/components/Table'
 import {
   deleteFactory,
-  getFactoryReportData,
   getFactoryDetail,
   getFactoryList,
   type FactoryInfo,
@@ -12,9 +11,11 @@ import {
 import { columns, searchSchemas } from './data'
 import SetModal from './SetModal.vue'
 import ImportModal from './ImportModal.vue'
+import ReportModal from './reportModal.vue'
 const router = useRouter()
 const [registerSetModal, { openModal: openSetModel }] = useModal()
 const [registerImportModal, { openModal: openImportModel }] = useModal()
+const [registerReportModal, { openModal: openReportModel }] = useModal()
 
 const [registerTable, { reload }] = useTable({
   api: getFactoryList, // 请求接口
@@ -60,28 +61,7 @@ const [registerTable, { reload }] = useTable({
             buttonProps: {
               type: 'info',
               onClick: async () => {
-                const link = document.createElement('a')
-                // 返回的是 streamableFile 对象
-                try {
-                  const response = await getFactoryReportData(row.id)
-                  // 转换成 blob 对象
-                  const disposition = response.headers['content-disposition']
-                  const fileName = decodeURI(disposition.split("filename*=UTF-8''")[1])
-                  const blob = new Blob([response.data], {
-                    type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document;charset=utf-8'
-                  })
-                  const url = URL.createObjectURL(blob)
-                  link.href = url
-                  link.download = fileName
-                  document.body.appendChild(link)
-
-                  link.click()
-                  link.addEventListener('click', () => {
-                    link.remove()
-                  })
-                } catch (e) {
-                  window.$message.error('生成报告失败')
-                }
+                return openReportModel(true, row)
               }
             }
           }
@@ -150,6 +130,7 @@ const handlePositiveClick = async () => {
     </Table>
     <SetModal @register="registerSetModal" @success="reload()" />
     <ImportModal @register="registerImportModal" @success="reload()" />
+    <ReportModal @register="registerReportModal" />
   </PageWrapper>
 </template>
 

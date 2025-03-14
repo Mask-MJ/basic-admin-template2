@@ -60,9 +60,9 @@ export const updateFactory = (params: Partial<FactoryInfo>) =>
 export const deleteFactory = (ids: number | string) =>
   defHttp.delete({ url: `${Api.Factory}/${ids}` })
 // 生成报告
-export const getFactoryReportData = (id: number) =>
+export const getFactoryReportData = (params: any) =>
   defHttp2.post(
-    { url: `${Api.Factory}/report/${id}`, responseType: 'blob' },
+    { url: `${Api.Factory}/report`, params, responseType: 'blob' },
     { isReturnNativeResponse: true, isTransformResponse: false }
   )
 // 删除所有最终用户
