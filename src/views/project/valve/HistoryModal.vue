@@ -6,11 +6,13 @@ import { getDictDataList, getDictDataTreeListAll, getDictTypeList } from '@/api/
 import dayjs from 'dayjs'
 import { Workbook } from 'exceljs'
 import { groupBy, flattenDepth } from 'lodash-es'
+// import { historyData } from './mock.data'
 
 const valveId = ref()
 const tableData = ref<any[]>([])
 const language = ref('zh')
 const dictData = ref<any[]>([])
+const dictDataTreeList = ref<any[]>([])
 
 const [registerModal] = useModalInner(async (data) => {
   valveId.value = data.id
@@ -25,7 +27,7 @@ const [registerModal] = useModalInner(async (data) => {
   ])
 })
 
-const [registerTable, { setColumns, getTableData, getColumns }] = useTable({
+const [registerTable, { setColumns, getColumns }] = useTable({
   api: getValveHistoryList,
   columns: [
     { title: '位号', key: 'tag', resizable: true, fixed: 'left' },
@@ -37,8 +39,8 @@ const [registerTable, { setColumns, getTableData, getColumns }] = useTable({
   showToolbars: false,
   showIndexColumn: false,
   afterFetch: async (data) => {
-    const dictDataTreeList = await getDictDataTreeListAll()
-    return transformData(data, dictDataTreeList)
+    dictDataTreeList.value = await getDictDataTreeListAll()
+    return transformData(data, dictDataTreeList.value)
   }
 })
 const transformData = (data: any[], dictDataTreeList: any[]) => {
@@ -123,7 +125,14 @@ const exportData = async () => {
   worksheet.columns = getColumns().map((item: any) => {
     return { header: item.title, key: item.key, width: 30 }
   })
-  const data = getTableData()
+  // const data = getTableData()
+  tableData.value = (
+    await getValveHistoryList({
+      valveId: valveId.value,
+      pageSize: 10000
+    })
+  ).rows
+  const data = transformData(tableData.value, dictDataTreeList.value)
   worksheet.addRows(data)
   const arraybuffer: any = new ArrayBuffer(10 * 1024 * 1024)
   const res = await workbook.xlsx.writeBuffer(arraybuffer)
