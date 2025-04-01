@@ -44,7 +44,9 @@ const updateFileList = (options: {
     const result = JSON.parse(options.event?.currentTarget?.response)
     options.file.url = result.url
     emits('update:fileList', options.fileList)
+    return
   }
+  emits('update:fileList', options.fileList)
 }
 const getListLength = computed(() => props.value.length)
 const beforeUpload = async (data: { file: UploadFileInfo; fileList: UploadFileInfo[] }) => {

@@ -1,4 +1,3 @@
-import { uploadRuleFile } from '@/api/system/rule'
 import type { FormSchema } from '@/components/Form'
 
 export const searchSchemas: FormSchema[] = [
@@ -28,7 +27,8 @@ export const setSchemas: FormSchema[] = [
     label: '规则文件',
     required: true,
     componentProps: {
-      api: uploadRuleFile,
+      action: '/api/system/rule/upload',
+      // api: uploadRuleFile,
       listType: 'text',
       max: 1
     }
