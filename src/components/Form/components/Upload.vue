@@ -44,9 +44,14 @@ const updateFileList = (options: {
     const result = JSON.parse(options.event?.currentTarget?.response)
     options.file.url = result.url
     emits('update:fileList', options.fileList)
-    return
   }
-  emits('update:fileList', options.fileList)
+  if (options.file.status === 'removed') {
+    const index = fileList.value.findIndex((item) => item.id === options.file.id)
+    if (index !== -1) {
+      fileList.value.splice(index, 1)
+    }
+    emits('update:fileList', fileList.value)
+  }
 }
 const getListLength = computed(() => props.value.length)
 const beforeUpload = async (data: { file: UploadFileInfo; fileList: UploadFileInfo[] }) => {
