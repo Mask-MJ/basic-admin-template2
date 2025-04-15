@@ -42,6 +42,12 @@ const chartsData = ref<Charts>({
   valveBrandGroup: [], // 阀门品牌分组
   valveModelGroup: [], // 阀门型号分组
   positionerModelGroup: [], // 定位器型号分组
+  taskGroupByYear: [], // 定位器型号分组
+  maintenanceWorkOrderGroupByYear: [], // 定位器型号分组
+  serviceWorkOrderGroupByYear: [], // 定位器型号分组
+  maintenanceWorkOrderList: [], // 维修记录
+  serviceWorkOrderList: [], // 现场服务记录
+  taskList: [], // 诊断记录
   valveTotal: 0, // 阀门数量
   taskTotal: 0, // 分析任务数量
   taskCount: [], // 本周任务数量
@@ -129,21 +135,77 @@ const positionerModelOption = computed(() => {
 
 const taskOption = computed(() => {
   const option = cloneDeep(LineOption)
-  option.series[0].data = [218, 135, 147, 260, 230, 400, 500]
+  option.xAxis.data = map(chartsData.value.taskGroupByYear, 'name')
+  option.series[0].data = map(chartsData.value.taskGroupByYear, 'value')
   return option
 })
 
 const maintenanceRecordOption = computed(() => {
   const option = cloneDeep(LineOption)
-  option.series[0].data = [330, 200, 224, 218, 135, 300, 500]
+  option.xAxis.data = map(chartsData.value.maintenanceWorkOrderGroupByYear, 'name')
+  option.series[0].data = map(chartsData.value.maintenanceWorkOrderGroupByYear, 'value')
   return option
 })
 
 const fieldServiceOption = computed(() => {
   const option = cloneDeep(LineOption)
-  option.series[0].data = [150, 230, 224, 218, 135, 147, 260]
+  option.xAxis.data = map(chartsData.value.serviceWorkOrderGroupByYear, 'name')
+  option.series[0].data = map(chartsData.value.serviceWorkOrderGroupByYear, 'value')
   return option
 })
+
+const tabsOptions = computed(() => [
+  {
+    name: '1',
+    label: '维修记录',
+    columns: [
+      { title: '所属最终用户', key: 'factory.name' },
+      { title: '任务名称', key: 'typeName' },
+      { title: '故障类别', key: 'faultCategory' },
+      { title: '处理措施', key: 'remedialActions' },
+      { title: '维修完成时间', key: 'createdAt' },
+      { title: '备注', key: 'remark' }
+    ],
+    data: chartsData.value.maintenanceWorkOrderList
+  },
+  {
+    name: '2',
+    label: '现场服务记录',
+    columns: [
+      { title: '所属最终用户', key: 'factory.name' },
+      { title: '任务名称', key: 'typeName' },
+      { title: '故障类别', key: 'faultCategory' },
+      { title: '处理措施', key: 'remedialActions' },
+      { title: '维修完成时间', key: 'createdAt' },
+      { title: '备注', key: 'remark' }
+    ],
+    data: chartsData.value.serviceWorkOrderList
+  },
+  {
+    name: '3',
+    label: '诊断记录',
+    columns: [
+      { title: '任务名称', key: 'name' },
+      { title: '所属最终用户', key: 'factory.name' },
+      {
+        title: '状态',
+        key: 'status',
+        render: (row: any) => {
+          const statusMap = new Map([
+            [0, '未开始'],
+            [1, '进行中'],
+            [2, '已完成'],
+            [3, '失败']
+          ])
+          return statusMap.get(row.status)
+        }
+      },
+      { title: '创建人员', key: 'createBy' },
+      { title: '备注', key: 'remark' }
+    ],
+    data: chartsData.value.taskList
+  }
+])
 
 onMounted(async () => {
   registerMap('china', china as any)
@@ -236,6 +298,20 @@ onMounted(async () => {
     <n-gi>
       <n-card title="现场服务量历史趋势" hoverable>
         <VChart class="chart" :option="fieldServiceOption" autoresize />
+      </n-card>
+    </n-gi>
+    <n-gi :span="3">
+      <n-card hoverable>
+        <n-tabs type="line" animated>
+          <n-tab-pane
+            :name="item.name"
+            :tab="item.label"
+            v-for="item in tabsOptions"
+            :key="item.name"
+          >
+            <n-data-table :columns="item.columns" :data="item.data" bordered :max-height="250" />
+          </n-tab-pane>
+        </n-tabs>
       </n-card>
     </n-gi>
   </n-grid>

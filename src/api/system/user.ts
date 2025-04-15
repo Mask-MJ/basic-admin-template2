@@ -70,10 +70,16 @@ export interface Charts {
   valveBrandGroup: { name: string; value: number }[]
   valveModelGroup: { name: string; value: number }[]
   positionerModelGroup: { name: string; value: number }[]
+  taskGroupByYear: { name: string; value: number }[]
+  maintenanceWorkOrderGroupByYear: { name: string; value: number }[]
+  serviceWorkOrderGroupByYear: { name: string; value: number }[]
   valveTotal: number
   taskTotal: number
   taskCount: { name: string; value: number }[]
   operationLog: OperationLogInfo[]
+  maintenanceWorkOrderList: any[]
+  serviceWorkOrderList: any[]
+  taskList: any[]
 }
 
 enum Api {
