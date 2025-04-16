@@ -309,7 +309,13 @@ onMounted(async () => {
             v-for="item in tabsOptions"
             :key="item.name"
           >
-            <n-data-table :columns="item.columns" :data="item.data" bordered :max-height="250" />
+            <n-data-table
+              :columns="item.columns"
+              :data="item.data"
+              bordered
+              :max-height="250"
+              :min-height="250"
+            />
           </n-tab-pane>
         </n-tabs>
       </n-card>
