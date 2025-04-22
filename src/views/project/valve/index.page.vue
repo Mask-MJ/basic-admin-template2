@@ -10,7 +10,6 @@ import {
 } from '@/api/project/valve'
 import { columns, searchSchemas, setSchemas } from './data'
 import SetModal from './SetModal.vue'
-import HistoryModal from './HistoryModal.vue'
 import ChartModal from './ChartModal.vue'
 import { Workbook } from 'exceljs'
 
@@ -31,7 +30,6 @@ const getSchemas = computed(() => {
 })
 
 const [registerSetModal, { openModal: openSetModel }] = useModal()
-const [registerHistoryModal, { openModal: openHistoryModel }] = useModal()
 const [registerChartModal, { openModal: openChartModel }] = useModal()
 
 const [registerTable, { reload, getForm }] = useTable({
@@ -115,7 +113,8 @@ const [registerTable, { reload, getForm }] = useTable({
             buttonProps: {
               type: 'warning',
               onClick: () => {
-                openHistoryModel(true, row)
+                // openHistoryModel(true, row)
+                router.push(`/project/valve/historyData/${row.id}`)
               }
             }
           },
@@ -195,7 +194,6 @@ const handlePositiveClick = async () => {
       </template>
     </Table>
     <SetModal @register="registerSetModal" @success="reload()" />
-    <HistoryModal @register="registerHistoryModal" />
     <ChartModal @register="registerChartModal" />
   </PageWrapper>
 </template>

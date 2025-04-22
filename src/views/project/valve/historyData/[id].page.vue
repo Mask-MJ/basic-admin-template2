@@ -1,31 +1,18 @@
 <script setup lang="ts">
-import { useModalInner } from '@/components/Modal'
+import { getValveDetail, getValveHistoryList } from '@/api/project/valve'
 import { useTable } from '@/components/Table'
-import { getValveHistoryList } from '@/api/project/valve'
 import { getDictDataList, getDictDataTreeListAll, getDictTypeList } from '@/api/system/dict'
-import dayjs from 'dayjs'
+import { flattenDepth, groupBy } from 'lodash-es'
 import { Workbook } from 'exceljs'
-import { groupBy, flattenDepth } from 'lodash-es'
-// import { historyData } from './mock.data'
+import dayjs from 'dayjs'
 
-const valveId = ref()
+const router = useRouter()
 const tableData = ref<any[]>([])
 const language = ref('zh')
 const dictData = ref<any[]>([])
+const valveDetail = ref<any>({})
 const dictDataTreeList = ref<any[]>([])
-
-const [registerModal] = useModalInner(async (data) => {
-  valveId.value = data.id
-  const dictType = (await getDictTypeList({ name: 'HART', pageSize: 1000 })).rows
-  const dictTypeId = dictType[0].id
-  dictData.value = (await getDictDataList({ dictTypeId, pageSize: 1000 })).rows
-
-  setColumns([
-    { title: '位号', key: 'tag', resizable: true, fixed: 'left' },
-    { title: '读取时间', key: 'time', minWidth: 200, resizable: true },
-    ...transformColums()
-  ])
-})
+const valveId = computed(() => (router.currentRoute.value.params as { id: string }).id)
 
 const [registerTable, { setColumns, getColumns }] = useTable({
   api: getValveHistoryList,
@@ -73,7 +60,6 @@ const transformData = (data: any[], dictDataTreeList: any[]) => {
     return { tag: item.tag, time: item.time, ...condition }
   })
 }
-
 const transformColums = () => {
   const columns: any[] = []
   const repeatArray = flattenDepth(
@@ -103,7 +89,6 @@ const transformColums = () => {
   })
   return columns
 }
-
 const changeLanguage = () => {
   language.value = language.value === 'zh' ? 'en' : 'zh'
   setColumns([
@@ -128,7 +113,7 @@ const exportData = async () => {
   // const data = getTableData()
   tableData.value = (
     await getValveHistoryList({
-      valveId: valveId.value,
+      valveId: Number(valveId.value),
       pageSize: 10000
     })
   ).rows
@@ -158,11 +143,32 @@ function download(arrayBuffer: any) {
     link.remove()
   })
 }
+watch(
+  () => (router.currentRoute.value.params as { id: string }).id,
+  async (val) => {
+    valveDetail.value = await getValveDetail(Number(val))
+    const dictType = (await getDictTypeList({ name: 'HART', pageSize: 1000 })).rows
+    const dictTypeId = dictType[0].id
+    dictData.value = (await getDictDataList({ dictTypeId, pageSize: 1000 })).rows
+
+    setColumns([
+      { title: '位号', key: 'tag', resizable: true, fixed: 'left' },
+      { title: '读取时间', key: 'time', minWidth: 200, resizable: true },
+      ...transformColums()
+    ])
+  },
+  { immediate: true }
+)
 </script>
 
 <template>
-  <Modal title="阀门历史数据" class="!w-250" @register="registerModal">
-    <Table @register="registerTable">
+  <div class="h-full flex">
+    <n-card class="mr-2 w-1/5" title="阀门信息">
+      <div>最终用户：{{ valveDetail.factory?.name }}</div>
+      <div>装置：{{ valveDetail.unit }}</div>
+      <div>位号：{{ valveDetail.tag }}</div>
+    </n-card>
+    <Table class="w-4/5" @register="registerTable">
       <template #toolbar>
         <n-button class="mr-2" type="primary" @click="exportData()"> 导出数据 </n-button>
         <n-button class="mr-2" type="primary" @click="changeLanguage">
@@ -170,7 +176,7 @@ function download(arrayBuffer: any) {
         </n-button>
       </template>
     </Table>
-  </Modal>
+  </div>
 </template>
 
-<style lang="" scoped></style>
+<style scoped></style>
