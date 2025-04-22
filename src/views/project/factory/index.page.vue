@@ -12,6 +12,7 @@ import { columns, searchSchemas } from './data'
 import SetModal from './SetModal.vue'
 import ImportModal from './ImportModal.vue'
 import ReportModal from './reportModal.vue'
+const userStore = useUserStore()
 const router = useRouter()
 const [registerSetModal, { openModal: openSetModel }] = useModal()
 const [registerImportModal, { openModal: openImportModel }] = useModal()
@@ -27,7 +28,7 @@ const [registerTable, { reload }] = useTable({
   showIndexColumn: false,
   pagination: false,
   actionColumn: {
-    width: 250,
+    width: 350,
     key: 'ACTION',
     render: (row: FactoryInfo) =>
       h(Action, {
@@ -35,6 +36,7 @@ const [registerTable, { reload }] = useTable({
           {
             icon: 'i-ant-design:laptop-outlined',
             tooltipProps: { content: '工作台' },
+            ifShow: userStore.isAdmin,
             buttonProps: {
               type: 'success',
               onClick: () => router.push(`/project/factory/${row.id}`)
@@ -48,11 +50,27 @@ const [registerTable, { reload }] = useTable({
             }
           },
           {
+            icon: 'i-ant-design:deployment-unit-outlined',
+            tooltipProps: { content: '装置管理' },
+            buttonProps: {
+              type: 'warning',
+              onClick: () => router.push(`/project/device/${row.id}`)
+            }
+          },
+          {
             icon: 'i-ant-design:dashboard-outlined',
             tooltipProps: { content: '阀门管理' },
             buttonProps: {
-              type: 'warning',
+              type: 'success',
               onClick: () => router.push(`/project/valve/factoryId-${row.id}`)
+            }
+          },
+          {
+            icon: 'i-ant-design:line-chart-outlined',
+            tooltipProps: { content: '分析任务' },
+            buttonProps: {
+              type: 'warning',
+              onClick: () => router.push(`/project/analysisTask/${row.id}`)
             }
           },
           {
@@ -64,39 +82,21 @@ const [registerTable, { reload }] = useTable({
                 return openReportModel(true, row)
               }
             }
-          }
-        ],
-        dropDownActions: [
-          {
-            props: {
-              icon: 'i-ant-design:deployment-unit-outlined',
-              onClick: () => router.push(`/project/device/${row.id}`)
-            },
-            label: '装置管理'
           },
           {
-            props: {
-              icon: 'i-ant-design:line-chart-outlined',
-              onClick: () => router.push(`/project/analysisTask/${row.id}`)
-            },
-            label: '分析任务'
-          },
-          {
-            props: {
-              icon: 'i-ant-design:file-search-outlined',
+            icon: 'i-ant-design:file-search-outlined',
+            tooltipProps: { content: '导入数据' },
+            buttonProps: {
+              type: 'warning',
               onClick: () => openImportModel(true, row)
-            },
-            label: '导入数据'
+            }
           },
           {
-            props: {
-              icon: 'i-ant-design:delete-outlined',
-              onClick: async () => {
-                await deleteFactory(row.id)
-                await reload()
-              }
-            },
-            label: '删除'
+            type: 'del',
+            onClick: async () => {
+              await deleteFactory(row.id)
+              await reload()
+            }
           }
         ]
       })
@@ -120,7 +120,7 @@ const handlePositiveClick = async () => {
       <template #toolbar>
         <n-button class="mr-2" type="primary" @click="openSetModel(true)"> 新增 </n-button>
         <n-button class="mr-2" type="success" @click="download"> 下载模板 </n-button>
-        <n-popconfirm @positive-click="handlePositiveClick">
+        <n-popconfirm @positive-click="handlePositiveClick" v-if="userStore.isAdmin">
           <template #trigger>
             <n-button class="mr-2" type="error"> 删除全部 </n-button>
           </template>

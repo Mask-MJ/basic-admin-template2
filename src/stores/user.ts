@@ -41,6 +41,9 @@ export const useUserStore = defineStore('user-store', {
     },
     getMenuList(): MenuOption[] {
       return transformersMenus(this.backendRouteList)
+    },
+    isAdmin(): boolean {
+      return this.userInfo.isAdmin
     }
   },
   actions: {
