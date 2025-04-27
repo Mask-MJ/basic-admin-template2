@@ -186,9 +186,10 @@ const tabsOptions = computed(() => [
             ? h(
                 'a',
                 {
-                  href: data.attachment,
-                  target: '_blank',
-                  class: 'text-blue-500'
+                  class: 'text-blue-500',
+                  onClick: () => {
+                    download(data.attachment)
+                  }
                 },
                 data.attachment?.split('/').pop()
               )

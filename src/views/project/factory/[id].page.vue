@@ -87,10 +87,41 @@ const tabsOptions = computed(() => [
     columns: [
       { title: '所属最终用户', key: 'factory.name' },
       { title: '任务名称', key: 'typeName' },
+      {
+        title: '位号',
+        key: 'valve',
+        render: (data: any) => {
+          return data.valve?.map((item: any) => item.tag).join(', ')
+        }
+      },
+      {
+        title: '序列号',
+        key: 'valve',
+        render: (data: any) => {
+          return data.valve?.map((item: any) => item.serialNumber).join(', ')
+        }
+      },
       { title: '故障类别', key: 'faultCategory' },
       { title: '处理措施', key: 'remedialActions' },
       { title: '维修完成时间', key: 'createdAt' },
-      { title: '备注', key: 'remark' }
+      {
+        title: '维修报告',
+        key: 'attachment',
+        render: (data: any) => {
+          return data.attachment
+            ? h(
+                'a',
+                {
+                  class: 'text-blue-500',
+                  onClick: () => {
+                    download(data.attachment)
+                  }
+                },
+                data.attachment?.split('/').pop()
+              )
+            : ''
+        }
+      }
     ],
     data: chartsData.value.maintenanceWorkOrderList
   },
@@ -100,10 +131,41 @@ const tabsOptions = computed(() => [
     columns: [
       { title: '所属最终用户', key: 'factory.name' },
       { title: '任务名称', key: 'typeName' },
+      {
+        title: '位号',
+        key: 'valve',
+        render: (data: any) => {
+          return data.valve?.map((item: any) => item.tag).join(', ')
+        }
+      },
+      {
+        title: '序列号',
+        key: 'valve',
+        render: (data: any) => {
+          return data.valve?.map((item: any) => item.serialNumber).join(', ')
+        }
+      },
       { title: '故障类别', key: 'faultCategory' },
       { title: '处理措施', key: 'remedialActions' },
       { title: '维修完成时间', key: 'createdAt' },
-      { title: '备注', key: 'remark' }
+      {
+        title: '维修报告',
+        key: 'attachment',
+        render: (data: any) => {
+          return data.attachment
+            ? h(
+                'a',
+                {
+                  class: 'text-blue-500',
+                  onClick: () => {
+                    download(data.attachment)
+                  }
+                },
+                data.attachment?.split('/').pop()
+              )
+            : ''
+        }
+      }
     ],
     data: chartsData.value.serviceWorkOrderList
   },
@@ -132,7 +194,21 @@ const tabsOptions = computed(() => [
     data: chartsData.value.taskList
   }
 ])
-
+function download(url: string) {
+  const link = document.createElement('a')
+  const blob = new Blob([url])
+  const fileName = url.split('/').pop()
+  const objectUrl = URL.createObjectURL(blob)
+  link.href = objectUrl
+  link.download = fileName || ''
+  document.body.appendChild(link)
+  link.click()
+  URL.revokeObjectURL(objectUrl)
+  link.remove()
+  setTimeout(() => {
+    URL.revokeObjectURL(objectUrl)
+  }, 100)
+}
 onMounted(async () => {
   chartsData.value = await getFactoryChart(factoryId.value)
   factoryDetail.value = await getFactoryDetail(factoryId.value)
