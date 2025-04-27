@@ -16,7 +16,6 @@ import { BarOption, LineOption } from './data'
 import { cloneDeep, flatMap, sortBy, map } from 'lodash-es'
 import china from '@/assets/json/china.json'
 import { getCharts, type Charts } from '@/api/system/user'
-import { downloadFileFromUrl } from '@/utils'
 
 use([
   CanvasRenderer,
@@ -185,12 +184,11 @@ const tabsOptions = computed(() => [
         render: (data: any) => {
           return data.attachment
             ? h(
-                'span',
+                'a',
                 {
-                  class: 'text-blue-500',
-                  onClick: () => {
-                    download(data.attachment)
-                  }
+                  href: data.attachment,
+                  target: '_blank',
+                  class: 'text-blue-500'
                 },
                 data.attachment?.split('/').pop()
               )
@@ -231,10 +229,9 @@ const tabsOptions = computed(() => [
             ? h(
                 'a',
                 {
-                  class: 'text-blue-500',
-                  onClick: () => {
-                    download(data.attachment)
-                  }
+                  href: data.attachment,
+                  target: '_blank',
+                  class: 'text-blue-500'
                 },
                 data.attachment?.split('/').pop()
               )
@@ -269,11 +266,6 @@ const tabsOptions = computed(() => [
     data: chartsData.value.taskList
   }
 ])
-
-async function download(url: string) {
-  const fileName = url.split('/').pop()
-  downloadFileFromUrl({ fileName, source: url, target: '_blank' })
-}
 
 onMounted(async () => {
   registerMap('china', china as any)

@@ -112,10 +112,9 @@ const tabsOptions = computed(() => [
             ? h(
                 'a',
                 {
-                  class: 'text-blue-500',
-                  onClick: () => {
-                    download(data.attachment)
-                  }
+                  href: data.attachment,
+                  target: '_blank',
+                  class: 'text-blue-500'
                 },
                 data.attachment?.split('/').pop()
               )
@@ -156,10 +155,9 @@ const tabsOptions = computed(() => [
             ? h(
                 'a',
                 {
-                  class: 'text-blue-500',
-                  onClick: () => {
-                    download(data.attachment)
-                  }
+                  href: data.attachment,
+                  target: '_blank',
+                  class: 'text-blue-500'
                 },
                 data.attachment?.split('/').pop()
               )
@@ -194,21 +192,7 @@ const tabsOptions = computed(() => [
     data: chartsData.value.taskList
   }
 ])
-function download(url: string) {
-  const link = document.createElement('a')
-  const blob = new Blob([url])
-  const fileName = url.split('/').pop()
-  const objectUrl = URL.createObjectURL(blob)
-  link.href = objectUrl
-  link.download = fileName || ''
-  document.body.appendChild(link)
-  link.click()
-  URL.revokeObjectURL(objectUrl)
-  link.remove()
-  setTimeout(() => {
-    URL.revokeObjectURL(objectUrl)
-  }, 100)
-}
+
 onMounted(async () => {
   chartsData.value = await getFactoryChart(factoryId.value)
   factoryDetail.value = await getFactoryDetail(factoryId.value)
