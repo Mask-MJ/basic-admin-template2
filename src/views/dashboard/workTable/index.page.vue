@@ -161,10 +161,40 @@ const tabsOptions = computed(() => [
     columns: [
       { title: '所属最终用户', key: 'factory.name' },
       { title: '任务名称', key: 'typeName' },
+      {
+        title: '位号',
+        key: 'valve',
+        render: (data: any) => {
+          return data.valve?.map((item: any) => item.tag).join(', ')
+        }
+      },
+      {
+        title: '序列号',
+        key: 'valve',
+        render: (data: any) => {
+          return data.valve?.map((item: any) => item.serialNumber).join(', ')
+        }
+      },
       { title: '故障类别', key: 'faultCategory' },
       { title: '处理措施', key: 'remedialActions' },
       { title: '维修完成时间', key: 'createdAt' },
-      { title: '备注', key: 'remark' }
+      {
+        title: '维修报告',
+        key: 'attachment',
+        render: (data: any) => {
+          return data.attachment
+            ? h(
+                'a',
+                {
+                  href: data.attachment,
+                  target: '_blank',
+                  class: 'text-blue-500'
+                },
+                data.attachment?.split('/').pop()
+              )
+            : ''
+        }
+      }
     ],
     data: chartsData.value.maintenanceWorkOrderList
   },
@@ -174,10 +204,40 @@ const tabsOptions = computed(() => [
     columns: [
       { title: '所属最终用户', key: 'factory.name' },
       { title: '任务名称', key: 'typeName' },
+      {
+        title: '位号',
+        key: 'valve',
+        render: (data: any) => {
+          return data.valve?.map((item: any) => item.tag).join(', ')
+        }
+      },
+      {
+        title: '序列号',
+        key: 'valve',
+        render: (data: any) => {
+          return data.valve?.map((item: any) => item.serialNumber).join(', ')
+        }
+      },
       { title: '故障类别', key: 'faultCategory' },
       { title: '处理措施', key: 'remedialActions' },
       { title: '维修完成时间', key: 'createdAt' },
-      { title: '备注', key: 'remark' }
+      {
+        title: '维修报告',
+        key: 'attachment',
+        render: (data: any) => {
+          return data.attachment
+            ? h(
+                'a',
+                {
+                  href: data.attachment,
+                  target: '_blank',
+                  class: 'text-blue-500'
+                },
+                data.attachment?.split('/').pop()
+              )
+            : ''
+        }
+      }
     ],
     data: chartsData.value.serviceWorkOrderList
   },
