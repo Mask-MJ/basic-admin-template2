@@ -52,6 +52,19 @@ const [registerTable] = useTable({
         label: '任务名称',
         span: 8,
         componentProps: { placeholder: '请输入任务名称' }
+      },
+      {
+        path: 'type',
+        component: 'NSelect',
+        label: '任务类型',
+        span: 8,
+        componentProps: {
+          placeholder: '请选择任务类型',
+          options: [
+            { label: '现场服务', value: 0 },
+            { label: '返场维修', value: 1 }
+          ]
+        }
       }
     ]
   }, // 搜索表单配置
