@@ -42,7 +42,7 @@ const [registerTable, { reload, getForm }] = useTable({
   rowKey: (rowData) => rowData.id,
   showIndexColumn: false,
   actionColumn: {
-    width: 350,
+    width: 400,
     key: 'ACTION',
     render: (row: ValveInfo) =>
       h(Action, {
@@ -115,6 +115,16 @@ const [registerTable, { reload, getForm }] = useTable({
               onClick: () => {
                 // openHistoryModel(true, row)
                 router.push(`/project/valve/historyData/${row.id}`)
+              }
+            }
+          },
+          {
+            icon: 'i-ant-design:code-sandbox-outlined',
+            tooltipProps: { content: '工单' },
+            buttonProps: {
+              type: 'success',
+              onClick: () => {
+                router.push(`/project/valve/workOrder/${row.id}`)
               }
             }
           },

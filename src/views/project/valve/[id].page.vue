@@ -89,6 +89,118 @@ watch(
   { immediate: true }
 )
 
+const tabsOptions = computed(() => [
+  {
+    name: '1',
+    label: '维修记录',
+    columns: [
+      { title: '所属最终用户', key: 'factory.name' },
+      { title: '任务名称', key: 'typeName' },
+      {
+        title: '位号',
+        key: 'valve',
+        render: (data: any) => {
+          return data.valve?.map((item: any) => item.tag).join(', ')
+        }
+      },
+      {
+        title: '序列号',
+        key: 'valve',
+        render: (data: any) => {
+          return data.valve?.map((item: any) => item.serialNumber).join(', ')
+        }
+      },
+      { title: '故障类别', key: 'faultCategory' },
+      { title: '处理措施', key: 'remedialActions' },
+      { title: '维修完成时间', key: 'createdAt' },
+      {
+        title: '维修报告',
+        key: 'attachment',
+        render: (data: any) => {
+          return data.attachment
+            ? h(
+                'a',
+                {
+                  href: data.attachment,
+                  target: '_blank',
+                  class: 'text-blue-500'
+                },
+                data.attachment?.split('/').pop()
+              )
+            : ''
+        }
+      }
+    ],
+    data: valveDetail.value?.workOrder?.filter((item: any) => item.type === 1) || []
+  },
+  {
+    name: '2',
+    label: '现场服务记录',
+    columns: [
+      { title: '所属最终用户', key: 'factory.name' },
+      { title: '任务名称', key: 'typeName' },
+      {
+        title: '位号',
+        key: 'valve',
+        render: (data: any) => {
+          return data.valve?.map((item: any) => item.tag).join(', ')
+        }
+      },
+      {
+        title: '序列号',
+        key: 'valve',
+        render: (data: any) => {
+          return data.valve?.map((item: any) => item.serialNumber).join(', ')
+        }
+      },
+      { title: '故障类别', key: 'faultCategory' },
+      { title: '处理措施', key: 'remedialActions' },
+      { title: '维修完成时间', key: 'createdAt' },
+      {
+        title: '维修报告',
+        key: 'attachment',
+        render: (data: any) => {
+          return data.attachment
+            ? h(
+                'a',
+                {
+                  href: data.attachment,
+                  target: '_blank',
+                  class: 'text-blue-500'
+                },
+                data.attachment?.split('/').pop()
+              )
+            : ''
+        }
+      }
+    ],
+    data: valveDetail.value?.workOrder?.filter((item: any) => item.type === 0) || []
+  },
+  {
+    name: '3',
+    label: '诊断记录',
+    columns: [
+      { title: '任务名称', key: 'name' },
+      {
+        title: '状态',
+        key: 'status',
+        render: (row: any) => {
+          const statusMap = new Map([
+            [0, '未开始'],
+            [1, '进行中'],
+            [2, '已完成'],
+            [3, '失败']
+          ])
+          return statusMap.get(row.status)
+        }
+      },
+      { title: '创建人员', key: 'createBy' },
+      { title: '备注', key: 'remark' }
+    ],
+    data: valveDetail.value?.analysisTask || []
+  }
+])
+
 // onMounted(async () => {
 //   if (!valveId.value) return
 //   valveDetail.value = await getValveDetail(valveId.value)
@@ -174,13 +286,31 @@ watch(
           <li>阀门位号：{{ valveDetail?.tag || '' }}</li>
         </ul>
       </n-card>
-      <n-grid x-gap="12" :cols="3" class="mt-4">
+      <n-grid x-gap="12" :cols="3" class="my-4">
         <n-gi v-for="item in dictDatas" :key="item.id">
           <n-card :title="item.name">
             <VChart class="chart" :option="getOption(item)" autoresize />
           </n-card>
         </n-gi>
       </n-grid>
+      <n-card hoverable>
+        <n-tabs type="line" animated>
+          <n-tab-pane
+            :name="item.name"
+            :tab="item.label"
+            v-for="item in tabsOptions"
+            :key="item.name"
+          >
+            <n-data-table
+              :columns="item.columns"
+              :data="item.data"
+              bordered
+              :max-height="250"
+              :min-height="250"
+            />
+          </n-tab-pane>
+        </n-tabs>
+      </n-card>
     </div>
     <Page v-else />
   </div>

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" name="factory">
 import { useModal } from '@/components/Modal'
 import { useTable, Action } from '@/components/Table'
 import {
