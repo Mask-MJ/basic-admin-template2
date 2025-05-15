@@ -146,6 +146,7 @@ function download(arrayBuffer: any) {
 watch(
   () => (router.currentRoute.value.params as { id: string }).id,
   async (val) => {
+    if (!val) return
     valveDetail.value = await getValveDetail(Number(val))
     const dictType = (await getDictTypeList({ name: 'HART', pageSize: 1000 })).rows
     const dictTypeId = dictType[0].id

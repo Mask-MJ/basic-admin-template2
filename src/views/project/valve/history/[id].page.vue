@@ -48,6 +48,7 @@ const [registerTable] = useTable({
 watch(
   () => (router.currentRoute.value.params as { id: string }).id,
   async (val) => {
+    if (!val) return
     valveDetail.value = await getValveDetail(Number(val))
   },
   { immediate: true }

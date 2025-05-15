@@ -53,6 +53,7 @@ const changeLanguage = (value: string) => {
 watch(
   () => (router.currentRoute.value.params as { id: string }).id,
   async (val) => {
+    if (!val) return
     valveDetail.value = await getValveDetail(Number(val))
 
     const result = await getValveRunInfo(Number(val))
