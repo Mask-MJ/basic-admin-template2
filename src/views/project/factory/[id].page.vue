@@ -1,5 +1,5 @@
-<script setup lang="ts">
-import { getFactoryChart, getFactoryDetail } from '@/api/project/factory'
+<script setup lang="ts" name="factoryDetail">
+import { getFactoryChart, getFactoryChart2, getFactoryDetail } from '@/api/project/factory'
 import { BarOption, LineOption } from '@/views/dashboard/workTable/data'
 import { cloneDeep, map } from 'lodash-es'
 import { use } from 'echarts/core'
@@ -32,6 +32,12 @@ use([
 const router = useRouter()
 const factoryDetail = ref<any>({})
 const chartsData = ref<any>({})
+const chartsData2 = ref<any>({})
+const formValue = ref({
+  deviceId: null,
+  valveBrand: '',
+  positionerModel: ''
+})
 const factoryId = computed(() => {
   return Number((router.currentRoute.value.params as { id: string }).id)
 })
@@ -193,8 +199,13 @@ const tabsOptions = computed(() => [
   }
 ])
 
+const submit = () => {
+  console.log('submit', formValue.value)
+}
+
 onMounted(async () => {
   chartsData.value = await getFactoryChart(factoryId.value)
+  // chartsData2.value = await getFactoryChart2({ factoryId: factoryId.value })
   factoryDetail.value = await getFactoryDetail(factoryId.value)
 })
 </script>
@@ -206,7 +217,7 @@ onMounted(async () => {
         <n-card title="最终用户详情">
           <ul>
             <li>名称：{{ factoryDetail.name || '' }}</li>
-            <li>所属区域：{{ getAddress }}</li>
+            <li>所属区域：{{ getAddress || '' }}</li>
             <li>所属行业：{{ factoryDetail.industry || '' }}</li>
           </ul>
         </n-card>
@@ -226,6 +237,29 @@ onMounted(async () => {
       <n-gi>
         <n-card title="定位器型号分析" hoverable>
           <VChart class="chart" :option="positionerModelOption" autoresize />
+        </n-card>
+      </n-gi>
+      <n-gi :span="3">
+        <n-card title="分类统计" hoverable>
+          <n-form ref="formRef" inline :label-width="100" label-placement="left" :model="formValue">
+            <n-form-item label="装置">
+              <n-input v-model:value="formValue.deviceId" />
+            </n-form-item>
+            <n-form-item label="阀门品牌">
+              <n-input v-model:value="formValue.valveBrand" />
+            </n-form-item>
+            <n-form-item label="定位器型号">
+              <n-input v-model:value="formValue.positionerModel" />
+            </n-form-item>
+            <n-form-item>
+              <n-button attr-type="reset" class="mr-4" @click="submit"> 重置 </n-button>
+              <n-button attr-type="submit" @click="submit"> 提交 </n-button>
+            </n-form-item>
+          </n-form>
+          <div class="flex">
+            <VChart class="chart mr-4" :option="positionerModelOption" autoresize />
+            <VChart class="chart" :option="positionerModelOption" autoresize />
+          </div>
         </n-card>
       </n-gi>
     </n-grid>

@@ -36,7 +36,8 @@ enum Api {
   Factory = 'project/factory',
   FactoryRemoveAll = 'project/factory/removeAll',
   Import = 'project/factory/import',
-  Chart = 'project/factory/chart'
+  Chart = 'project/factory/chart',
+  Chart2 = 'project/factory/chart2'
 }
 
 // 获取最终用户列表
@@ -50,6 +51,8 @@ export const getFactoryDetail = (id: number) =>
   defHttp.get<FactoryInfo>({ url: `${Api.Factory}/${id}` })
 // 获取最终用户图表数据
 export const getFactoryChart = (id: number) => defHttp.get({ url: `${Api.Chart}/${id}` })
+// 获取最终用户图表数据2
+export const getFactoryChart2 = (params: any) => defHttp.post({ url: Api.Chart2, params })
 // 导入阀门基础数据
 export const importValveData = (params: UploadFileParams) =>
   defHttp.uploadFile({ url: Api.Import }, params)
