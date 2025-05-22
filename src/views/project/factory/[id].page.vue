@@ -1,11 +1,11 @@
 <script setup lang="ts" name="factoryDetail">
 import { getFactoryChart, getFactoryChart2, getFactoryDetail } from '@/api/project/factory'
-import { BarOption, LineOption } from '@/views/dashboard/workTable/data'
+import { BarOption, LineOption, PieOption } from '@/views/dashboard/workTable/data'
 import { cloneDeep, map } from 'lodash-es'
 import { use } from 'echarts/core'
 import { CanvasRenderer } from 'echarts/renderers'
 import VChart from 'vue-echarts'
-import { LineChart, BarChart, MapChart } from 'echarts/charts'
+import { LineChart, BarChart, MapChart, PieChart } from 'echarts/charts'
 import {
   TitleComponent,
   TooltipComponent,
@@ -15,10 +15,12 @@ import {
   GeoComponent,
   VisualMapComponent
 } from 'echarts/components'
+import { getDeviceList } from '@/api/project/device'
 use([
   CanvasRenderer,
   LineChart,
   BarChart,
+  PieChart,
   GridComponent,
   TitleComponent,
   TooltipComponent,
@@ -33,6 +35,8 @@ const router = useRouter()
 const factoryDetail = ref<any>({})
 const chartsData = ref<any>({})
 const chartsData2 = ref<any>({})
+const chartsData3 = ref<any>({})
+const deviceOptions = ref<any[]>([])
 const formValue = ref({
   deviceId: null,
   valveBrand: '',
@@ -46,6 +50,31 @@ const valveBrandOption = computed(() => {
   const option = cloneDeep(BarOption)
   option.xAxis[0].data = map(chartsData.value.valveBrandGroup, 'name')
   option.series[0].data = map(chartsData.value.valveBrandGroup, 'value')
+  return option
+})
+
+const valvePieOption = computed(() => {
+  const option = cloneDeep(PieOption)
+  option.series[0].data = chartsData3.value.healthIndicator || []
+  return option
+})
+
+const valvePieOption2 = computed(() => {
+  const option = cloneDeep(PieOption)
+  option.series[0].data = chartsData3.value.alertIndicator || []
+  return option
+})
+
+const valveBarOption3 = computed(() => {
+  const option = cloneDeep(BarOption)
+  option.xAxis[0].data = map(chartsData2.value.healthIndicator, 'name')
+  option.series[0].data = map(chartsData2.value.healthIndicator, 'value')
+  return option
+})
+
+const valvePieOption4 = computed(() => {
+  const option = cloneDeep(PieOption)
+  option.series[0].data = chartsData2.value.alertIndicator || []
   return option
 })
 
@@ -199,21 +228,39 @@ const tabsOptions = computed(() => [
   }
 ])
 
-const submit = () => {
-  console.log('submit', formValue.value)
+const submit = async () => {
+  chartsData2.value = await getFactoryChart2({
+    factoryId: factoryId.value,
+    ...formValue.value
+  })
+}
+
+const reset = () => {
+  formValue.value.deviceId = null
+  formValue.value.valveBrand = ''
+  formValue.value.positionerModel = ''
 }
 
 onMounted(async () => {
   chartsData.value = await getFactoryChart(factoryId.value)
-  // chartsData2.value = await getFactoryChart2({ factoryId: factoryId.value })
+  chartsData2.value = await getFactoryChart2({ factoryId: factoryId.value })
+  chartsData3.value = cloneDeep(chartsData2.value)
+  deviceOptions.value = (
+    await getDeviceList({ factoryId: factoryId.value, pageSize: 10000 })
+  ).rows.map((item: any) => {
+    return {
+      label: item.name,
+      value: item.id
+    }
+  })
   factoryDetail.value = await getFactoryDetail(factoryId.value)
 })
 </script>
 
 <template>
   <PageWrapper>
-    <n-grid x-gap="12" y-gap="12" :cols="3" class="mb-3">
-      <n-gi :span="2">
+    <n-grid x-gap="12" y-gap="12" :cols="4" class="mb-3">
+      <n-gi :span="3">
         <n-card title="最终用户详情">
           <ul>
             <li>名称：{{ factoryDetail.name || '' }}</li>
@@ -229,21 +276,31 @@ onMounted(async () => {
           </n-statistic>
         </n-card>
       </n-gi>
-      <n-gi>
+      <n-gi :span="2">
+        <n-card title="阀门健康指示总览" hoverable>
+          <VChart class="chart" :option="valvePieOption" autoresize />
+        </n-card>
+      </n-gi>
+      <n-gi :span="2">
+        <n-card title="阀门报警总览" hoverable>
+          <VChart class="chart" :option="valvePieOption2" autoresize />
+        </n-card>
+      </n-gi>
+      <n-gi :span="2">
         <n-card title="阀门品牌分析" hoverable>
           <VChart class="chart" :option="valveBrandOption" autoresize />
         </n-card>
       </n-gi>
-      <n-gi>
+      <n-gi :span="2">
         <n-card title="定位器型号分析" hoverable>
           <VChart class="chart" :option="positionerModelOption" autoresize />
         </n-card>
       </n-gi>
-      <n-gi :span="3">
+      <n-gi :span="4">
         <n-card title="分类统计" hoverable>
           <n-form ref="formRef" inline :label-width="100" label-placement="left" :model="formValue">
             <n-form-item label="装置">
-              <n-input v-model:value="formValue.deviceId" />
+              <n-select class="w-40" v-model:value="formValue.deviceId" :options="deviceOptions" />
             </n-form-item>
             <n-form-item label="阀门品牌">
               <n-input v-model:value="formValue.valveBrand" />
@@ -252,13 +309,13 @@ onMounted(async () => {
               <n-input v-model:value="formValue.positionerModel" />
             </n-form-item>
             <n-form-item>
-              <n-button attr-type="reset" class="mr-4" @click="submit"> 重置 </n-button>
+              <n-button attr-type="reset" class="mr-4" @click="reset"> 重置 </n-button>
               <n-button attr-type="submit" @click="submit"> 提交 </n-button>
             </n-form-item>
           </n-form>
           <div class="flex">
-            <VChart class="chart mr-4" :option="positionerModelOption" autoresize />
-            <VChart class="chart" :option="positionerModelOption" autoresize />
+            <VChart class="chart mr-4" :option="valveBarOption3" autoresize />
+            <VChart class="chart" :option="valvePieOption4" autoresize />
           </div>
         </n-card>
       </n-gi>

@@ -35,7 +35,7 @@ enum Api {
 
 // 获取装置列表
 export const getDeviceList = (params?: Partial<SearchParams>) =>
-  defHttp.get<DeviceInfo[]>({ url: Api.Device, params })
+  defHttp.get({ url: Api.Device, params })
 // 创建装置
 export const createDevice = (params: CreatedDevice) => defHttp.post({ url: Api.Device, params })
 // 获取单个装置信息
