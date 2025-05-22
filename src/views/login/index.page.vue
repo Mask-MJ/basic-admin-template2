@@ -9,7 +9,7 @@ const formRef = ref<HTMLElement & FormInst>()
 const rememberMe = ref(false)
 const model = reactive({
   account: 'admin',
-  password: '123456'
+  password: 'Star1234'
 })
 
 const handleSubmit = async () => {

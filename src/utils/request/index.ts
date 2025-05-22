@@ -115,7 +115,9 @@ const transform: AxiosTransform = {
     const userStore = useUserStore()
     const { statusCode, message } = error.response.data
     if (statusCode === ResultEnum.TIMEOUT) {
-      userStore.logout()
+      setTimeout(() => {
+        userStore.logout()
+      }, 3000)
     }
     // else if (statusCode === ResultEnum.FORBIDDEN) {
     // 无权限 重定向到首页
