@@ -54,6 +54,12 @@ export const setSchemas: FormSchema[] = [
       placeholder: '请输入详细地址'
     }
   },
+  {
+    path: 'location',
+    label: '经纬度',
+    component: 'NInput',
+    slot: 'location'
+  },
   // {
   //   path: 'status',
   //   label: '状态',
