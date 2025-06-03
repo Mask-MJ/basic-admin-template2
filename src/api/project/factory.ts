@@ -16,6 +16,15 @@ export interface FactoryInfo {
   status: number
   address: string
   location: number[]
+  latitude: string
+  longitude: string
+  province: string
+  city: string
+  county: string
+  industry: string
+  _count: {
+    valve: number
+  }
   remark: string
   createBy: string
   updateBy: string

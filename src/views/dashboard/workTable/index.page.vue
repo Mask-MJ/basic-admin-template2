@@ -16,7 +16,6 @@ import { BarOption, LineOption } from './data'
 import { cloneDeep, flatMap, sortBy, map } from 'lodash-es'
 import china from '@/assets/json/china.json'
 import { getCharts, type Charts } from '@/api/system/user'
-import { getAllFactoryList } from '@/api/project/factory'
 
 use([
   CanvasRenderer,
@@ -35,18 +34,6 @@ const themeStore = useThemeStore()
 if (themeStore.darkMode) {
   provide(THEME_KEY, 'dark')
 }
-
-const type = ref(1) // 1 工作台模式 2 地图模式
-const mapRef = ref<any>(null)
-const wrapRef = ref<HTMLDivElement | null>(null)
-let BMap: any = (window as any).BMap || null
-const { load } = useScriptTag(
-  'https://api.map.baidu.com/getscript?v=3.0&ak=Z6eRnlM84tMu0CLxuTMXhG0HUb0vr29B&services=&t=20210201100830&s=1',
-  async () => {
-    BMap = (window as any).BMap
-  },
-  { manual: true }
-)
 
 const chartsData = ref<Charts>({
   factoryTotal: 0, // 最终用户数量
@@ -280,148 +267,120 @@ const tabsOptions = computed(() => [
   }
 ])
 
-async function initMap() {
-  const wrapEl = unref(wrapRef)
-  if (!wrapEl) return
-  if (!BMap) {
-    await load()
-  }
-  const factoryList = await getAllFactoryList()
-  mapRef.value = new BMap.Map(wrapEl)
-  const point = new BMap.Point(116.404, 39.915)
-  mapRef.value.centerAndZoom(point, 15)
-  mapRef.value.enableScrollWheelZoom(true)
-  factoryList.forEach((item: any) => {
-    if (!item.longitude || !item.latitude) return
-    const factoryPoint = new BMap.Point(item.longitude, item.latitude)
-    const marker = new BMap.Marker(factoryPoint)
-    marker.setLabel(new BMap.Label(`最终用户: ${item.name}`, { offset: new BMap.Size(20, -10) }))
-    mapRef.value.addOverlay(marker)
-  })
-}
-
 onMounted(async () => {
   registerMap('china', china as any)
   chartsData.value = await getCharts()
-  await initMap()
 })
 </script>
 
 <template>
-  <div>
-    <n-radio-group class="mb-2" v-model:value="type" name="radiobuttongroup1">
-      <n-radio-button :value="1" label="工作台模式" />
-      <n-radio-button :value="2" label="地图模式" />
-    </n-radio-group>
-    <n-grid v-show="type === 1" x-gap="12" y-gap="12" :cols="3">
-      <n-gi>
-        <n-card title="最终用户" hoverable>
-          <n-statistic label="数量" tabular-nums>
-            <n-number-animation show-separator :from="0" :to="chartsData.factoryTotal" />
-          </n-statistic>
-        </n-card>
-      </n-gi>
-      <n-gi>
-        <n-card title="阀门" hoverable>
-          <n-statistic label="数量" tabular-nums>
-            <n-number-animation show-separator :from="0" :to="chartsData.valveTotal" />
-          </n-statistic>
-        </n-card>
-      </n-gi>
-      <n-gi>
-        <n-card title="分析任务" hoverable>
-          <n-statistic label="数量" tabular-nums>
-            <n-number-animation show-separator :from="0" :to="chartsData.taskTotal" />
-          </n-statistic>
-        </n-card>
-      </n-gi>
-      <n-gi :span="2">
-        <n-card title="本周任务数量" hoverable>
-          <VChart class="chart" :option="weekTaskOption" autoresize />
-        </n-card>
-      </n-gi>
-      <n-gi>
-        <n-card title="工作记录" hoverable>
-          <ul class="list">
-            <n-scrollbar style="max-height: 280px">
-              <li
-                class="mb-2 border-b-1 border-slate-300 rounded px-2 py-1 text-slate-500"
-                v-for="item in chartsData.operationLog"
-                :key="item.id"
-              >
-                <div class="mb-2 text-base text-slate-800 font-bold">{{ item.module }}</div>
-                <div class="">
-                  <div class="">{{ item.title }}</div>
-                  <div class="">{{ item.createdAt }}</div>
-                </div>
-              </li>
-            </n-scrollbar>
-          </ul>
-        </n-card>
-      </n-gi>
-      <n-gi :span="2">
-        <n-card hoverable>
-          <VChart class="map" :option="factoryMapOption" autoresize />
-        </n-card>
-      </n-gi>
-      <n-gi>
-        <n-card hoverable>
-          <VChart class="map" :option="factoryBarOption" autoresize />
-        </n-card>
-      </n-gi>
-      <n-gi>
-        <n-card title="最终用户行业分析" hoverable>
-          <VChart class="chart" :option="industryOption" autoresize />
-        </n-card>
-      </n-gi>
-      <n-gi>
-        <n-card title="阀门品牌分析" hoverable>
-          <VChart class="chart" :option="valveBrandOption" autoresize />
-        </n-card>
-      </n-gi>
-      <n-gi>
-        <n-card title="定位器型号分析" hoverable>
-          <VChart class="chart" :option="positionerModelOption" autoresize />
-        </n-card>
-      </n-gi>
-      <n-gi>
-        <n-card title="诊断分析任务历史量趋势" hoverable>
-          <VChart class="chart" :option="taskOption" autoresize />
-        </n-card>
-      </n-gi>
-      <n-gi>
-        <n-card title="维修量历史趋势" hoverable>
-          <VChart class="chart" :option="maintenanceRecordOption" autoresize />
-        </n-card>
-      </n-gi>
-      <n-gi>
-        <n-card title="现场服务量历史趋势" hoverable>
-          <VChart class="chart" :option="fieldServiceOption" autoresize />
-        </n-card>
-      </n-gi>
-      <n-gi :span="3">
-        <n-card hoverable>
-          <n-tabs type="line" animated>
-            <n-tab-pane
-              :name="item.name"
-              :tab="item.label"
-              v-for="item in tabsOptions"
-              :key="item.name"
+  <n-grid x-gap="12" y-gap="12" :cols="3">
+    <n-gi>
+      <n-card title="最终用户" hoverable>
+        <n-statistic label="数量" tabular-nums>
+          <n-number-animation show-separator :from="0" :to="chartsData.factoryTotal" />
+        </n-statistic>
+      </n-card>
+    </n-gi>
+    <n-gi>
+      <n-card title="阀门" hoverable>
+        <n-statistic label="数量" tabular-nums>
+          <n-number-animation show-separator :from="0" :to="chartsData.valveTotal" />
+        </n-statistic>
+      </n-card>
+    </n-gi>
+    <n-gi>
+      <n-card title="分析任务" hoverable>
+        <n-statistic label="数量" tabular-nums>
+          <n-number-animation show-separator :from="0" :to="chartsData.taskTotal" />
+        </n-statistic>
+      </n-card>
+    </n-gi>
+    <n-gi :span="2">
+      <n-card title="本周任务数量" hoverable>
+        <VChart class="chart" :option="weekTaskOption" autoresize />
+      </n-card>
+    </n-gi>
+    <n-gi>
+      <n-card title="工作记录" hoverable>
+        <ul class="list">
+          <n-scrollbar style="max-height: 280px">
+            <li
+              class="mb-2 border-b-1 border-slate-300 rounded px-2 py-1 text-slate-500"
+              v-for="item in chartsData.operationLog"
+              :key="item.id"
             >
-              <n-data-table
-                :columns="item.columns"
-                :data="item.data"
-                bordered
-                :max-height="250"
-                :min-height="250"
-              />
-            </n-tab-pane>
-          </n-tabs>
-        </n-card>
-      </n-gi>
-    </n-grid>
-    <div v-show="type === 2" class="h-180 w-full" ref="wrapRef"></div>
-  </div>
+              <div class="mb-2 text-base text-slate-800 font-bold">{{ item.module }}</div>
+              <div class="">
+                <div class="">{{ item.title }}</div>
+                <div class="">{{ item.createdAt }}</div>
+              </div>
+            </li>
+          </n-scrollbar>
+        </ul>
+      </n-card>
+    </n-gi>
+    <n-gi :span="2">
+      <n-card hoverable>
+        <VChart class="map" :option="factoryMapOption" autoresize />
+      </n-card>
+    </n-gi>
+    <n-gi>
+      <n-card hoverable>
+        <VChart class="map" :option="factoryBarOption" autoresize />
+      </n-card>
+    </n-gi>
+    <n-gi>
+      <n-card title="最终用户行业分析" hoverable>
+        <VChart class="chart" :option="industryOption" autoresize />
+      </n-card>
+    </n-gi>
+    <n-gi>
+      <n-card title="阀门品牌分析" hoverable>
+        <VChart class="chart" :option="valveBrandOption" autoresize />
+      </n-card>
+    </n-gi>
+    <n-gi>
+      <n-card title="定位器型号分析" hoverable>
+        <VChart class="chart" :option="positionerModelOption" autoresize />
+      </n-card>
+    </n-gi>
+    <n-gi>
+      <n-card title="诊断分析任务历史量趋势" hoverable>
+        <VChart class="chart" :option="taskOption" autoresize />
+      </n-card>
+    </n-gi>
+    <n-gi>
+      <n-card title="维修量历史趋势" hoverable>
+        <VChart class="chart" :option="maintenanceRecordOption" autoresize />
+      </n-card>
+    </n-gi>
+    <n-gi>
+      <n-card title="现场服务量历史趋势" hoverable>
+        <VChart class="chart" :option="fieldServiceOption" autoresize />
+      </n-card>
+    </n-gi>
+    <n-gi :span="3">
+      <n-card hoverable>
+        <n-tabs type="line" animated>
+          <n-tab-pane
+            :name="item.name"
+            :tab="item.label"
+            v-for="item in tabsOptions"
+            :key="item.name"
+          >
+            <n-data-table
+              :columns="item.columns"
+              :data="item.data"
+              bordered
+              :max-height="250"
+              :min-height="250"
+            />
+          </n-tab-pane>
+        </n-tabs>
+      </n-card>
+    </n-gi>
+  </n-grid>
 </template>
 
 <style scoped>

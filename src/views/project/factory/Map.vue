@@ -36,7 +36,7 @@ async function initMap() {
         longitude: e.point.lng,
         latitude: e.point.lat,
         code: rs.content.address_detail.adcode,
-        address: address.value
+        address: addComp.street + addComp.streetNumber
       })
     })
   })

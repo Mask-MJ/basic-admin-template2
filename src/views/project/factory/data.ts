@@ -59,7 +59,6 @@ export const setSchemas: FormSchema[] = [
     label: '详细地址',
     component: 'NInput',
     componentProps: {
-      disabled: true,
       type: 'text',
       placeholder: '请输入详细地址'
     }
