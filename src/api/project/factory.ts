@@ -34,6 +34,7 @@ export interface SearchParams {
 
 enum Api {
   Factory = 'project/factory',
+  FactoryAll = 'project/factory/all',
   FactoryRemoveAll = 'project/factory/removeAll',
   Import = 'project/factory/import',
   Chart = 'project/factory/chart',
@@ -43,6 +44,9 @@ enum Api {
 // 获取最终用户列表
 export const getFactoryList = (params?: Partial<SearchParams>) =>
   defHttp.get<FactoryInfo[]>({ url: Api.Factory, params })
+
+// 获取所有最终用户列表
+export const getAllFactoryList = () => defHttp.get<FactoryInfo[]>({ url: Api.FactoryAll })
 
 // 创建最终用户
 export const createFactory = (params: CreatedFactory) => defHttp.post({ url: Api.Factory, params })

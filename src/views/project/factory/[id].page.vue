@@ -118,6 +118,30 @@ const fieldServiceOption = computed(() => {
 const tabsOptions = computed(() => [
   {
     name: '1',
+    label: '诊断记录',
+    columns: [
+      { title: '任务名称', key: 'name' },
+      { title: '所属最终用户', key: 'factory.name' },
+      {
+        title: '状态',
+        key: 'status',
+        render: (row: any) => {
+          const statusMap = new Map([
+            [0, '未开始'],
+            [1, '进行中'],
+            [2, '已完成'],
+            [3, '失败']
+          ])
+          return statusMap.get(row.status)
+        }
+      },
+      { title: '创建人员', key: 'createBy' },
+      { title: '备注', key: 'remark' }
+    ],
+    data: chartsData.value.taskList
+  },
+  {
+    name: '2',
     label: '维修记录',
     columns: [
       { title: '所属最终用户', key: 'factory.name' },
@@ -160,7 +184,7 @@ const tabsOptions = computed(() => [
     data: chartsData.value.maintenanceWorkOrderList
   },
   {
-    name: '2',
+    name: '3',
     label: '现场服务记录',
     columns: [
       { title: '所属最终用户', key: 'factory.name' },
@@ -201,30 +225,6 @@ const tabsOptions = computed(() => [
       }
     ],
     data: chartsData.value.serviceWorkOrderList
-  },
-  {
-    name: '3',
-    label: '诊断记录',
-    columns: [
-      { title: '任务名称', key: 'name' },
-      { title: '所属最终用户', key: 'factory.name' },
-      {
-        title: '状态',
-        key: 'status',
-        render: (row: any) => {
-          const statusMap = new Map([
-            [0, '未开始'],
-            [1, '进行中'],
-            [2, '已完成'],
-            [3, '失败']
-          ])
-          return statusMap.get(row.status)
-        }
-      },
-      { title: '创建人员', key: 'createBy' },
-      { title: '备注', key: 'remark' }
-    ],
-    data: chartsData.value.taskList
   }
 ])
 

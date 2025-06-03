@@ -14,6 +14,7 @@ import MapModal from './MapModal.vue'
 
 const emits = defineEmits(['success', 'register'])
 const [registerMapModal, { openModal }] = useModal()
+const factoryDetail = ref<FactoryInfo>({} as FactoryInfo)
 
 const [registerForm, { validate, getPathsValue, setPathsValue, updateSchema }] = useForm({
   labelWidth: 100,
@@ -23,6 +24,7 @@ const [registerForm, { validate, getPathsValue, setPathsValue, updateSchema }] =
 const [registerModal, { closeModal, setModalProps }] = useModalInner(async (data: FactoryInfo) => {
   setModalProps({ title: data.id ? '编辑最终用户' : '新增最终用户' })
   const factoryList = await getFactoryList({ filterId: data.id })
+  factoryDetail.value = data
   await updateSchema({
     path: 'parentId',
     componentProps: {
@@ -33,6 +35,21 @@ const [registerModal, { closeModal, setModalProps }] = useModalInner(async (data
     await setPathsValue(data)
   }
 })
+
+const setLocation = (data: {
+  longitude: number
+  latitude: number
+  code: string
+  address: string
+}) => {
+  const res = unref(data)
+  setPathsValue({
+    longitude: res.longitude + '',
+    latitude: res.latitude + '',
+    code: res.code + '',
+    address: res.address
+  })
+}
 
 const handleSubmit = async () => {
   try {
@@ -59,12 +76,12 @@ const handleSubmit = async () => {
   <Modal class="!w-120" @register="registerModal" @positive-click="handleSubmit">
     <Form @register="registerForm">
       <template #location>
-        <NButton @click="openModal(true)">
+        <NButton @click="openModal(true, factoryDetail)">
           <span>选择坐标</span>
         </NButton>
       </template>
     </Form>
-    <MapModal @register="registerMapModal" />
+    <MapModal @register="registerMapModal" @success="setLocation" />
   </Modal>
 </template>
 

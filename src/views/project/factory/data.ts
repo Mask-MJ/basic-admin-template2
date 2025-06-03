@@ -35,12 +35,21 @@ export const setSchemas: FormSchema[] = [
   },
   { path: 'name', label: '名称', required: true, component: 'NInput' },
   { path: 'industry', label: '所属行业', component: 'NInput' },
+  { path: 'longitude', label: 'longitude', show: false, component: 'NInput' },
+  { path: 'latitude', label: 'latitude', show: false, component: 'NInput' },
+  {
+    path: 'location',
+    label: '坐标',
+    component: 'NInput',
+    slot: 'location'
+  },
   {
     path: 'code',
     label: '城市',
     required: true,
     component: 'NCascader',
     componentProps: {
+      disabled: true,
       options: areaData,
       checkStrategy: 'child'
     }
@@ -50,15 +59,10 @@ export const setSchemas: FormSchema[] = [
     label: '详细地址',
     component: 'NInput',
     componentProps: {
+      disabled: true,
       type: 'text',
       placeholder: '请输入详细地址'
     }
-  },
-  {
-    path: 'location',
-    label: '经纬度',
-    component: 'NInput',
-    slot: 'location'
   },
   // {
   //   path: 'status',
