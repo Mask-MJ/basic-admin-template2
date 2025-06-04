@@ -9,7 +9,7 @@ const valveDetail = ref<any>({})
 const valveId = computed(() => (router.currentRoute.value.params as { id: string }).id)
 const [registerScoreModal, { openModal: openScoreModal }] = useModal()
 
-const [registerTable] = useTable({
+const [registerTable, { reload }] = useTable({
   api: getValveHistoryScore, // 请求接口
   columns: [
     { title: '检查时间', key: 'checkTime', width: 300 },
@@ -50,6 +50,7 @@ watch(
   async (val) => {
     if (!val) return
     valveDetail.value = await getValveDetail(Number(val))
+    reload()
   },
   { immediate: true }
 )
