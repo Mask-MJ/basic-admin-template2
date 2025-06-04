@@ -16,7 +16,7 @@ const [registerTable, { reload }] = useTable({
     { title: '评分时间', key: 'scoreTime', width: 150 },
     { title: '分数', key: 'infor.totalScore', width: 150 }
   ], // 展示的列
-  searchInfo: { valveId: valveId.value }, // 额外参数
+  searchInfo: { valveId }, // 额外参数
   useSearchForm: false, // 启用搜索表单
   bordered: true,
   rowKey: (rowData) => rowData.id,
