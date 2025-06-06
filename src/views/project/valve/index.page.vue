@@ -37,7 +37,7 @@ const [registerTable, { reload, getForm }] = useTable({
   columns, // 展示的列
   useSearchForm: true, // 启用搜索表单
   formConfig: { labelWidth: 100, schemas: getSchemas.value }, // 搜索表单配置
-  searchInfo: { [formType.value]: Number(typeId.value) || null }, // 额外参数
+  searchInfo: { [formType.value]: typeId }, // 额外参数
   bordered: true,
   rowKey: (rowData) => rowData.id,
   showIndexColumn: false,
@@ -187,6 +187,14 @@ const handlePositiveClick = async () => {
   await deleteAllValve()
   reload()
 }
+
+watch(
+  () => (router.currentRoute.value.params as { id: string }).id,
+  () => {
+    reload()
+  },
+  { immediate: true }
+)
 </script>
 
 <template>
