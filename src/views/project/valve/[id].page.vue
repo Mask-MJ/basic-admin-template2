@@ -304,7 +304,7 @@ const getDescription = (data: any) => {
           <li>所属装置：{{ valveDetail?.device?.name || '' }}</li>
           <li>阀门位号：{{ valveDetail?.tag || '' }}</li>
           <li>阀体序列号：{{ valveDetail?.serialNumber || '' }}</li>
-          <li>阀门套装{{ getDescription(valveDetail) }}</li>
+          <li>阀门套装：{{ getDescription(valveDetail) }}</li>
         </ul>
       </n-card>
       <n-grid x-gap="12" :cols="3" class="my-4">
