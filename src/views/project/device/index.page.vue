@@ -7,6 +7,7 @@ import SetModal from './SetModal.vue'
 import { NButton, NPopconfirm } from 'naive-ui'
 import { type FactoryInfo, getFactoryList } from '@/api/project/factory'
 
+const userStore = useUserStore()
 const router = useRouter()
 const factoryId = computed(() => (router.currentRoute.value.params as { id: string }).id)
 const name = ref(null)
@@ -138,7 +139,7 @@ onMounted(() => {
     </NCard>
     <NCard>
       <NButton class="mb-4 mr-2" type="primary" @click="openSetModel(true)"> 新增 </NButton>
-      <NPopconfirm @positive-click="handlePositiveClick">
+      <NPopconfirm @positive-click="handlePositiveClick" v-if="userStore.isAdmin">
         <template #trigger>
           <NButton class="mr-2" type="error"> 删除全部 </NButton>
         </template>
