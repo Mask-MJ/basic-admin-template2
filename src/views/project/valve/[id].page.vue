@@ -194,6 +194,8 @@ const tabsOptions = computed(() => [
           return statusMap.get(row.status)
         }
       },
+      { title: '创建时间', key: 'createdAt' },
+      { title: '更新时间', key: 'updatedAt' },
       { title: '创建人员', key: 'createBy' },
       { title: '备注', key: 'remark' }
     ],
