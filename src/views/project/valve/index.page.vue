@@ -5,8 +5,8 @@ import {
   deleteValve,
   getValveList,
   getAllValveList,
-  type ValveInfo,
-  deleteAllValve
+  type ValveInfo
+  // deleteAllValve
 } from '@/api/project/valve'
 import { columns, searchSchemas, setSchemas } from './data'
 import SetModal from './SetModal.vue'
@@ -183,10 +183,10 @@ function download(arrayBuffer: any) {
     link.remove()
   })
 }
-const handlePositiveClick = async () => {
-  await deleteAllValve()
-  reload()
-}
+// const handlePositiveClick = async () => {
+//   await deleteAllValve()
+//   reload()
+// }
 
 watch(
   () => (router.currentRoute.value.params as { id: string }).id,
@@ -203,12 +203,12 @@ watch(
       <template #toolbar>
         <n-button class="mr-2" type="primary" @click="openSetModel(true)"> 新增 </n-button>
         <n-button class="mr-2" type="success" @click="exportData"> 导出全部数据 </n-button>
-        <n-popconfirm @positive-click="handlePositiveClick">
+        <!-- <n-popconfirm @positive-click="handlePositiveClick">
           <template #trigger>
             <n-button class="mr-2" type="error"> 删除全部 </n-button>
           </template>
           是否确认删除, 如果有关联数据会一并删除
-        </n-popconfirm>
+        </n-popconfirm> -->
       </template>
     </Table>
     <SetModal @register="registerSetModal" @success="reload()" />

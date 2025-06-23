@@ -105,7 +105,7 @@ const [registerTable, { reload }] = useTable({
 
 const download = async () => {
   const link = document.createElement('a')
-  link.href = 'http://200.200.200.18:9000/pdf/阀门导入数据模板 V4.xlsx'
+  link.href = 'http://200.200.200.18:9000/pdf/阀门导入数据模板 V6.xlsx'
   link.click()
 }
 const handlePositiveClick = async () => {
