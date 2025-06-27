@@ -2,7 +2,7 @@ import type { UserInfo } from '@/api/system/user'
 import type { FormSchema } from '@/components/Form'
 import type { BasicColumn } from '@/components/Table'
 
-import { getMenuList } from '@/api/system/menu'
+import { getMenuListWithPermission } from '@/api/system/menu'
 import { getFactoryList } from '@/api/project/factory'
 
 export const searchSchemas: FormSchema[] = [
@@ -29,12 +29,12 @@ export const setSchemas: FormSchema[] = [
     component: 'ApiTreeSelect',
     componentProps: {
       immediate: true,
-      api: getMenuList,
+      maxTagCount: 5,
+      api: getMenuListWithPermission,
       multiple: true,
       labelField: 'name',
       keyField: 'id',
-      checkable: true,
-      cascade: true
+      checkable: true
     }
   },
   {

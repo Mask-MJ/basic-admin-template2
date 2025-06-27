@@ -12,6 +12,7 @@ import { columns, searchSchemas } from './data'
 import SetModal from './SetModal.vue'
 import ImportModal from './ImportModal.vue'
 import ReportModal from './reportModal.vue'
+import { hasPermission } from '@/utils'
 const userStore = useUserStore()
 const router = useRouter()
 const [registerSetModal, { openModal: openSetModel }] = useModal()
@@ -118,7 +119,14 @@ const handlePositiveClick = async () => {
   <PageWrapper>
     <Table @register="registerTable">
       <template #toolbar>
-        <n-button class="mr-2" type="primary" @click="openSetModel(true)"> 新增 </n-button>
+        <n-button
+          v-if="hasPermission('project:factory:create')"
+          class="mr-2"
+          type="primary"
+          @click="openSetModel(true)"
+        >
+          新增
+        </n-button>
         <n-button class="mr-2" type="success" @click="download"> 下载模板 </n-button>
         <n-popconfirm @positive-click="handlePositiveClick" v-if="userStore.isAdmin">
           <template #trigger>
