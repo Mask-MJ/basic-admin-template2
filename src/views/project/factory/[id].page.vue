@@ -243,20 +243,39 @@ const reset = () => {
   formValue.value.positionerModel = ''
 }
 
-onMounted(async () => {
-  chartsData.value = await getFactoryChart(factoryId.value)
-  chartsData2.value = await getFactoryChart2({ factoryId: factoryId.value })
-  chartsData3.value = cloneDeep(chartsData2.value)
-  deviceOptions.value = (
-    await getDeviceList({ factoryId: factoryId.value, pageSize: 10000 })
-  ).rows.map((item: any) => {
-    return {
-      label: item.name,
-      value: item.id
-    }
-  })
-  factoryDetail.value = await getFactoryDetail(factoryId.value)
-})
+watch(
+  () => factoryId.value,
+  async (factoryId) => {
+    chartsData.value = await getFactoryChart(factoryId)
+    chartsData2.value = await getFactoryChart2({ factoryId: factoryId })
+    chartsData3.value = cloneDeep(chartsData2.value)
+    deviceOptions.value = (await getDeviceList({ factoryId: factoryId, pageSize: 10000 })).rows.map(
+      (item: any) => {
+        return {
+          label: item.name,
+          value: item.id
+        }
+      }
+    )
+    factoryDetail.value = await getFactoryDetail(factoryId)
+  },
+  { immediate: true }
+)
+
+// onMounted(async () => {
+//   chartsData.value = await getFactoryChart(factoryId.value)
+//   chartsData2.value = await getFactoryChart2({ factoryId: factoryId.value })
+//   chartsData3.value = cloneDeep(chartsData2.value)
+//   deviceOptions.value = (
+//     await getDeviceList({ factoryId: factoryId.value, pageSize: 10000 })
+//   ).rows.map((item: any) => {
+//     return {
+//       label: item.name,
+//       value: item.id
+//     }
+//   })
+//   factoryDetail.value = await getFactoryDetail(factoryId.value)
+// })
 </script>
 
 <template>
