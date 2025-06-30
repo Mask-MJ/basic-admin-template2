@@ -109,7 +109,7 @@ export const setSchemas: FormSchema[] = [
   { path: 'actuatorBrand', label: '执行机构品牌', component: 'NInput', span: 8 },
   { path: 'actuatorSeries', label: '执行机构系列', component: 'NInput', span: 8 },
   { path: 'actuatorSize', label: '执行机构尺寸', component: 'NInput', span: 8 },
-  { path: 'failurePosition', label: '故障位置', component: 'NInput', span: 8 },
+  { path: 'actuatorFailurePosition', label: '故障位置', component: 'NInput', span: 8 },
   { path: 'handwheel', label: '手轮', component: 'NInput', span: 8 },
   { path: 'stroke', label: '行程', component: 'NInput', span: 8 },
   // { path: 'actuatorDescription', label: '执行机构描述', component: 'NInput', span: 8 },
