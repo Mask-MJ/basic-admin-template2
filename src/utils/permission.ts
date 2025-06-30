@@ -5,5 +5,7 @@ export function hasPermission(requiredPermission: string): boolean {
     .map((menu) => menu.permission)
     .filter((permission) => permission !== null)
   console.log('userStore', userPermissions, requiredPermission)
+  // 如果是管理员，直接返回true
+  if (userStore.isAdmin) return true
   return userPermissions.includes(requiredPermission)
 }
