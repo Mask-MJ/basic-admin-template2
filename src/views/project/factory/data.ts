@@ -45,14 +45,10 @@ export const setSchemas: FormSchema[] = [
   },
   {
     path: 'code',
-    label: '城市',
+    label: '所属区域',
     required: true,
     component: 'NCascader',
-    componentProps: {
-      disabled: true,
-      options: areaData,
-      checkStrategy: 'child'
-    }
+    componentProps: { options: areaData, checkStrategy: 'child' }
   },
   {
     path: 'address',

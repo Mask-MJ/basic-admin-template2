@@ -59,7 +59,7 @@ const [registerTable, { reload }] = useTable({
           },
           {
             icon: 'i-ant-design:dashboard-outlined',
-            tooltipProps: { content: '阀门管理' },
+            tooltipProps: { content: '阀门列表' },
             buttonProps: {
               type: 'success',
               onClick: () => router.push(`/project/valve/factoryId-${row.id}`)
