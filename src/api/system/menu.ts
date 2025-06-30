@@ -35,12 +35,16 @@ export interface SearchParams {
 }
 
 enum Api {
-  Menu = 'system/menu'
+  Menu = 'system/menu',
+  MenuWithPermission = 'system/menu/all'
 }
 
 // 获取菜单列表
 export const getMenuList = (params?: Partial<SearchParams>) =>
   defHttp.get<MenuInfo[]>({ url: Api.Menu, params })
+// 获取菜单权限列表
+export const getMenuListWithPermission = (params?: Partial<SearchParams>) =>
+  defHttp.get<MenuInfo[]>({ url: Api.MenuWithPermission, params })
 // 创建菜单
 export const createMenu = (params: CreateMenu) => defHttp.post({ url: Api.Menu, params })
 // 获取单个菜单信息

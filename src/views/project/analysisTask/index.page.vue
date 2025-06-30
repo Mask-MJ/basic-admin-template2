@@ -15,6 +15,7 @@ import HistoryModal from './HistoryModal.vue'
 import type { PaginationProps } from 'naive-ui'
 import { getFactoryReportData } from '@/api/project/factory'
 
+const userStore = useUserStore()
 const router = useRouter()
 
 const factoryId = computed(() => (router.currentRoute.value.params as { id: string }).id)
@@ -150,7 +151,7 @@ onBeforeRouteLeave(() => {
     <Table @register="registerTable">
       <template #toolbar>
         <n-button class="mr-2" type="primary" @click="openSetModel(true)"> 新增 </n-button>
-        <n-popconfirm @positive-click="handlePositiveClick">
+        <n-popconfirm @positive-click="handlePositiveClick" v-if="userStore.isAdmin">
           <template #trigger>
             <n-button class="mr-2" type="error"> 删除全部 </n-button>
           </template>

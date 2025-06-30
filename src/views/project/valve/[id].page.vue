@@ -194,12 +194,33 @@ const tabsOptions = computed(() => [
           return statusMap.get(row.status)
         }
       },
+      { title: '创建时间', key: 'createdAt' },
+      { title: '更新时间', key: 'updatedAt' },
       { title: '创建人员', key: 'createBy' },
       { title: '备注', key: 'remark' }
     ],
     data: valveDetail.value?.analysisTask || []
   }
 ])
+
+const getDescription = (data: any) => {
+  return [
+    data.valveDescription,
+    data.actuatorDescription,
+    data.positionerDescription,
+    data.lsDescription,
+    data.pilotDescription,
+    data.qeDescription,
+    data.regulatorDescription,
+    data.signalComparatorDescription,
+    data.sovDescription,
+    data.tripValveDescription,
+    data.vbDescription
+  ]
+    .map((item: string) => item || '')
+    .filter(Boolean)
+    .join('；')
+}
 
 // onMounted(async () => {
 //   if (!valveId.value) return
@@ -284,6 +305,8 @@ const tabsOptions = computed(() => [
           <li>所属最终用户：{{ valveDetail?.factory?.name || '' }}</li>
           <li>所属装置：{{ valveDetail?.device?.name || '' }}</li>
           <li>阀门位号：{{ valveDetail?.tag || '' }}</li>
+          <li>阀体序列号：{{ valveDetail?.serialNumber || '' }}</li>
+          <li>阀门套装：{{ getDescription(valveDetail) }}</li>
         </ul>
       </n-card>
       <n-grid x-gap="12" :cols="3" class="my-4">

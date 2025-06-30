@@ -36,7 +36,7 @@ export interface ValveInfo {
   valveBodyMaterial: string
   /// 阀盖形式
   valveBonnet: string
-  /// 阀内件
+  /// 流量特性
   valveTrim: string
   /// 阀体泄漏等级
   valveSeatLeakage: string

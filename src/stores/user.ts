@@ -47,6 +47,13 @@ export const useUserStore = defineStore('user-store', {
     }
   },
   actions: {
+    hasPermission(permission: string): boolean {
+      const userPermissions = this.userInfo.role
+        .flatMap((role: any) => role.menu)
+        .map((menu) => menu.permission)
+        .filter((permission) => permission !== null)
+      return userPermissions.includes(permission)
+    },
     setToken(info: string | null = null) {
       this.token = info
     },

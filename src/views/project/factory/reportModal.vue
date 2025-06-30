@@ -11,6 +11,8 @@ const [registerModal, { closeModal }] = useModalInner(async (data: FactoryInfo) 
 const factoryId = ref()
 const uploadRef = ref<UploadInst | null>(null)
 const file = ref<UploadFileInfo>()
+const endDate = ref<string>()
+const cycle = ref<number>(30)
 const handleSubmit = async () => {
   const link = document.createElement('a')
   // 返回的是 streamableFile 对象
@@ -23,12 +25,16 @@ const handleSubmit = async () => {
       response = await getFactoryReportData({
         factoryId: factoryId.value,
         valveTags,
-        reportMode: 'valveList'
+        reportMode: 'valveList',
+        endDate: endDate.value,
+        cycle: cycle.value
       })
     } else {
       response = await getFactoryReportData({
         factoryId: factoryId.value,
-        reportMode: 'factory'
+        reportMode: 'factory',
+        endDate: endDate.value,
+        cycle: cycle.value
       })
     }
     // 转换成 blob 对象
@@ -58,6 +64,14 @@ const handleChange = (data: { file: UploadFileInfo; fileList: UploadFileInfo[] }
 
 <template>
   <Modal class="!w-120" title="生成报告" @register="registerModal" @positive-click="handleSubmit">
+    <div>
+      <span>日期</span>
+      <n-date-picker v-model:formatted-value="endDate" type="date" value-format="yyyy-MM-dd" />
+    </div>
+    <div>
+      <span>时间区间</span>
+      <n-input-number v-model:value="cycle" clearable />
+    </div>
     <n-upload
       ref="uploadRef"
       :default-upload="false"

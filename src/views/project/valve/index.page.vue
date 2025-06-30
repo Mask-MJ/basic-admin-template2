@@ -13,6 +13,7 @@ import SetModal from './SetModal.vue'
 import ChartModal from './ChartModal.vue'
 import { Workbook } from 'exceljs'
 
+const userStore = useUserStore()
 const router = useRouter()
 const formType = computed(
   () => (router.currentRoute.value.params as { id: string }).id?.split('-')[0]
@@ -203,7 +204,7 @@ watch(
       <template #toolbar>
         <n-button class="mr-2" type="primary" @click="openSetModel(true)"> 新增 </n-button>
         <n-button class="mr-2" type="success" @click="exportData"> 导出全部数据 </n-button>
-        <n-popconfirm @positive-click="handlePositiveClick">
+        <n-popconfirm @positive-click="handlePositiveClick" v-if="userStore.isAdmin">
           <template #trigger>
             <n-button class="mr-2" type="error"> 删除全部 </n-button>
           </template>
