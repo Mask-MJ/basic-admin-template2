@@ -246,6 +246,7 @@ const reset = () => {
 watch(
   () => factoryId.value,
   async (factoryId) => {
+    if (!factoryId) return
     chartsData.value = await getFactoryChart(factoryId)
     chartsData2.value = await getFactoryChart2({ factoryId: factoryId })
     chartsData3.value = cloneDeep(chartsData2.value)
