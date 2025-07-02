@@ -14,6 +14,7 @@ import SetModal from './SetModal.vue'
 import HistoryModal from './HistoryModal.vue'
 import type { PaginationProps } from 'naive-ui'
 import { getFactoryReportData } from '@/api/project/factory'
+import { hasPermission } from '@/utils'
 
 const userStore = useUserStore()
 const router = useRouter()
@@ -44,6 +45,7 @@ const [registerTable, { reload, setTableData, getPagination, getForm }] = useTab
           {
             icon: 'i-ant-design:play-circle-outlined',
             tooltipProps: { content: '执行任务' },
+            auth: 'project:analysisTask:create',
             buttonProps: {
               type: 'success',
               loading: row.status === 1,
@@ -60,6 +62,7 @@ const [registerTable, { reload, setTableData, getPagination, getForm }] = useTab
           },
           {
             type: 'edit',
+            auth: 'project:analysisTask:update',
             onClick: async () => {
               const result = await getAnalysisTaskDetail(row.id)
               return openSetModel(true, result)
@@ -67,6 +70,7 @@ const [registerTable, { reload, setTableData, getPagination, getForm }] = useTab
           },
           {
             type: 'del',
+            auth: 'project:analysisTask:delete',
             onClick: async () => {
               await deleteAnalysisTask(row.id)
               await reload()
@@ -75,6 +79,7 @@ const [registerTable, { reload, setTableData, getPagination, getForm }] = useTab
           {
             icon: 'i-ant-design:fund-view-outlined',
             tooltipProps: { content: '查看结果' },
+            auth: 'project:analysisTask:query',
             ifShow: row.status === 2,
             buttonProps: {
               type: 'info',
@@ -86,6 +91,7 @@ const [registerTable, { reload, setTableData, getPagination, getForm }] = useTab
           {
             icon: 'i-ant-design:file-search-outlined',
             tooltipProps: { content: '生成报告' },
+            auth: 'project:analysisTask:query',
             buttonProps: {
               type: 'info',
               onClick: async () => {
@@ -150,7 +156,14 @@ onBeforeRouteLeave(() => {
   <PageWrapper>
     <Table @register="registerTable">
       <template #toolbar>
-        <n-button class="mr-2" type="primary" @click="openSetModel(true)"> 新增 </n-button>
+        <n-button
+          v-if="hasPermission('project:analysisTask:create')"
+          class="mr-2"
+          type="primary"
+          @click="openSetModel(true)"
+        >
+          新增
+        </n-button>
         <n-popconfirm @positive-click="handlePositiveClick" v-if="userStore.isAdmin">
           <template #trigger>
             <n-button class="mr-2" type="error"> 删除全部 </n-button>

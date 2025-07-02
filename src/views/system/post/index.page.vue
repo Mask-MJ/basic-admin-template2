@@ -3,6 +3,7 @@ import SetModal from './SetModal.vue'
 import { deletePost, getPostDetail, getPostList, type PostInfo } from '@/api/system/post'
 import { useModal } from '@/components/Modal'
 import { Action, useTable } from '@/components/Table'
+import { hasPermission } from '@/utils'
 
 import { columns, searchSchemas } from './data'
 
@@ -23,6 +24,7 @@ const [registerTable, { reload }] = useTable({
         actions: [
           {
             type: 'edit',
+            auth: 'system:post:update',
             onClick: async () => {
               const result = await getPostDetail(row.id)
               return openModal(true, result)
@@ -30,6 +32,7 @@ const [registerTable, { reload }] = useTable({
           },
           {
             type: 'del',
+            auth: 'system:post:delete',
             onClick: async () => {
               await deletePost(row.id)
               await reload()
@@ -45,7 +48,14 @@ const [registerTable, { reload }] = useTable({
   <PageWrapper>
     <Table @register="registerTable">
       <template #toolbar>
-        <n-button class="mr-2" type="primary" @click="openModal(true)"> 新增 </n-button>
+        <n-button
+          v-if="hasPermission('system:post:create')"
+          class="mr-2"
+          type="primary"
+          @click="openModal(true)"
+        >
+          新增
+        </n-button>
       </template>
     </Table>
     <SetModal @register="registerSetModal" @success="reload()" />

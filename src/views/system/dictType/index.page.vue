@@ -8,6 +8,7 @@ import {
 } from '@/api/system/dict'
 import { useModal } from '@/components/Modal'
 import { Action, useTable } from '@/components/Table'
+import { hasPermission } from '@/utils'
 
 import { columns, searchSchemas } from './data'
 
@@ -29,6 +30,7 @@ const [registerTable, { reload }] = useTable({
         actions: [
           {
             type: 'edit',
+            auth: 'system:dictType:update',
             onClick: async () => {
               const result = await getDictTypeDetail(row.id)
               return openModal(true, result)
@@ -36,6 +38,7 @@ const [registerTable, { reload }] = useTable({
           },
           {
             icon: 'i-line-md:list-3',
+            auth: 'system:dictData:query',
             tooltipProps: { content: '模版管理' },
             buttonProps: {
               type: 'success',
@@ -44,6 +47,7 @@ const [registerTable, { reload }] = useTable({
           },
           {
             type: 'del',
+            auth: 'system:dictType:delete',
             onClick: async () => {
               await deleteDictType(row.id)
               await reload()
@@ -62,7 +66,14 @@ const handleAdd = () => {
   <PageWrapper>
     <Table @register="registerTable">
       <template #toolbar>
-        <n-button class="mr-2" type="primary" @click="handleAdd"> 新增 </n-button>
+        <n-button
+          v-if="hasPermission('system:dictType:create')"
+          class="mr-2"
+          type="primary"
+          @click="handleAdd"
+        >
+          新增
+        </n-button>
       </template>
     </Table>
     <SetModal @register="registerSetModal" @success="reload()" />

@@ -6,6 +6,7 @@ import { Action, useTable } from '@/components/Table'
 import { columns, searchSchemas } from './data'
 import ResetModal from './ResetModal.vue'
 import SetModal from './SetModal.vue'
+import { hasPermission } from '@/utils'
 
 const [registerSetModal, { openModal: openSetModel }] = useModal()
 const [registerResetModal, { openModal: openResetModel }] = useModal()
@@ -27,6 +28,7 @@ const [registerTable, { reload }] = useTable({
           : [
               {
                 type: 'edit',
+                auth: 'system:user:update',
                 onClick: async () => {
                   const result = await getUserDetail(row.id)
                   return openSetModel(true, result)
@@ -34,6 +36,7 @@ const [registerTable, { reload }] = useTable({
               },
               {
                 icon: 'i-ant-design:key-outlined',
+                auth: 'system:user:update',
                 tooltipProps: { content: '重置密码' },
                 buttonProps: {
                   type: 'success',
@@ -42,6 +45,7 @@ const [registerTable, { reload }] = useTable({
               },
               {
                 type: 'del',
+                auth: 'system:user:delete',
                 onClick: async () => {
                   await deleteUser(row.id)
                   await reload()
@@ -57,7 +61,14 @@ const [registerTable, { reload }] = useTable({
   <PageWrapper>
     <Table @register="registerTable">
       <template #toolbar>
-        <n-button class="mr-2" type="primary" @click="openSetModel(true)"> 新增 </n-button>
+        <n-button
+          v-if="hasPermission('system:user:create')"
+          class="mr-2"
+          type="primary"
+          @click="openSetModel(true)"
+        >
+          新增
+        </n-button>
       </template>
     </Table>
     <SetModal @register="registerSetModal" @success="reload()" />

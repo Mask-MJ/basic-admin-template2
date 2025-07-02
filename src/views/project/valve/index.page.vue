@@ -12,6 +12,7 @@ import { columns, searchSchemas, setSchemas } from './data'
 import SetModal from './SetModal.vue'
 import ChartModal from './ChartModal.vue'
 import { Workbook } from 'exceljs'
+import { hasPermission } from '@/utils'
 
 const userStore = useUserStore()
 const router = useRouter()
@@ -50,14 +51,16 @@ const [registerTable, { reload, getForm }] = useTable({
         actions: [
           {
             icon: 'i-ant-design:laptop-outlined',
+            auth: 'project:valve:query',
             tooltipProps: { content: '工作台' },
             buttonProps: {
               type: 'success',
-              onClick: () => router.push(`/project/valve/${row.id}`)
+              onClick: () => router.push(`/project/valve/workTable/${row.id}`)
             }
           },
           {
             type: 'edit',
+            auth: 'project:valve:update',
             onClick: async () => {
               // const result = await getValveDetail(row.id)
               // return openSetModel(true, result)
@@ -67,6 +70,7 @@ const [registerTable, { reload, getForm }] = useTable({
           {
             icon: 'i-ant-design:eye-outlined',
             tooltipProps: { content: '查看运行数据' },
+            auth: 'project:valve:query',
             buttonProps: {
               type: 'success',
               onClick: async () => {
@@ -79,6 +83,7 @@ const [registerTable, { reload, getForm }] = useTable({
           {
             icon: 'i-ant-design:line-chart-outlined',
             tooltipProps: { content: '图表' },
+            auth: 'project:valve:query',
             buttonProps: {
               type: 'info',
               onClick: () => {
@@ -89,6 +94,7 @@ const [registerTable, { reload, getForm }] = useTable({
           {
             icon: 'i-ant-design:audit-outlined',
             tooltipProps: { content: '评分' },
+            auth: 'project:valve:query',
             buttonProps: {
               type: 'success',
               onClick: () => {
@@ -100,6 +106,7 @@ const [registerTable, { reload, getForm }] = useTable({
           {
             icon: 'i-ant-design:audit-outlined',
             tooltipProps: { content: '历史评分' },
+            auth: 'project:valve:query',
             buttonProps: {
               type: 'info',
               onClick: () => {
@@ -111,6 +118,7 @@ const [registerTable, { reload, getForm }] = useTable({
           {
             icon: 'i-ant-design:bar-chart-outlined',
             tooltipProps: { content: '查看历史数据' },
+            auth: 'project:valve:query',
             buttonProps: {
               type: 'warning',
               onClick: () => {
@@ -122,6 +130,7 @@ const [registerTable, { reload, getForm }] = useTable({
           {
             icon: 'i-ant-design:code-sandbox-outlined',
             tooltipProps: { content: '工单' },
+            auth: 'project:valve:query',
             buttonProps: {
               type: 'success',
               onClick: () => {
@@ -131,6 +140,7 @@ const [registerTable, { reload, getForm }] = useTable({
           },
           {
             type: 'del',
+            auth: 'project:valve:delete',
             ifShow: ['factoryId', 'deviceId'].includes(formType.value),
             onClick: async () => {
               await deleteValve(row.id)
@@ -194,7 +204,7 @@ watch(
   () => {
     reload()
   },
-  { immediate: true }
+  { immediate: false }
 )
 </script>
 
@@ -202,8 +212,22 @@ watch(
   <PageWrapper>
     <Table @register="registerTable">
       <template #toolbar>
-        <n-button class="mr-2" type="primary" @click="openSetModel(true)"> 新增 </n-button>
-        <n-button class="mr-2" type="success" @click="exportData"> 导出全部数据 </n-button>
+        <n-button
+          v-if="hasPermission('project:valve:create')"
+          class="mr-2"
+          type="primary"
+          @click="openSetModel(true)"
+        >
+          新增
+        </n-button>
+        <n-button
+          v-if="hasPermission('project:valve:query')"
+          class="mr-2"
+          type="success"
+          @click="exportData"
+        >
+          导出全部数据
+        </n-button>
         <n-popconfirm @positive-click="handlePositiveClick" v-if="userStore.isAdmin">
           <template #trigger>
             <n-button class="mr-2" type="error"> 删除全部 </n-button>

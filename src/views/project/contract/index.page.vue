@@ -9,6 +9,7 @@ import {
 } from '@/api/project/contract'
 import { columns, searchSchemas } from './data'
 import SetModal from './SetModal.vue'
+import { hasPermission } from '@/utils'
 
 const router = useRouter()
 const factoryId = computed(() => (router.currentRoute.value.params as { id: string }).id)
@@ -35,6 +36,7 @@ const [registerTable, { reload }] = useTable({
         actions: [
           {
             type: 'edit',
+            auth: 'project:contract:update',
             onClick: async () => {
               const result = await getContractDetail(row.id)
               return openSetModel(true, result)
@@ -42,6 +44,7 @@ const [registerTable, { reload }] = useTable({
           },
           {
             type: 'del',
+            auth: 'project:contract:delete',
             onClick: async () => {
               await deleteContract(row.id)
               await reload()
@@ -57,7 +60,14 @@ const [registerTable, { reload }] = useTable({
   <PageWrapper>
     <Table @register="registerTable">
       <template #toolbar>
-        <n-button class="mr-2" type="primary" @click="openSetModel(true)"> 新增 </n-button>
+        <n-button
+          v-if="hasPermission('project:contract:create')"
+          class="mr-2"
+          type="primary"
+          @click="openSetModel(true)"
+        >
+          新增
+        </n-button>
       </template>
     </Table>
     <SetModal @register="registerSetModal" @success="reload()" />

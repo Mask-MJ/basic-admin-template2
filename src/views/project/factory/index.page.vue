@@ -38,6 +38,7 @@ const [registerTable, { reload }] = useTable({
             icon: 'i-ant-design:laptop-outlined',
             tooltipProps: { content: '工作台' },
             ifShow: userStore.isAdmin,
+            auth: 'project:factory:query',
             buttonProps: {
               type: 'success',
               onClick: () => router.push(`/project/factory/${row.id}`)
@@ -45,6 +46,7 @@ const [registerTable, { reload }] = useTable({
           },
           {
             type: 'edit',
+            auth: 'project:factory:update',
             onClick: async () => {
               const result = await getFactoryDetail(row.id)
               return openSetModel(true, result)
@@ -52,6 +54,7 @@ const [registerTable, { reload }] = useTable({
           },
           {
             icon: 'i-ant-design:deployment-unit-outlined',
+            auth: 'project:valve:query',
             tooltipProps: { content: '装置管理' },
             buttonProps: {
               type: 'warning',
@@ -61,6 +64,7 @@ const [registerTable, { reload }] = useTable({
           {
             icon: 'i-ant-design:dashboard-outlined',
             tooltipProps: { content: '阀门列表' },
+            auth: 'project:valve:query',
             buttonProps: {
               type: 'success',
               onClick: () => router.push(`/project/valve/factoryId-${row.id}`)
@@ -68,6 +72,7 @@ const [registerTable, { reload }] = useTable({
           },
           {
             icon: 'i-ant-design:line-chart-outlined',
+            auth: 'project:valve:query',
             tooltipProps: { content: '分析任务' },
             buttonProps: {
               type: 'warning',
@@ -77,6 +82,7 @@ const [registerTable, { reload }] = useTable({
           {
             icon: 'i-ant-design:file-search-outlined',
             tooltipProps: { content: '生成报告' },
+            auth: 'project:valve:query',
             buttonProps: {
               type: 'info',
               onClick: async () => {
@@ -87,6 +93,7 @@ const [registerTable, { reload }] = useTable({
           {
             icon: 'i-ant-design:file-search-outlined',
             tooltipProps: { content: '导入数据' },
+            auth: 'project:factory:create',
             buttonProps: {
               type: 'warning',
               onClick: () => openImportModel(true, row)
@@ -94,6 +101,7 @@ const [registerTable, { reload }] = useTable({
           },
           {
             type: 'del',
+            auth: 'project:factory:delete',
             onClick: async () => {
               await deleteFactory(row.id)
               await reload()

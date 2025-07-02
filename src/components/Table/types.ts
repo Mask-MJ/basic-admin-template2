@@ -143,7 +143,7 @@ export interface ActionItem {
   tooltipProps?: TooltipProps & { content: string }
   buttonProps?: ButtonProps
   icon?: string
-  auth?: string | string[]
+  auth?: string
   // 业务控制是否显示
   ifShow?: boolean | ((action: ActionItem) => boolean)
   // 编辑和删除几乎每个表格都有，所以提取出来

@@ -10,6 +10,7 @@ import { Action, useTable } from '@/components/Table'
 
 import { columns, searchSchemas } from './data'
 import SetModal from './SetModal.vue'
+import { hasPermission } from '@/utils'
 
 const [registerSetModal, { openModal: openSetModel }] = useModal()
 const [registerTable, { reload }] = useTable({
@@ -30,6 +31,7 @@ const [registerTable, { reload }] = useTable({
         actions: [
           {
             type: 'edit',
+            auth: 'system:dictDataTree:update',
             onClick: async () => {
               const result = await getDictDataTreeDetail(row.id)
               return openSetModel(true, result)
@@ -37,6 +39,7 @@ const [registerTable, { reload }] = useTable({
           },
           {
             type: 'del',
+            auth: 'system:dictDataTree:delete',
             onClick: async () => {
               await deleteDictDataTree(row.id)
               await reload()
@@ -55,7 +58,14 @@ const handleAdd = () => {
   <PageWrapper>
     <Table @register="registerTable">
       <template #toolbar>
-        <n-button class="mr-2" type="primary" @click="handleAdd"> 新增 </n-button>
+        <n-button
+          v-if="hasPermission('system:dictDataTree:create')"
+          class="mr-2"
+          type="primary"
+          @click="handleAdd"
+        >
+          新增
+        </n-button>
       </template>
     </Table>
     <SetModal @register="registerSetModal" @success="reload()" />

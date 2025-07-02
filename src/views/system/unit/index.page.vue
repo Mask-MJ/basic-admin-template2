@@ -3,6 +3,7 @@ import SetModal from './SetModal.vue'
 import { deleteUnit, getUnitDetail, getUnitList, type UnitInfo } from '@/api/system/unit'
 import { useModal } from '@/components/Modal'
 import { Action, useTable } from '@/components/Table'
+import { hasPermission } from '@/utils'
 
 import { columns, searchSchemas } from './data'
 
@@ -23,6 +24,7 @@ const [registerTable, { reload }] = useTable({
         actions: [
           {
             type: 'edit',
+            auth: 'system:unit:update',
             onClick: async () => {
               const result = await getUnitDetail(row.id)
               return openModal(true, result)
@@ -30,6 +32,7 @@ const [registerTable, { reload }] = useTable({
           },
           {
             type: 'del',
+            auth: 'system:unit:delete',
             onClick: async () => {
               await deleteUnit(row.id)
               await reload()
@@ -45,7 +48,14 @@ const [registerTable, { reload }] = useTable({
   <PageWrapper>
     <Table @register="registerTable">
       <template #toolbar>
-        <n-button class="mr-2" type="primary" @click="openModal(true)"> 新增 </n-button>
+        <n-button
+          v-if="hasPermission('system:unit:create')"
+          class="mr-2"
+          type="primary"
+          @click="openModal(true)"
+        >
+          新增
+        </n-button>
       </template>
     </Table>
     <SetModal @register="registerSetModal" @success="reload()" />

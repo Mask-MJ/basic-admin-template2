@@ -148,6 +148,18 @@ export const setSchemas: FormSchema[] = [
     }
   },
   {
+    path: 'type',
+    label: '类型',
+    component: 'NRadioGroup',
+    componentProps: {
+      options: [
+        { label: '目录', value: 'C' },
+        { label: '菜单', value: 'M' },
+        { label: '按钮', value: 'B' }
+      ]
+    }
+  },
+  {
     path: 'status',
     label: '状态',
     component: 'NRadioGroup',

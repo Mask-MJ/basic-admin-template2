@@ -4,6 +4,7 @@ import type { DropdownProps } from 'naive-ui'
 
 import { isBoolean, isFunction } from 'lodash-es'
 import { NButton, NPopconfirm, NTooltip } from 'naive-ui'
+import { hasPermission } from '@/utils/permission'
 
 const props = defineProps({
   actions: { type: Array as PropType<ActionItem[]>, default: () => [] },
@@ -37,6 +38,9 @@ const getActions = computed(() => {
   return (toRaw(props.actions) || [])
     .filter((action) => {
       // 权限过滤 hasPermission(action.auth)
+      if (action.auth && !hasPermission(action.auth)) {
+        return false
+      }
       return isIfShow(action)
     })
     .map((action): ActionItem => {

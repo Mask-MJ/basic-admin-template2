@@ -3,6 +3,7 @@ import { deleteRole, getRoleDetail, getRoleList, type RoleInfo } from '@/api/sys
 import SetModal from './SetModal.vue'
 import { useModal } from '@/components/Modal'
 import { Action, useTable } from '@/components/Table'
+import { hasPermission } from '@/utils'
 
 import { columns, searchSchemas } from './data'
 
@@ -24,6 +25,7 @@ const [registerTable, { reload }] = useTable({
             actions: [
               {
                 type: 'edit',
+                auth: 'system:role:update',
                 onClick: async () => {
                   const result = await getRoleDetail(row.id)
                   return openSetModel(true, result)
@@ -31,6 +33,7 @@ const [registerTable, { reload }] = useTable({
               },
               {
                 type: 'del',
+                auth: 'system:role:delete',
                 onClick: async () => {
                   await deleteRole(row.id)
                   await reload()
@@ -50,7 +53,14 @@ const handleAdd = () => {
   <PageWrapper>
     <Table @register="registerTable">
       <template #toolbar>
-        <n-button class="mr-2" type="primary" @click="handleAdd"> 新增 </n-button>
+        <n-button
+          v-if="hasPermission('system:role:create')"
+          class="mr-2"
+          type="primary"
+          @click="handleAdd"
+        >
+          新增
+        </n-button>
       </template>
     </Table>
     <SetModal @register="registerSetModal" @success="reload()" />

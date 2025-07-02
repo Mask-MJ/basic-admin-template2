@@ -3,6 +3,7 @@ import { deleteDept, getDeptDetail, getDeptList, type DeptInfo } from '@/api/sys
 import { Action, useTable } from '@/components/Table'
 import { useModal } from '@/components/Modal'
 import SetModal from './SetModal.vue'
+import { hasPermission } from '@/utils'
 
 import { columns, searchSchemas } from './data'
 
@@ -25,6 +26,7 @@ const [registerTable, { reload }] = useTable({
         actions: [
           {
             type: 'edit',
+            auth: 'system:dept:update',
             onClick: async () => {
               const result = await getDeptDetail(row.id)
               return openModal(true, result)
@@ -32,6 +34,7 @@ const [registerTable, { reload }] = useTable({
           },
           {
             type: 'del',
+            auth: 'system:dept:delete',
             onClick: async () => {
               await deleteDept(row.id)
               await reload()
@@ -47,7 +50,14 @@ const [registerTable, { reload }] = useTable({
   <PageWrapper>
     <Table @register="registerTable">
       <template #toolbar>
-        <n-button class="mr-2" type="primary" @click="openModal(true)"> 新增 </n-button>
+        <n-button
+          v-if="hasPermission('project:dept:create')"
+          class="mr-2"
+          type="primary"
+          @click="openModal(true)"
+        >
+          新增
+        </n-button>
       </template>
     </Table>
     <SetModal @register="registerSetModal" @success="reload()" />

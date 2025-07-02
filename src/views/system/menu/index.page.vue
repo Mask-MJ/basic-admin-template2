@@ -2,6 +2,7 @@
 import { deleteMenu, getMenuDetail, getMenuList, type MenuInfo } from '@/api/system/menu'
 import { useModal } from '@/components/Modal'
 import { Action, useTable } from '@/components/Table'
+import { hasPermission } from '@/utils'
 
 import { columns, searchSchemas } from './data'
 import SetModal from './SetModal.vue'
@@ -25,6 +26,7 @@ const [registerTable, { reload }] = useTable({
         actions: [
           {
             type: 'edit',
+            auth: 'system:menu:update',
             onClick: async () => {
               const result = await getMenuDetail(row.id)
               return openSetModel(true, result)
@@ -32,6 +34,7 @@ const [registerTable, { reload }] = useTable({
           },
           {
             type: 'del',
+            auth: 'system:menu:delete',
             onClick: async () => {
               await deleteMenu(row.id)
               await reload()
@@ -50,7 +53,14 @@ const handleAdd = () => {
   <PageWrapper>
     <Table @register="registerTable">
       <template #toolbar>
-        <n-button class="mr-2" type="primary" @click="handleAdd"> 新增 </n-button>
+        <n-button
+          v-if="hasPermission('system:menu:create')"
+          class="mr-2"
+          type="primary"
+          @click="handleAdd"
+        >
+          新增
+        </n-button>
       </template>
     </Table>
     <SetModal @register="registerSetModal" @success="reload()" />
