@@ -39,7 +39,7 @@ export const setSchemas: FormSchema[] = [
   },
   {
     path: 'factoryIds',
-    label: '最终用户权限',
+    label: '数据权限',
     component: 'ApiTreeSelect',
     componentProps: {
       immediate: true,

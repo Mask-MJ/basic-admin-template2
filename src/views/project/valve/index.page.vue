@@ -70,7 +70,7 @@ const [registerTable, { reload, getForm }] = useTable({
           {
             icon: 'i-ant-design:eye-outlined',
             tooltipProps: { content: '查看运行数据' },
-            auth: 'project:valve:query',
+            auth: 'project:valve:runInfo',
             buttonProps: {
               type: 'success',
               onClick: async () => {
@@ -94,7 +94,7 @@ const [registerTable, { reload, getForm }] = useTable({
           {
             icon: 'i-ant-design:audit-outlined',
             tooltipProps: { content: '评分' },
-            auth: 'project:valve:query',
+            auth: 'project:valve:score',
             buttonProps: {
               type: 'success',
               onClick: () => {
@@ -106,7 +106,7 @@ const [registerTable, { reload, getForm }] = useTable({
           {
             icon: 'i-ant-design:audit-outlined',
             tooltipProps: { content: '历史评分' },
-            auth: 'project:valve:query',
+            auth: 'project:valve:history',
             buttonProps: {
               type: 'info',
               onClick: () => {
@@ -118,7 +118,7 @@ const [registerTable, { reload, getForm }] = useTable({
           {
             icon: 'i-ant-design:bar-chart-outlined',
             tooltipProps: { content: '查看历史数据' },
-            auth: 'project:valve:query',
+            auth: 'project:valve:historyData',
             buttonProps: {
               type: 'warning',
               onClick: () => {
@@ -130,7 +130,7 @@ const [registerTable, { reload, getForm }] = useTable({
           {
             icon: 'i-ant-design:code-sandbox-outlined',
             tooltipProps: { content: '工单' },
-            auth: 'project:valve:query',
+            auth: 'project:valve:workOrder',
             buttonProps: {
               type: 'success',
               onClick: () => {
