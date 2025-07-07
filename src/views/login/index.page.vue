@@ -8,8 +8,8 @@ const userStore = useUserStore()
 const formRef = ref<HTMLElement & FormInst>()
 const rememberMe = ref(false)
 const model = reactive({
-  account: 'admin',
-  password: 'Star1234'
+  account: '',
+  password: ''
 })
 
 const handleSubmit = async () => {
