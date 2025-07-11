@@ -92,6 +92,31 @@ watch(
 const tabsOptions = computed(() => [
   {
     name: '1',
+    label: '诊断记录',
+    columns: [
+      { title: '任务名称', key: 'name' },
+      {
+        title: '状态',
+        key: 'status',
+        render: (row: any) => {
+          const statusMap = new Map([
+            [0, '未开始'],
+            [1, '进行中'],
+            [2, '已完成'],
+            [3, '失败']
+          ])
+          return statusMap.get(row.status)
+        }
+      },
+      { title: '创建时间', key: 'createdAt' },
+      { title: '更新时间', key: 'updatedAt' },
+      { title: '创建人员', key: 'createBy' },
+      { title: '备注', key: 'remark' }
+    ],
+    data: valveDetail.value?.analysisTask || []
+  },
+  {
+    name: '2',
     label: '维修记录',
     columns: [
       { title: '所属最终用户', key: 'factory.name' },
@@ -134,7 +159,7 @@ const tabsOptions = computed(() => [
     data: valveDetail.value?.workOrder?.filter((item: any) => item.type === 1) || []
   },
   {
-    name: '2',
+    name: '3',
     label: '现场服务记录',
     columns: [
       { title: '所属最终用户', key: 'factory.name' },
@@ -175,31 +200,6 @@ const tabsOptions = computed(() => [
       }
     ],
     data: valveDetail.value?.workOrder?.filter((item: any) => item.type === 0) || []
-  },
-  {
-    name: '3',
-    label: '诊断记录',
-    columns: [
-      { title: '任务名称', key: 'name' },
-      {
-        title: '状态',
-        key: 'status',
-        render: (row: any) => {
-          const statusMap = new Map([
-            [0, '未开始'],
-            [1, '进行中'],
-            [2, '已完成'],
-            [3, '失败']
-          ])
-          return statusMap.get(row.status)
-        }
-      },
-      { title: '创建时间', key: 'createdAt' },
-      { title: '更新时间', key: 'updatedAt' },
-      { title: '创建人员', key: 'createBy' },
-      { title: '备注', key: 'remark' }
-    ],
-    data: valveDetail.value?.analysisTask || []
   }
 ])
 
