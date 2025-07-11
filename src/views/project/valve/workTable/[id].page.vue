@@ -204,6 +204,8 @@ const tabsOptions = computed(() => [
 ])
 
 const getDescription = (data: any) => {
+  if (!data) return ''
+  // 返回一个字符串，包含所有描述信息
   return [
     data.valveDescription,
     data.actuatorDescription,
