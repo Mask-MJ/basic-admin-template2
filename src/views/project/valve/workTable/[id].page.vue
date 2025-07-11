@@ -40,7 +40,7 @@ watch(
   async (valveId) => {
     if (!valveId) return
     valveDetail.value = await getValveDetail(valveId)
-    dictDatas.value = await getDictDataCharts({ dictTypeValue: valveDetail.value.source || 'hart' })
+    dictDatas.value = await getDictDataCharts({ dictTypeValue: 'hart' })
     const beginTime = dayjs().subtract(1, 'year').valueOf()
     const endTime = dayjs().valueOf()
     result.value = await Promise.all(
