@@ -68,7 +68,7 @@ const [registerTable, { reload }] = useTable({
       }
     ]
   }, // 搜索表单配置
-  searchInfo: { valveId: Number(valveId.value) }, // 额外参数
+  searchInfo: { valveId }, // 额外参数
   bordered: true,
   rowKey: (rowData) => rowData.id,
   showIndexColumn: false
