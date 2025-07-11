@@ -6,7 +6,7 @@ const router = useRouter()
 const valveId = computed(() => (router.currentRoute.value.params as { id: string }).id)
 const valveDetail = ref()
 
-const [registerTable] = useTable({
+const [registerTable, { reload }] = useTable({
   api: getValveWorkOrder, // 请求接口
   columns: [
     { title: '所属最终用户', key: 'factory.name' },
@@ -79,6 +79,7 @@ watch(
   async (valveId) => {
     if (!valveId) return
     valveDetail.value = await getValveDetail(Number(valveId))
+    reload()
   },
   { immediate: true }
 )
