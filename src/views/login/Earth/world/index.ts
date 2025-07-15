@@ -92,4 +92,18 @@ export default class World {
     this.controls && this.controls.update()
     this.earth && this.earth.render()
   }
+
+  /**
+   * 销毁函数
+   */
+  // public destroy() {
+  //   this.sizes.$off('resize')
+  //   this.earth && this.earth.destroy()
+  //   this.basic.destroy()
+  //   this.renderer.dispose()
+  //   this.scene.clear()
+  //   this.camera = null as any
+  //   this.controls = null as any
+  //   this.resources = null as any
+  // }
 }

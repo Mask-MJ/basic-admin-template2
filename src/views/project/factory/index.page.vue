@@ -76,7 +76,7 @@ const [registerTable, { reload }] = useTable({
             tooltipProps: { content: '分析任务' },
             buttonProps: {
               type: 'warning',
-              onClick: () => router.push(`/project/analysisTask/${row.id}`)
+              onClick: () => router.push(`/project/analysisTask/factoryId-${row.id}`)
             }
           },
           {

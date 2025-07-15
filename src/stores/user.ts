@@ -67,6 +67,7 @@ export const useUserStore = defineStore('user-store', {
         await this.getUserInfoAction()
         const redirect = router.currentRoute.value.query.redirect
         router.push(redirect ? (redirect as string) : PageEnum.BASE_HOME)
+        location.reload() // Reload the page after login
       } catch (error) {
         return Promise.reject(error)
       }

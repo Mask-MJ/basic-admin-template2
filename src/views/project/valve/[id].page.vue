@@ -16,12 +16,8 @@ import { hasPermission } from '@/utils'
 
 const userStore = useUserStore()
 const router = useRouter()
-const formType = computed(
-  () => (router.currentRoute.value.params as { id: string }).id?.split('-')[0]
-)
-const typeId = computed(() => {
-  return (router.currentRoute.value.params as { id: string }).id?.split('-')[1]
-})
+const formType = ref((router.currentRoute.value.params as { id: string }).id?.split('-')[0] || '')
+const typeId = ref((router.currentRoute.value.params as { id: string }).id?.split('-')[1] || '')
 
 const getSchemas = computed(() => {
   if (formType.value === 'factoryId' || formType.value === 'deviceId') {
@@ -44,7 +40,7 @@ const [registerTable, { reload, getForm }] = useTable({
   rowKey: (rowData) => rowData.id,
   showIndexColumn: false,
   actionColumn: {
-    width: 400,
+    width: 450,
     key: 'ACTION',
     render: (row: ValveInfo) =>
       h(Action, {
@@ -139,6 +135,17 @@ const [registerTable, { reload, getForm }] = useTable({
             }
           },
           {
+            icon: 'i-ant-design:line-chart-outlined',
+            tooltipProps: { content: '分析任务' },
+            auth: 'project:analysisTask:query',
+            buttonProps: {
+              type: 'info',
+              onClick: () => {
+                router.push(`/project/analysisTask/valveId-${row.id}`)
+              }
+            }
+          },
+          {
             type: 'del',
             auth: 'project:valve:delete',
             ifShow: ['factoryId', 'deviceId'].includes(formType.value),
@@ -201,10 +208,20 @@ const handlePositiveClick = async () => {
 
 watch(
   () => (router.currentRoute.value.params as { id: string }).id,
-  () => {
-    reload()
+  (val) => {
+    console.log('formType.value3', val)
+    if (!val) {
+      return
+    }
+    formType.value = val.split('-')[0]
+    typeId.value = val.split('-')[1]
+
+    // 重新获取表单数据
+    reload({
+      [formType.value]: typeId.value
+    })
   },
-  { immediate: false }
+  { immediate: true } // // 初始化时获取参数
 )
 </script>
 

@@ -19,9 +19,14 @@ import { hasPermission } from '@/utils'
 const userStore = useUserStore()
 const router = useRouter()
 
-const factoryId = computed(() => (router.currentRoute.value.params as { id: string }).id)
+const formType = computed(
+  () => (router.currentRoute.value.params as { id: string }).id?.split('-')[0]
+)
+const typeId = computed(() => {
+  return (router.currentRoute.value.params as { id: string }).id?.split('-')[1]
+})
 const getSchemas = computed(() =>
-  factoryId.value ? searchSchemas.filter((item) => item.path !== 'factoryId') : searchSchemas
+  typeId.value ? searchSchemas.filter((item) => item.path !== 'factoryId') : searchSchemas
 )
 
 const [registerSetModal, { openModal: openSetModel }] = useModal()
@@ -32,12 +37,12 @@ const [registerTable, { reload, setTableData, getPagination, getForm }] = useTab
   columns, // 展示的列
   useSearchForm: true, // 启用搜索表单
   formConfig: { labelWidth: 100, schemas: getSchemas.value }, // 搜索表单配置
-  searchInfo: { factoryId: factoryId.value }, // 额外参数
+  searchInfo: { [formType.value]: typeId }, // 额外参数
   bordered: true,
   rowKey: (rowData) => rowData.id,
   showIndexColumn: false,
   actionColumn: {
-    width: 200,
+    width: 250,
     key: 'ACTION',
     render: (row: AnalysisTaskInfo) =>
       h(Action, {
@@ -89,6 +94,15 @@ const [registerTable, { reload, setTableData, getPagination, getForm }] = useTab
             }
           },
           {
+            icon: 'i-ant-design:dashboard-outlined',
+            tooltipProps: { content: '阀门列表' },
+            auth: 'project:valve:query',
+            buttonProps: {
+              type: 'success',
+              onClick: () => router.push(`/project/valve/analysisTaskId-${row.id}`)
+            }
+          },
+          {
             icon: 'i-ant-design:file-search-outlined',
             tooltipProps: { content: '生成报告' },
             auth: 'project:analysisTask:query',
@@ -133,7 +147,7 @@ onMounted(() => {
     const formValue = getForm().getPathsValue()
     const pagination = getPagination() as PaginationProps
     const result = (await getAnalysisTaskList({
-      factoryId: Number(factoryId.value) || undefined,
+      [formType.value]: typeId.value || undefined,
       page: pagination.page,
       pageSize: pagination.pageSize,
       ...formValue
