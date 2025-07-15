@@ -19,13 +19,7 @@ const router = useRouter()
 const formType = ref((router.currentRoute.value.params as { id: string }).id?.split('-')[0] || '')
 const typeId = ref((router.currentRoute.value.params as { id: string }).id?.split('-')[1] || '')
 
-const getSchemas = computed(() => {
-  if (formType.value === 'factoryId' || formType.value === 'deviceId') {
-    return searchSchemas.filter((item) => item.path !== 'factoryId')
-  } else {
-    return searchSchemas
-  }
-})
+const getSchemas = computed(() => searchSchemas.filter((item) => item.path !== 'factoryId'))
 
 const [registerSetModal, { openModal: openSetModel }] = useModal()
 const [registerChartModal, { openModal: openChartModel }] = useModal()
@@ -35,9 +29,12 @@ const [registerTable, { reload, getForm }] = useTable({
   columns, // 展示的列
   useSearchForm: true, // 启用搜索表单
   formConfig: { labelWidth: 100, schemas: getSchemas.value }, // 搜索表单配置
-  searchInfo: { [formType.value]: typeId }, // 额外参数
+  // searchInfo: { [formType.value]: typeId.value }, // 额外参数
   bordered: true,
   rowKey: (rowData) => rowData.id,
+  beforeFetch: (params) => {
+    return { ...params, [formType.value]: Number(typeId.value) }
+  },
   showIndexColumn: false,
   actionColumn: {
     width: 450,
@@ -205,24 +202,17 @@ const handlePositiveClick = async () => {
   await deleteAllValve()
   reload()
 }
-
-watch(
-  () => (router.currentRoute.value.params as { id: string }).id,
-  (val) => {
-    console.log('formType.value3', val)
-    if (!val) {
-      return
-    }
-    formType.value = val.split('-')[0]
-    typeId.value = val.split('-')[1]
-
-    // 重新获取表单数据
-    reload({
-      [formType.value]: typeId.value
-    })
-  },
-  { immediate: true } // // 初始化时获取参数
-)
+watchEffect(() => {
+  const params = router.currentRoute.value.params as { id: string }
+  if (Object.keys(params).length === 0) {
+    return
+  }
+  formType.value = params.id.split('-')[0]
+  typeId.value = params.id.split('-')[1]
+})
+onActivated(() => {
+  reload()
+})
 </script>
 
 <template>

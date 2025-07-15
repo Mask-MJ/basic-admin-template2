@@ -1,13 +1,7 @@
 <script setup lang="ts">
 import { useModal } from '@/components/Modal'
 import { useTable, Action } from '@/components/Table'
-import {
-  deleteValve,
-  getValveList,
-  getAllValveList,
-  type ValveInfo,
-  deleteAllValve
-} from '@/api/project/valve'
+import { getValveList, getAllValveList, type ValveInfo, deleteAllValve } from '@/api/project/valve'
 import { columns, searchSchemas, setSchemas } from './data'
 import SetModal from './SetModal.vue'
 import ChartModal from './ChartModal.vue'
@@ -16,16 +10,6 @@ import { hasPermission } from '@/utils'
 
 const userStore = useUserStore()
 const router = useRouter()
-const formType = ref((router.currentRoute.value.params as { id: string }).id?.split('-')[0] || '')
-const typeId = ref((router.currentRoute.value.params as { id: string }).id?.split('-')[1] || '')
-
-const getSchemas = computed(() => {
-  if (formType.value === 'factoryId' || formType.value === 'deviceId') {
-    return searchSchemas.filter((item) => item.path !== 'factoryId')
-  } else {
-    return searchSchemas
-  }
-})
 
 const [registerSetModal, { openModal: openSetModel }] = useModal()
 const [registerChartModal, { openModal: openChartModel }] = useModal()
@@ -34,8 +18,7 @@ const [registerTable, { reload, getForm }] = useTable({
   api: getValveList, // 请求接口
   columns, // 展示的列
   useSearchForm: true, // 启用搜索表单
-  formConfig: { labelWidth: 100, schemas: getSchemas.value }, // 搜索表单配置
-  searchInfo: { [formType.value]: typeId }, // 额外参数
+  formConfig: { labelWidth: 100, schemas: searchSchemas }, // 搜索表单配置
   bordered: true,
   rowKey: (rowData) => rowData.id,
   showIndexColumn: false,
@@ -144,15 +127,6 @@ const [registerTable, { reload, getForm }] = useTable({
                 router.push(`/project/analysisTask/valveId-${row.id}`)
               }
             }
-          },
-          {
-            type: 'del',
-            auth: 'project:valve:delete',
-            ifShow: ['factoryId', 'deviceId'].includes(formType.value),
-            onClick: async () => {
-              await deleteValve(row.id)
-              await reload()
-            }
           }
         ]
       })
@@ -170,10 +144,7 @@ const exportData = async () => {
   worksheet.columns = columns
 
   const formValue = getForm().getPathsValue()
-  const data = await getAllValveList({
-    ...formValue,
-    [formType.value]: Number(typeId.value)
-  })
+  const data = await getAllValveList(formValue)
   data.map((item: any) => {
     item['factoryId'] = item.factory.name
     item['deviceId'] = item.device?.name || ''
@@ -205,25 +176,6 @@ const handlePositiveClick = async () => {
   await deleteAllValve()
   reload()
 }
-
-watch(
-  () => (router.currentRoute.value.params as { id: string }).id,
-  (val) => {
-    console.log('formType.value1', val)
-    if (!val) {
-      return
-    }
-    formType.value = val.split('-')[0]
-    typeId.value = val.split('-')[1]
-
-    console.log('formType.value2', val)
-    // 重新获取表单数据
-    reload({
-      [formType.value]: typeId.value
-    })
-  },
-  { immediate: true }
-)
 </script>
 
 <template>
