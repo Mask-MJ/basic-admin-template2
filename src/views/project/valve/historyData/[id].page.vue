@@ -14,7 +14,7 @@ const valveDetail = ref<any>({})
 const dictDataTreeList = ref<any[]>([])
 const valveId = computed(() => (router.currentRoute.value.params as { id: string }).id)
 
-const [registerTable, { setColumns, getColumns }] = useTable({
+const [registerTable, { setColumns, getColumns, reload }] = useTable({
   api: getValveHistoryList,
   columns: [
     { title: '位号', key: 'tag', resizable: true, fixed: 'left' },
@@ -157,6 +157,7 @@ watch(
       { title: '读取时间', key: 'time', minWidth: 200, resizable: true },
       ...transformColums()
     ])
+    reload()
   },
   { immediate: true }
 )

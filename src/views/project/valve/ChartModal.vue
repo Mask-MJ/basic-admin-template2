@@ -35,7 +35,7 @@ const options = ref<any[]>([])
 const [registerModal, { setModalProps }] = useModalInner(async (data) => {
   setModalProps({ title: `阀门运行数据可视化 位号：${data.tag}` })
   const source = data.source || 'hart'
-  options.value = await getDictDataCharts({ dictTypeValue: source })
+  options.value = await getDictDataCharts({ dictTypeValue: 'hart' })
   valveId.value = data.id
   value.value = options.value[0]?.name
 })
