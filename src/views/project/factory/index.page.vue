@@ -37,7 +37,6 @@ const [registerTable, { reload }] = useTable({
           {
             icon: 'i-ant-design:laptop-outlined',
             tooltipProps: { content: '工作台' },
-            ifShow: userStore.isAdmin,
             auth: 'project:factory:workTable',
             buttonProps: {
               type: 'success',
