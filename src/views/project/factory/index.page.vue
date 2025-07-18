@@ -38,7 +38,7 @@ const [registerTable, { reload }] = useTable({
             icon: 'i-ant-design:laptop-outlined',
             tooltipProps: { content: '工作台' },
             ifShow: userStore.isAdmin,
-            auth: 'project:factory:query',
+            auth: 'project:factory:workTable',
             buttonProps: {
               type: 'success',
               onClick: () => router.push(`/project/factory/${row.id}`)
