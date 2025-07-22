@@ -2,7 +2,11 @@
 import VChart from 'vue-echarts'
 import Page from '../[id].page.vue'
 import { getDictDataCharts, type DictDataInfo } from '@/api/system/dict'
-import { getValveDetail, getValveHistoryChart } from '@/api/project/valve'
+import {
+  getValveDetail,
+  getValveHealthScoreTrendPlot,
+  getValveHistoryChart
+} from '@/api/project/valve'
 import { use } from 'echarts/core'
 import dayjs from 'dayjs'
 import { LineChart } from 'echarts/charts'
@@ -30,9 +34,25 @@ const valveId = computed(() => {
 })
 const dictDatas = ref<DictDataInfo[]>([])
 const valveDetail = ref()
+const healthScore = ref()
 const result = ref<any[]>([])
 const getOption = (data: DictDataInfo) => {
   return result.value.filter((item) => item._id === data.id)[0]
+}
+const getValveHealthScoreTrendPlotChart = () => {
+  return {
+    title: { text: '阀门健康评分趋势图' },
+    tooltip: { trigger: 'axis' },
+    xAxis: { type: 'category', data: healthScore.value?.dataLine || [] },
+    yAxis: { type: 'value', max: 100, min: 0 },
+    series: [
+      {
+        name: '健康评分',
+        type: 'line',
+        data: healthScore.value?.scoreLine || []
+      }
+    ]
+  }
 }
 
 watch(
@@ -41,6 +61,7 @@ watch(
     if (!valveId) return
     valveDetail.value = await getValveDetail(valveId)
     dictDatas.value = await getDictDataCharts({ dictTypeValue: 'hart' })
+    healthScore.value = await getValveHealthScoreTrendPlot(valveId)
     const beginTime = dayjs().subtract(1, 'year').valueOf()
     const endTime = dayjs().valueOf()
     result.value = await Promise.all(
@@ -315,6 +336,11 @@ const getDescription = (data: any) => {
         <n-gi v-for="item in dictDatas" :key="item.id">
           <n-card :title="item.name">
             <VChart class="chart" :option="getOption(item)" autoresize />
+          </n-card>
+        </n-gi>
+        <n-gi>
+          <n-card title="获取阀门健康评分趋势图">
+            <VChart class="chart" :option="getValveHealthScoreTrendPlotChart()" autoresize />
           </n-card>
         </n-gi>
       </n-grid>
