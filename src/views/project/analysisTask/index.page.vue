@@ -13,8 +13,10 @@ import { columns, searchSchemas } from './data'
 import SetModal from './SetModal.vue'
 import HistoryModal from './HistoryModal.vue'
 import type { PaginationProps } from 'naive-ui'
-import { getFactoryReportData } from '@/api/project/factory'
+import { getFactoryReportData, getFactoryReportData2 } from '@/api/project/factory'
 import { hasPermission } from '@/utils'
+import { Workbook } from 'exceljs'
+import dayjs from 'dayjs'
 
 const userStore = useUserStore()
 const router = useRouter()
@@ -130,6 +132,41 @@ const [registerTable, { reload, setTableData, getPagination, getForm }] = useTab
                   link.click()
                   link.addEventListener('click', () => {
                     link.remove()
+                  })
+
+                  const excelData = await getFactoryReportData2({
+                    analysisTaskId: row.id,
+                    reportMode: 'analysisTask'
+                  })
+                  const workbook = new Workbook()
+                  const worksheet = workbook.addWorksheet('阀门问题数据')
+                  worksheet.columns = [
+                    { header: '位号', key: 'tag', width: 30 },
+                    { header: '问题(判断依据文件中粗体字)', key: 'description', width: 30 },
+                    { header: '潜在风险', key: 'risk', width: 50 },
+                    { header: '建议措施', key: 'measures', width: 30 },
+                    { header: '报告时间', key: 'time', width: 30 }
+                  ]
+                  excelData.forEach((item: any) => {
+                    item.time = dayjs().format('YYYY-MM-DD HH:mm:ss')
+                  })
+
+                  worksheet.addRows(excelData)
+                  const arraybuffer: any = new ArrayBuffer(10 * 1024 * 1024)
+                  const res = await workbook.xlsx.writeBuffer(arraybuffer)
+                  const excelLink = document.createElement('a')
+
+                  const excelBlob = new Blob([res])
+                  const excelUrl = URL.createObjectURL(excelBlob)
+
+                  excelLink.href = excelUrl
+                  excelLink.download = '阀门问题数据.xlsx'
+
+                  document.body.appendChild(excelLink)
+
+                  excelLink.click()
+                  excelLink.addEventListener('click', () => {
+                    excelLink.remove()
                   })
                 } catch (e) {
                   window.$message.error('生成报告失败')

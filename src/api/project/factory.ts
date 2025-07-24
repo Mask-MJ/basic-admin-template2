@@ -76,10 +76,16 @@ export const updateFactory = (params: Partial<FactoryInfo>) =>
 export const deleteFactory = (ids: number | string) =>
   defHttp.delete({ url: `${Api.Factory}/${ids}` })
 // 生成报告
-export const getFactoryReportData = (params: any) =>
+export const getFactoryReportData = (data: any) =>
   defHttp2.post(
-    { url: `${Api.Factory}/report`, params, responseType: 'blob' },
+    { url: `${Api.Factory}/report`, params: { ...data, type: 1 }, responseType: 'blob' },
     { isReturnNativeResponse: true, isTransformResponse: false }
   )
+// 导出excel
+export const getFactoryReportData2 = (data: any) =>
+  defHttp2.post({
+    url: `${Api.Factory}/report`,
+    params: { ...data, type: 2 }
+  })
 // 删除所有最终用户
 export const deleteAllFactory = () => defHttp.delete({ url: Api.FactoryRemoveAll })

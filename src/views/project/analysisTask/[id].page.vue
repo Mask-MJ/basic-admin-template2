@@ -13,8 +13,9 @@ import { columns, searchSchemas } from './data'
 import SetModal from './SetModal.vue'
 import HistoryModal from './HistoryModal.vue'
 import type { PaginationProps } from 'naive-ui'
-import { getFactoryReportData } from '@/api/project/factory'
+import { getFactoryReportData, getFactoryReportData2 } from '@/api/project/factory'
 import { hasPermission } from '@/utils'
+import { Workbook } from 'exceljs'
 
 const userStore = useUserStore()
 const router = useRouter()
@@ -109,9 +110,9 @@ const [registerTable, { reload, setTableData, getPagination, getForm }] = useTab
             buttonProps: {
               type: 'info',
               onClick: async () => {
-                const link = document.createElement('a')
                 // 返回的是 streamableFile 对象
                 try {
+                  const link = document.createElement('a')
                   const response = await getFactoryReportData({
                     analysisTaskId: row.id,
                     reportMode: 'analysisTask'
@@ -130,6 +131,30 @@ const [registerTable, { reload, setTableData, getPagination, getForm }] = useTab
                   link.click()
                   link.addEventListener('click', () => {
                     link.remove()
+                  })
+
+                  const excelData = await getFactoryReportData2({
+                    analysisTaskId: row.id,
+                    reportMode: 'analysisTask'
+                  })
+                  const workbook = new Workbook()
+                  const worksheet = workbook.addWorksheet('阀门问题数据')
+                  worksheet.addRows(excelData)
+                  const arraybuffer: any = new ArrayBuffer(10 * 1024 * 1024)
+                  const res = await workbook.xlsx.writeBuffer(arraybuffer)
+                  const excelLink = document.createElement('a')
+
+                  const excelBlob = new Blob([res])
+                  const excelUrl = URL.createObjectURL(excelBlob)
+
+                  excelLink.href = excelUrl
+                  excelLink.download = '阀门问题数据.xlsx'
+
+                  document.body.appendChild(excelLink)
+
+                  excelLink.click()
+                  excelLink.addEventListener('click', () => {
+                    excelLink.remove()
                   })
                 } catch (e) {
                   window.$message.error('生成报告失败')
