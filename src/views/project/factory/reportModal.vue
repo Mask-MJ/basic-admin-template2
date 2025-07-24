@@ -1,9 +1,14 @@
 <script setup lang="ts">
-import { getFactoryReportData, type FactoryInfo } from '@/api/project/factory'
+import {
+  getFactoryReportData,
+  getFactoryReportData2,
+  type FactoryInfo
+} from '@/api/project/factory'
 import { useModalInner } from '@/components/Modal'
 import type { UploadFileInfo, UploadInst } from 'naive-ui'
 import { Workbook } from 'exceljs'
 import { compact, flatMap } from 'lodash-es'
+import dayjs from 'dayjs'
 
 const [registerModal, { closeModal }] = useModalInner(async (data: FactoryInfo) => {
   factoryId.value = data.id
@@ -17,26 +22,22 @@ const handleSubmit = async () => {
   const link = document.createElement('a')
   // 返回的是 streamableFile 对象
   try {
-    let response: any
+    let params: any = {
+      factoryId: factoryId.value,
+      endDate: endDate.value,
+      cycle: cycle.value
+    }
     if (file.value) {
       const workbook = new Workbook()
       const worksheet = await workbook.xlsx.read(file.value.file?.stream())
       const valveTags = compact(flatMap(worksheet.getWorksheet(1)?.getSheetValues()))
-      response = await getFactoryReportData({
-        factoryId: factoryId.value,
-        valveTags,
-        reportMode: 'valveList',
-        endDate: endDate.value,
-        cycle: cycle.value
-      })
+      params.valveTags = valveTags
+      params.reportMode = 'valveList'
     } else {
-      response = await getFactoryReportData({
-        factoryId: factoryId.value,
-        reportMode: 'factory',
-        endDate: endDate.value,
-        cycle: cycle.value
-      })
+      params.reportMode = 'factory'
     }
+    let response = await getFactoryReportData(params)
+
     // 转换成 blob 对象
     const disposition = response.headers['content-disposition']
     const fileName = decodeURI(disposition.split("filename*=UTF-8''")[1])
@@ -51,6 +52,38 @@ const handleSubmit = async () => {
     link.click()
     link.addEventListener('click', () => {
       link.remove()
+    })
+
+    const excelData = await getFactoryReportData2(params)
+    const workbook = new Workbook()
+    const worksheet = workbook.addWorksheet('阀门问题数据')
+    worksheet.columns = [
+      { header: '位号', key: 'tag', width: 30 },
+      { header: '问题(判断依据文件中粗体字)', key: 'description', width: 30 },
+      { header: '潜在风险', key: 'risk', width: 50 },
+      { header: '建议措施', key: 'measures', width: 30 },
+      { header: '报告时间', key: 'time', width: 30 }
+    ]
+    excelData.forEach((item: any) => {
+      item.time = dayjs().format('YYYY-MM-DD HH:mm:ss')
+    })
+
+    worksheet.addRows(excelData)
+    const arraybuffer: any = new ArrayBuffer(10 * 1024 * 1024)
+    const res = await workbook.xlsx.writeBuffer(arraybuffer)
+    const excelLink = document.createElement('a')
+
+    const excelBlob = new Blob([res])
+    const excelUrl = URL.createObjectURL(excelBlob)
+
+    excelLink.href = excelUrl
+    excelLink.download = '阀门问题数据.xlsx'
+
+    document.body.appendChild(excelLink)
+
+    excelLink.click()
+    excelLink.addEventListener('click', () => {
+      excelLink.remove()
     })
     closeModal()
   } catch (e) {
