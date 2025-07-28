@@ -250,24 +250,24 @@ watch(
   async (factoryId) => {
     if (!factoryId) return
     chartsData.value = await getFactoryChart(factoryId)
-    // chartsData2.value = await getFactoryChart2({ factoryId: factoryId })
-    chartsData2.value = {
-      healthIndicator: [
-        { name: '0-73', value: 50 },
-        { name: '73-80', value: 20 },
-        { name: '80-100', value: 30 }
-      ],
-      alertIndicator: [
-        {
-          name: '正常',
-          value: 2
-        },
-        {
-          name: '报警',
-          value: 5
-        }
-      ]
-    }
+    chartsData2.value = await getFactoryChart2({ factoryId: factoryId })
+    // chartsData2.value = {
+    //   healthIndicator: [
+    //     { name: '0-73', value: 50 },
+    //     { name: '73-80', value: 20 },
+    //     { name: '80-100', value: 30 }
+    //   ],
+    //   alertIndicator: [
+    //     {
+    //       name: '正常',
+    //       value: 2
+    //     },
+    //     {
+    //       name: '报警',
+    //       value: 5
+    //     }
+    //   ]
+    // }
     chartsData3.value = cloneDeep(chartsData2.value)
     deviceOptions.value = (await getDeviceList({ factoryId: factoryId, pageSize: 10000 })).rows.map(
       (item: any) => {
