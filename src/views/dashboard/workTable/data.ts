@@ -21,7 +21,7 @@ export const BarOption = {
       axisTick: { alignWithLabel: true }
     }
   ],
-  yAxis: [{ type: 'value' }],
+  yAxis: [{ type: 'value', minInterval: 1 }],
   series: [
     {
       name: '数量',
@@ -83,7 +83,7 @@ export const LineOption = {
     type: 'category',
     data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
   },
-  yAxis: { type: 'value' },
+  yAxis: { type: 'value', minInterval: 1 },
   series: [
     {
       data: [150, 230, 224, 218, 135, 147, 260],

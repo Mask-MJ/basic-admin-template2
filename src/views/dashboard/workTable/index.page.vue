@@ -102,7 +102,7 @@ const factoryMapOption = computed(() => {
 const factoryBarOption = computed(() => {
   const option: any = cloneDeep(BarOption)
   const data = sortBy(chartsData.value.factoryProvinceGroup, (item) => item.value)
-  option.xAxis = { type: 'value', boundaryGap: [0, 0.01] }
+  option.xAxis = { type: 'value', minInterval: 1, boundaryGap: [0, 0.01] }
   option.yAxis = {
     type: 'category',
     data: flatMap(data, (item) => item.name)
