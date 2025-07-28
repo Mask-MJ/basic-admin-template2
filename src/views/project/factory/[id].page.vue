@@ -55,12 +55,14 @@ const valveBrandOption = computed(() => {
 
 const valvePieOption = computed(() => {
   const option = cloneDeep(PieOption)
+  option.color = ['#ff0000', '#ffff00', '#00b050']
   option.series[0].data = chartsData3.value.healthIndicator || []
   return option
 })
 
 const valvePieOption2 = computed(() => {
   const option = cloneDeep(PieOption)
+  option.color = ['#00b050', '#ff0000']
   option.series[0].data = chartsData3.value.alertIndicator || []
   return option
 })
@@ -248,7 +250,24 @@ watch(
   async (factoryId) => {
     if (!factoryId) return
     chartsData.value = await getFactoryChart(factoryId)
-    chartsData2.value = await getFactoryChart2({ factoryId: factoryId })
+    // chartsData2.value = await getFactoryChart2({ factoryId: factoryId })
+    chartsData2.value = {
+      healthIndicator: [
+        { name: '0-73', value: 50 },
+        { name: '73-80', value: 20 },
+        { name: '80-100', value: 30 }
+      ],
+      alertIndicator: [
+        {
+          name: '正常',
+          value: 2
+        },
+        {
+          name: '报警',
+          value: 5
+        }
+      ]
+    }
     chartsData3.value = cloneDeep(chartsData2.value)
     deviceOptions.value = (await getDeviceList({ factoryId: factoryId, pageSize: 10000 })).rows.map(
       (item: any) => {

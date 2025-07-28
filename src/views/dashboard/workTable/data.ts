@@ -34,6 +34,7 @@ export const BarOption = {
 }
 
 export const PieOption = {
+  color: ['#00b050', '#ff0000'],
   tooltip: { trigger: 'item' },
   legend: { top: '5%', left: 'center' },
   series: [
@@ -53,6 +54,7 @@ export const PieOption = {
   ]
 }
 export const PieOption2 = {
+  color: ['#00b050', '#ff0000'],
   tooltip: { trigger: 'item' },
   legend: { orient: 'vertical', left: 'left' },
   series: [

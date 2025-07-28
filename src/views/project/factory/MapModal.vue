@@ -30,7 +30,12 @@ const submit = (location: {
 </script>
 
 <template>
-  <Modal class="h-150 !w-300" @register="registerModal" @positive-click="handleSubmit">
+  <Modal
+    class="!h-180 !w-300"
+    :height="700"
+    @register="registerModal"
+    @positive-click="handleSubmit"
+  >
     <BaiduMap :location="factoryLocation" @submit="submit" />
   </Modal>
 </template>
