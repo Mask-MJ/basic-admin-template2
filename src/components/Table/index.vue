@@ -204,13 +204,14 @@ emits('register', tableAction, formActions)
           <slot :name="item" v-bind="data || {}"></slot>
         </template>
       </n-data-table>
+      <slot name="footer"> </slot>
     </dark-mode-container>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .n-data-table {
-  height: calc(100% - 48px);
+  height: calc(100% - 60px);
   min-height: 300px;
 }
 </style>

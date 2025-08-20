@@ -18,8 +18,8 @@ const router = useRouter()
 const [registerSetModal, { openModal: openSetModel }] = useModal()
 const [registerImportModal, { openModal: openImportModel }] = useModal()
 const [registerReportModal, { openModal: openReportModel }] = useModal()
-
-const [registerTable, { reload }] = useTable({
+const total = ref(0)
+const [registerTable, { reload, getRawTableData }] = useTable({
   api: getFactoryList, // 请求接口
   columns, // 展示的列
   useSearchForm: true, // 启用搜索表单
@@ -28,6 +28,9 @@ const [registerTable, { reload }] = useTable({
   rowKey: (rowData) => rowData.id,
   showIndexColumn: false,
   pagination: false,
+  afterFetch: () => {
+    total.value = getRawTableData().total
+  },
   actionColumn: {
     width: 350,
     key: 'ACTION',
@@ -141,6 +144,9 @@ const handlePositiveClick = async () => {
           </template>
           是否确认删除, 如果有关联数据会一并删除
         </n-popconfirm>
+      </template>
+      <template #footer>
+        <div class="h-4 flex justify-end">共 {{ total }} 条</div>
       </template>
     </Table>
     <SetModal @register="registerSetModal" @success="reload()" />

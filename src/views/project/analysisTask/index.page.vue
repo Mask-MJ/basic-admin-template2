@@ -43,6 +43,10 @@ const [registerTable, { reload, setTableData, getPagination, getForm }] = useTab
   bordered: true,
   rowKey: (rowData) => rowData.id,
   showIndexColumn: false,
+  pagination: {
+    pageSize: 10,
+    suffix: ({ itemCount }) => h('span', {}, `共 ${itemCount} 条`)
+  },
   actionColumn: {
     width: 250,
     key: 'ACTION',

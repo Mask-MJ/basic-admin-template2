@@ -12,8 +12,10 @@ import dayjs from 'dayjs'
 
 const [registerModal, { closeModal }] = useModalInner(async (data: FactoryInfo) => {
   factoryId.value = data.id
+  factoryName.value = data.name
 })
 const factoryId = ref()
+const factoryName = ref('')
 const uploadRef = ref<UploadInst | null>(null)
 const file = ref<UploadFileInfo>()
 const endDate = ref<string>()
@@ -77,7 +79,7 @@ const handleSubmit = async () => {
     const excelUrl = URL.createObjectURL(excelBlob)
 
     excelLink.href = excelUrl
-    excelLink.download = '阀门问题数据.xlsx'
+    excelLink.download = `${dayjs().format('YYYY-MM-DD')} ${factoryName.value}阀门问题数据.xlsx`
 
     document.body.appendChild(excelLink)
 

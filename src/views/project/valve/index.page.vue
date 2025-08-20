@@ -22,6 +22,10 @@ const [registerTable, { reload, getForm }] = useTable({
   bordered: true,
   rowKey: (rowData) => rowData.id,
   showIndexColumn: false,
+  pagination: {
+    pageSize: 10,
+    suffix: ({ itemCount }) => h('span', {}, `共 ${itemCount} 条`)
+  },
   actionColumn: {
     width: 450,
     key: 'ACTION',
@@ -205,6 +209,7 @@ const handlePositiveClick = async () => {
           是否确认删除, 如果有关联数据会一并删除
         </n-popconfirm>
       </template>
+      <template #suffix="{ itemCount }"> 从第 {{ itemCount }} 项结束 </template>
     </Table>
     <SetModal @register="registerSetModal" @success="reload()" />
     <ChartModal @register="registerChartModal" />
