@@ -25,7 +25,8 @@ export const searchSchemas: FormSchema[] = [
       api: getFactoryList,
       labelField: 'name',
       keyField: 'id',
-      cascade: true
+      cascade: true,
+      resultField: 'rows'
     }
   }
 ]
