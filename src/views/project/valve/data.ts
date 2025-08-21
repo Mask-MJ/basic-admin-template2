@@ -15,7 +15,8 @@ export const searchSchemas: FormSchema[] = [
       api: getFactoryList,
       labelField: 'name',
       keyField: 'id',
-      cascade: true
+      cascade: true,
+      resultField: 'rows'
     }
   },
   { path: 'tag', label: '位号', component: 'NInput', span: 6 },
@@ -66,7 +67,8 @@ export const setSchemas: FormSchema[] = [
       api: getFactoryList,
       labelField: 'name',
       keyField: 'id',
-      cascade: true
+      cascade: true,
+      resultField: 'rows'
     }
   },
   {

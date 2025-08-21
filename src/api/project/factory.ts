@@ -52,7 +52,7 @@ enum Api {
 
 // 获取最终用户列表
 export const getFactoryList = (params?: Partial<SearchParams>) =>
-  defHttp.get<FactoryInfo[]>({ url: Api.Factory, params })
+  defHttp.get({ url: Api.Factory, params })
 
 // 获取所有最终用户列表
 export const getAllFactoryList = () => defHttp.get<FactoryInfo[]>({ url: Api.FactoryAll })
