@@ -48,7 +48,8 @@ export const setSchemas: FormSchema[] = [
       labelField: 'name',
       keyField: 'id',
       checkable: true,
-      cascade: true
+      cascade: true,
+      resultField: 'rows'
     }
   },
   {

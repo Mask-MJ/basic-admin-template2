@@ -23,7 +23,8 @@ export const searchSchemas: FormSchema[] = [
       api: getFactoryList,
       labelField: 'name',
       keyField: 'id',
-      cascade: true
+      cascade: true,
+      resultField: 'rows'
     }
   }
 ]
@@ -58,7 +59,8 @@ export const setSchemas: FormSchema[] = [
       api: getFactoryList,
       labelField: 'name',
       keyField: 'id',
-      cascade: true
+      cascade: true,
+      resultField: 'rows'
     }
   },
   {

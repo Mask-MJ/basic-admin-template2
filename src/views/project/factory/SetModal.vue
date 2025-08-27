@@ -23,7 +23,7 @@ const [registerForm, { validate, getPathsValue, setPathsValue, updateSchema }] =
 
 const [registerModal, { closeModal, setModalProps }] = useModalInner(async (data: FactoryInfo) => {
   setModalProps({ title: data.id ? '编辑最终用户' : '新增最终用户' })
-  const factoryList = await getFactoryList({ filterId: data.id })
+  const factoryList = (await getFactoryList({ filterId: data.id })).rows
   factoryDetail.value = data
   await updateSchema({
     path: 'parentId',
