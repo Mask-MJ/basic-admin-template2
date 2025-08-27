@@ -164,5 +164,5 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
 }
 export const defHttp = createAxios()
 export const defHttp2 = createAxios({
-  timeout: 120 * 1000
+  timeout: 600 * 1000
 })
