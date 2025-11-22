@@ -55,7 +55,7 @@ const handleSubmit = async () => {
 watch(
   () => (router.currentRoute.value.params as { id: string }).id,
   async (val) => {
-    if (!val) return
+    if (!val || !Number(val)) return
     const result = await getValveDetail(Number(val))
     result.since = result.since ? dayjs(result.since).valueOf() : null
     valveDetail.value = result

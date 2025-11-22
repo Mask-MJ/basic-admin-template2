@@ -33,7 +33,7 @@ function getScoreType(score: number) {
 watch(
   () => (router.currentRoute.value.params as { id: string }).id,
   async (val) => {
-    if (!val) return
+    if (!val || !Number(val)) return
     valveDetail.value = await getValveDetail(Number(val))
     tableData.value = []
     const result = await getValveScore(Number(val))

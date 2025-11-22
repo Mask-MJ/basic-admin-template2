@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { deleteAllDevice, deleteDevice, getDeviceList, type DeviceInfo } from '@/api/project/device'
+import {
+  // deleteAllDevice,
+  deleteDevice,
+  getDeviceList,
+  type DeviceInfo
+} from '@/api/project/device'
 import EditTableColum from './EditTableColum.vue'
 import EditTableColum2 from './EditTableColum2.vue'
 import { useModal } from '@/components/Modal'
@@ -7,7 +12,7 @@ import SetModal from './SetModal.vue'
 import { NButton, NPopconfirm } from 'naive-ui'
 import { type FactoryInfo, getFactoryList } from '@/api/project/factory'
 
-const userStore = useUserStore()
+// const userStore = useUserStore()
 const router = useRouter()
 const factoryId = computed(() => (router.currentRoute.value.params as { id: string }).id)
 const name = ref(null)
@@ -114,10 +119,10 @@ const reload = () => {
   getData()
 }
 
-const handlePositiveClick = async () => {
-  await deleteAllDevice()
-  reload()
-}
+// const handlePositiveClick = async () => {
+//   await deleteAllDevice()
+//   reload()
+// }
 
 onMounted(() => {
   getData()
@@ -139,12 +144,12 @@ onMounted(() => {
     </NCard>
     <NCard>
       <NButton class="mb-4 mr-2" type="primary" @click="openSetModel(true)"> 新增 </NButton>
-      <NPopconfirm @positive-click="handlePositiveClick" v-if="userStore.isAdmin">
+      <!-- <NPopconfirm @positive-click="handlePositiveClick" v-if="userStore.isAdmin">
         <template #trigger>
           <NButton class="mr-2" type="error"> 删除全部 </NButton>
         </template>
         是否确认删除, 如果有关联数据会一并删除
-      </NPopconfirm>
+      </NPopconfirm> -->
       <n-data-table
         :columns="columns"
         :data="data"

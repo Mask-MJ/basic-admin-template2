@@ -58,7 +58,7 @@ const getValveHealthScoreTrendPlotChart = () => {
 watch(
   () => valveId.value,
   async (valveId) => {
-    if (!valveId) return
+    if (!valveId || !Number(valveId)) return
     valveDetail.value = await getValveDetail(valveId)
     dictDatas.value = await getDictDataCharts({ dictTypeValue: 'hart' })
     healthScore.value = await getValveHealthScoreTrendPlot(valveId)

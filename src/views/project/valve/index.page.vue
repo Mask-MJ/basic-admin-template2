@@ -1,14 +1,19 @@
 <script setup lang="ts">
 import { useModal } from '@/components/Modal'
 import { useTable, Action } from '@/components/Table'
-import { getValveList, getAllValveList, type ValveInfo, deleteAllValve } from '@/api/project/valve'
+import {
+  getValveList,
+  getAllValveList,
+  type ValveInfo
+  // deleteAllValve
+} from '@/api/project/valve'
 import { columns, searchSchemas, setSchemas } from './data'
 import SetModal from './SetModal.vue'
 import ChartModal from './ChartModal.vue'
 import { Workbook } from 'exceljs'
 import { hasPermission } from '@/utils'
 
-const userStore = useUserStore()
+// const userStore = useUserStore()
 const router = useRouter()
 
 const [registerSetModal, { openModal: openSetModel }] = useModal()
@@ -176,10 +181,10 @@ function download(arrayBuffer: any) {
     link.remove()
   })
 }
-const handlePositiveClick = async () => {
-  await deleteAllValve()
-  reload()
-}
+// const handlePositiveClick = async () => {
+//   await deleteAllValve()
+//   reload()
+// }
 </script>
 
 <template>
@@ -202,12 +207,12 @@ const handlePositiveClick = async () => {
         >
           导出全部数据
         </n-button>
-        <n-popconfirm @positive-click="handlePositiveClick" v-if="userStore.isAdmin">
+        <!-- <n-popconfirm @positive-click="handlePositiveClick" v-if="userStore.isAdmin">
           <template #trigger>
             <n-button class="mr-2" type="error"> 删除全部 </n-button>
           </template>
           是否确认删除, 如果有关联数据会一并删除
-        </n-popconfirm>
+        </n-popconfirm> -->
       </template>
       <template #suffix="{ itemCount }"> 从第 {{ itemCount }} 项结束 </template>
     </Table>

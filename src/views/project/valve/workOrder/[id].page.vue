@@ -77,7 +77,7 @@ const [registerTable, { reload }] = useTable({
 watch(
   () => valveId.value,
   async (valveId) => {
-    if (!valveId) return
+    if (!valveId || !Number(valveId)) return
     valveDetail.value = await getValveDetail(Number(valveId))
     reload()
   },

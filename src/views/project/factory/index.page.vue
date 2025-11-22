@@ -5,15 +5,15 @@ import {
   deleteFactory,
   getFactoryDetail,
   getFactoryList,
-  type FactoryInfo,
-  deleteAllFactory
+  type FactoryInfo
+  // deleteAllFactory
 } from '@/api/project/factory'
 import { columns, searchSchemas } from './data'
 import SetModal from './SetModal.vue'
 import ImportModal from './ImportModal.vue'
 import ReportModal from './reportModal.vue'
 import { hasPermission } from '@/utils'
-const userStore = useUserStore()
+// const userStore = useUserStore()
 const router = useRouter()
 const [registerSetModal, { openModal: openSetModel }] = useModal()
 const [registerImportModal, { openModal: openImportModel }] = useModal()
@@ -72,15 +72,15 @@ const [registerTable, { reload, getRawTableData }] = useTable({
               onClick: () => router.push(`/project/valve/factoryId-${row.id}`)
             }
           },
-          {
-            icon: 'i-ant-design:line-chart-outlined',
-            auth: 'project:valve:query',
-            tooltipProps: { content: '分析任务' },
-            buttonProps: {
-              type: 'warning',
-              onClick: () => router.push(`/project/analysisTask/factoryId-${row.id}`)
-            }
-          },
+          // {
+          //   icon: 'i-ant-design:line-chart-outlined',
+          //   auth: 'project:valve:query',
+          //   tooltipProps: { content: '分析任务' },
+          //   buttonProps: {
+          //     type: 'warning',
+          //     onClick: () => router.push(`/project/analysisTask/factoryId-${row.id}`)
+          //   }
+          // },
           {
             icon: 'i-ant-design:file-search-outlined',
             tooltipProps: { content: '生成报告' },
@@ -119,10 +119,10 @@ const download = async () => {
   link.href = 'http://200.200.200.18:9000/pdf/阀门导入数据模板 V6.xlsx'
   link.click()
 }
-const handlePositiveClick = async () => {
-  await deleteAllFactory()
-  reload()
-}
+// const handlePositiveClick = async () => {
+//   await deleteAllFactory()
+//   reload()
+// }
 </script>
 
 <template>
@@ -138,12 +138,12 @@ const handlePositiveClick = async () => {
           新增
         </n-button>
         <n-button class="mr-2" type="success" @click="download"> 下载模板 </n-button>
-        <n-popconfirm @positive-click="handlePositiveClick" v-if="userStore.isAdmin">
+        <!-- <n-popconfirm @positive-click="handlePositiveClick" v-if="userStore.isAdmin">
           <template #trigger>
             <n-button class="mr-2" type="error"> 删除全部 </n-button>
           </template>
           是否确认删除, 如果有关联数据会一并删除
-        </n-popconfirm>
+        </n-popconfirm> -->
       </template>
       <template #footer>
         <div class="h-4 flex justify-end">共 {{ total }} 条</div>

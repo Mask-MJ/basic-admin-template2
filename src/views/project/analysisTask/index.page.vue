@@ -6,7 +6,7 @@ import {
   executeAnalysisTask,
   getAnalysisTaskDetail,
   getAnalysisTaskList,
-  deleteAllAnalysisTask,
+  // deleteAllAnalysisTask,
   type AnalysisTaskInfo
 } from '@/api/project/analysisTask'
 import { columns, searchSchemas } from './data'
@@ -18,7 +18,7 @@ import { hasPermission } from '@/utils'
 import { Workbook } from 'exceljs'
 import dayjs from 'dayjs'
 
-const userStore = useUserStore()
+// const userStore = useUserStore()
 const router = useRouter()
 
 const formType = computed(
@@ -197,10 +197,10 @@ onMounted(() => {
   }, 5000)
 })
 
-const handlePositiveClick = async () => {
-  await deleteAllAnalysisTask()
-  reload()
-}
+// const handlePositiveClick = async () => {
+//   await deleteAllAnalysisTask()
+//   reload()
+// }
 
 onBeforeRouteLeave(() => {
   clearInterval(timer)
@@ -219,12 +219,12 @@ onBeforeRouteLeave(() => {
         >
           新增
         </n-button>
-        <n-popconfirm @positive-click="handlePositiveClick" v-if="userStore.isAdmin">
+        <!-- <n-popconfirm @positive-click="handlePositiveClick" v-if="userStore.isAdmin">
           <template #trigger>
             <n-button class="mr-2" type="error"> 删除全部 </n-button>
           </template>
           是否确认删除, 如果有关联数据会一并删除
-        </n-popconfirm>
+        </n-popconfirm> -->
       </template>
     </Table>
     <SetModal @register="registerSetModal" @success="reload()" />
