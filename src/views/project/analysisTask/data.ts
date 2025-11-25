@@ -22,6 +22,7 @@ export const searchSchemas: FormSchema[] = [
     span: 8,
     componentProps: {
       immediate: true,
+      filterable: true,
       api: getFactoryList,
       labelField: 'name',
       keyField: 'id',

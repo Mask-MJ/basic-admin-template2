@@ -80,14 +80,6 @@ const [registerTable, { reload, setTableData, getPagination, getForm }] = useTab
             }
           },
           {
-            type: 'del',
-            auth: 'project:analysisTask:delete',
-            onClick: async () => {
-              await deleteAnalysisTask(row.id)
-              await reload()
-            }
-          },
-          {
             icon: 'i-ant-design:fund-view-outlined',
             tooltipProps: { content: '查看结果' },
             auth: 'project:analysisTask:query',
@@ -176,6 +168,14 @@ const [registerTable, { reload, setTableData, getPagination, getForm }] = useTab
                   window.$message.error('生成报告失败')
                 }
               }
+            }
+          },
+          {
+            type: 'del',
+            auth: 'project:analysisTask:delete',
+            onClick: async () => {
+              await deleteAnalysisTask(row.id)
+              await reload()
             }
           }
         ]

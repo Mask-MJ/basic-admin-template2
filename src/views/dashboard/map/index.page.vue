@@ -20,14 +20,14 @@ const { load: loadPlugin } = useScriptTag(
   { manual: true }
 )
 
-const getAddress = (item: any) => {
-  const { province, city, county, address } = item
-  if (province === city) {
-    return province + county + address
-  } else {
-    return province + city + county + address
-  }
-}
+// const getAddress = (item: any) => {
+//   const { province, city, county, address } = item
+//   if (province === city) {
+//     return province + county + address
+//   } else {
+//     return province + city + county + address
+//   }
+// }
 
 async function initMap() {
   const wrapEl = unref(wrapRef)
@@ -67,7 +67,7 @@ async function initMap() {
   }
   // 添加聚合数据
 
-  cluster = new Cluster.View(map, {
+  cluster = new Cluster.View(mapRef.value, {
     clusterMinPoints: 2,
     clusterMaxZoom: 18,
     updateRealTime: true,
