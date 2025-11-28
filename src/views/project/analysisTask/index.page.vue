@@ -50,7 +50,7 @@ const [registerTable, { reload, setTableData, getPagination, getForm }] = useTab
   actionColumn: {
     width: 250,
     key: 'ACTION',
-    render: (row: AnalysisTaskInfo) =>
+    render: (row: AnalysisTaskInfo & { downloadLoading?: number }) =>
       h(Action, {
         actions: [
           {
@@ -106,7 +106,9 @@ const [registerTable, { reload, setTableData, getPagination, getForm }] = useTab
             auth: 'project:analysisTask:query',
             buttonProps: {
               type: 'info',
+              loading: row.downloadLoading === 1,
               onClick: async () => {
+                row.downloadLoading = 1
                 const link = document.createElement('a')
                 // 返回的是 streamableFile 对象
                 try {
@@ -164,7 +166,9 @@ const [registerTable, { reload, setTableData, getPagination, getForm }] = useTab
                   excelLink.addEventListener('click', () => {
                     excelLink.remove()
                   })
+                  row.downloadLoading = 0
                 } catch (e) {
+                  row.downloadLoading = 0
                   window.$message.error('生成报告失败')
                 }
               }
