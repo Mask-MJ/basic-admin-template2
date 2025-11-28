@@ -164,9 +164,9 @@ const [registerTable, { reload, setTableData, getPagination, getForm }] = useTab
 
                   excelLink.click()
                   excelLink.addEventListener('click', () => {
+                    row.downloadLoading = 0
                     excelLink.remove()
                   })
-                  row.downloadLoading = 0
                 } catch (e) {
                   row.downloadLoading = 0
                   window.$message.error('生成报告失败')
