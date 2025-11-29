@@ -108,6 +108,7 @@ const [registerTable, { reload, setTableData, getPagination, getForm }] = useTab
               type: 'info',
               loading: row.downloadLoading === 1,
               onClick: async () => {
+                if (row.downloadLoading === 1) return
                 row.downloadLoading = 1
                 const link = document.createElement('a')
                 // 返回的是 streamableFile 对象
@@ -198,7 +199,7 @@ onMounted(() => {
       ...formValue
     })) as any
     setTableData(result.rows)
-  }, 120000)
+  }, 60000)
 })
 
 // const handlePositiveClick = async () => {
