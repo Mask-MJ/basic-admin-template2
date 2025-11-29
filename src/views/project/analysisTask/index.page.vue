@@ -198,7 +198,7 @@ onMounted(() => {
       ...formValue
     })) as any
     setTableData(result.rows)
-  }, 5000)
+  }, 120000)
 })
 
 // const handlePositiveClick = async () => {
