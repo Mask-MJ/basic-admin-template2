@@ -164,8 +164,8 @@ const [registerTable, { reload, setTableData, getPagination, getForm }] = useTab
                   document.body.appendChild(excelLink)
 
                   excelLink.click()
+                  row.downloadLoading = 0
                   excelLink.addEventListener('click', () => {
-                    row.downloadLoading = 0
                     excelLink.remove()
                   })
                 } catch (e) {
