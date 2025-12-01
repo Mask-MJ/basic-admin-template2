@@ -338,7 +338,7 @@ watch(
         </n-card>
       </n-gi>
       <n-gi :span="4">
-        <n-card title="分类统计" hoverable>
+        <n-card title="健康分类统计" hoverable>
           <n-form ref="formRef" inline :label-width="100" label-placement="left" :model="formValue">
             <n-form-item label="装置">
               <n-select class="w-40" v-model:value="formValue.deviceId" :options="deviceOptions" />

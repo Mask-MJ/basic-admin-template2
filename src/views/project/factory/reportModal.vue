@@ -14,6 +14,7 @@ const [registerModal, { closeModal }] = useModalInner(async (data: FactoryInfo) 
   factoryId.value = data.id
   factoryName.value = data.name
 })
+const loading = ref(false)
 const factoryId = ref()
 const factoryName = ref('')
 const uploadRef = ref<UploadInst | null>(null)
@@ -21,6 +22,7 @@ const file = ref<UploadFileInfo>()
 const endDate = ref<string>()
 const cycle = ref<number>(30)
 const handleSubmit = async () => {
+  loading.value = true
   const link = document.createElement('a')
   // 返回的是 streamableFile 对象
   try {
@@ -87,9 +89,11 @@ const handleSubmit = async () => {
     excelLink.addEventListener('click', () => {
       excelLink.remove()
     })
+    loading.value = false
     closeModal()
   } catch (e) {
     window.$message.error('生成报告失败')
+    loading.value = false
   }
 }
 const handleChange = (data: { file: UploadFileInfo; fileList: UploadFileInfo[] }) => {
@@ -98,7 +102,13 @@ const handleChange = (data: { file: UploadFileInfo; fileList: UploadFileInfo[] }
 </script>
 
 <template>
-  <Modal class="!w-120" title="生成报告" @register="registerModal" @positive-click="handleSubmit">
+  <Modal
+    class="!w-120"
+    title="生成报告"
+    @register="registerModal"
+    @positive-click="handleSubmit"
+    :loading="loading"
+  >
     <div>
       <span>日期</span>
       <n-date-picker v-model:formatted-value="endDate" type="date" value-format="yyyy-MM-dd" />
