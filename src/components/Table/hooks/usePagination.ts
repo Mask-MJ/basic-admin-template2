@@ -4,7 +4,7 @@ import type { ComputedRef } from 'vue'
 
 import { isBoolean } from 'lodash-es'
 
-import { PAGE_SIZE, PAGE_SIZE_OPTIONS } from '../constants'
+import { PAGE_SIZE, PAGE_SIZE_OPTIONS, PAGINATION_PREFIX } from '../constants'
 
 export function usePagination(refProps: ComputedRef<BasicTableProps>) {
   const configRef = ref()
@@ -30,7 +30,7 @@ export function usePagination(refProps: ComputedRef<BasicTableProps>) {
       showSizePicker: true,
       showQuickJumper: true,
       // 任务 12: 页面底部显示"共 X 条", 全局列表统一
-      prefix: ({ itemCount }: { itemCount?: number }) => `共 ${itemCount ?? 0} 条`,
+      prefix: PAGINATION_PREFIX,
       ...(isBoolean(pagination) ? {} : pagination),
       ...unref(configRef)
     }

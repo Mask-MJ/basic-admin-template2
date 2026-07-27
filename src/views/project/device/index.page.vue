@@ -11,6 +11,7 @@ import { useModal } from '@/components/Modal'
 import SetModal from './SetModal.vue'
 import { NButton, NPopconfirm } from 'naive-ui'
 import { type FactoryInfo, getFactoryList } from '@/api/project/factory'
+import { PAGINATION_PREFIX } from '@/components/Table/constants'
 
 // const userStore = useUserStore()
 const router = useRouter()
@@ -88,7 +89,9 @@ const columns: any[] = [
 const paginationRef = computed(() => ({
   pageSize: 10,
   page: page.value,
-  itemCount: total.value
+  itemCount: total.value,
+  // 任务 12: 本页自写分页, 不走 BasicTable 的 usePagination, 需单独接总数文案
+  prefix: PAGINATION_PREFIX
 }))
 const data = ref<any[]>([])
 const handlePageChange = (curPage: number) => {

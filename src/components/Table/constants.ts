@@ -15,6 +15,9 @@ export const FETCH_SETTING = {
   // Total number of tables returned by the interface field name
   totalField: 'total'
 }
+// 任务 12: 分页栏左侧的总数文案, 供 BasicTable 与自写分页的页面共用, 避免两份文案漂移
+export const PAGINATION_PREFIX = ({ itemCount }: { itemCount?: number }) =>
+  `共 ${itemCount ?? 0} 条`
 // Default Size
 export const DEFAULT_SIZE = 'small'
 //  默认居中
