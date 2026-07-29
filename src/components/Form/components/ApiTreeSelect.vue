@@ -13,7 +13,13 @@ const props = defineProps({
 const isFirstLoaded = ref<Boolean>(false)
 const treeData = ref()
 const getAttrs = computed(() => {
-  return { ...(props.api ? { options: treeData.value } : {}), ...attrs }
+  return {
+    // 最终用户列表几十上百条且无序, 默认开启关键字筛选 (顾总 2026-07-22 反馈第 12 条)。
+    // 放在 attrs 之前, 个别表单仍可显式传 filterable: false 覆盖。
+    filterable: true,
+    ...(props.api ? { options: treeData.value } : {}),
+    ...attrs
+  }
 })
 
 function handleChange(...args: any) {
